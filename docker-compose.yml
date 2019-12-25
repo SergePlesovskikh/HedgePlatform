@@ -1,0 +1,41 @@
+version: '3.4'
+
+networks:
+  familynet:
+    driver: bridge
+    
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    container_name: 'postgresql'
+    restart: always
+    environment:
+      POSTGRES_DB: 'PLATFORMBASE'
+      POSTGRES_USER: 'ADM'
+      POSTGRES_PASSWORD: '6470102926'
+    networks:
+      - familynet
+
+  pgadmin:
+    container_name: 'pgadmin4'
+    image: dpage/pgadmin4
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - 5454:5454/tcp
+    environment:
+      PGADMIN_DEFAULT_EMAIL: sergredples@rambler.ru
+      PGADMIN_DEFAULT_PASSWORD: docker
+      PGADMIN_LISTEN_PORT: 5454
+    networks:
+      - familynet
+
+
+  hedgeplatform:
+    image: ${DOCKER_REGISTRY-}hedgeplatform
+    build:
+      context: .
+      dockerfile: HedgePlatform/Dockerfile
