@@ -1,0 +1,10 @@
+{
+  "db_connection_string": "Host=172.23.0.2;Port=5432;Database=PLATFORMBASE;Username=ADM;Password=6470102926",
+  "smsserver": "a2p-api.megalabs.ru/sms/v1/sms",
+  "sms_id": "DV_hdghk:P2sV6KQ7",
+  "sms_name": "HGH-TEL",
+  "always_send_counter_value": true,
+  "start_send_value_counter_day": 20,
+  "end_send_value_counter_day": 25,
+  "pdf_dll_path": "C:\\Program Files\\wkhtmltopdf\\bin\\libwkhtmltox.dll"
+}
