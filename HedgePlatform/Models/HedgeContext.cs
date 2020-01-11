@@ -12,8 +12,7 @@ namespace HedgePlatform.Models
             Configuration = configuration;
         }
 
-        public DbSet<Device> Device { get; set; }
-        public DbSet<User> User { get; set; }
+        public DbSet<Admin.User> User { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql(Configuration.GetValue<string>("db_connection_string"));

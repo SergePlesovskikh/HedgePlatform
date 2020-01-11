@@ -21,8 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\API\" />
     <Folder Include="Controllers\ADM\" />
+    <Folder Include="Controllers\API\Auth\" />
+    <Folder Include="Controllers\API\Counter\" />
+    <Folder Include="Controllers\API\Resident\" />
+    <Folder Include="Controllers\API\Message\" />
+    <Folder Include="Controllers\API\Appeal\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

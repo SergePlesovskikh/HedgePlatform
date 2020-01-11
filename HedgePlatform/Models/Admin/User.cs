@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace HedgePlatform.Models
+namespace HedgePlatform.Models.Admin
 {
     public class User
     {
@@ -17,6 +14,6 @@ namespace HedgePlatform.Models
 
         public DateTime LastActivity { get; set; }
 
-        public string LastAddr { get; set; }
+        public string LastIP { get; set; }
     }
 }
