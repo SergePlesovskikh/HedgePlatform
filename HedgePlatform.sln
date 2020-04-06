@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HedgePlatform", "HedgePlatform\HedgePlatform.csproj", "{F0DA39E1-17E4-4303-9F5A-4EA661BB57BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HedgePlatform", "HedgePlatform\HedgePlatform.csproj", "{F0DA39E1-17E4-4303-9F5A-4EA661BB57BB}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{83C81CF2-252B-42FA-AF95-956446AD5EEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HedgePlatform.DAL", "..\HedgePlatform.DAL\HedgePlatform.DAL.csproj", "{E9B80097-F544-485D-92FE-3F71E4301670}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HedgePlatform.BLL", "..\HedgePlatform.BLL\HedgePlatform.BLL.csproj", "{4276D7D4-346C-42C0-8E4C-CD0FDFFA7A90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{83C81CF2-252B-42FA-AF95-956446AD5EEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83C81CF2-252B-42FA-AF95-956446AD5EEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83C81CF2-252B-42FA-AF95-956446AD5EEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9B80097-F544-485D-92FE-3F71E4301670}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9B80097-F544-485D-92FE-3F71E4301670}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9B80097-F544-485D-92FE-3F71E4301670}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9B80097-F544-485D-92FE-3F71E4301670}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4276D7D4-346C-42C0-8E4C-CD0FDFFA7A90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4276D7D4-346C-42C0-8E4C-CD0FDFFA7A90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4276D7D4-346C-42C0-8E4C-CD0FDFFA7A90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4276D7D4-346C-42C0-8E4C-CD0FDFFA7A90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

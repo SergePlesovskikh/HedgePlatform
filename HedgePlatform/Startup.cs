@@ -1,13 +1,20 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using HedgePlatform.Models;
+using HedgePlatform.DAL.Interfaces;
+using HedgePlatform.DAL.Repositories;
+using HedgePlatform.BLL.Interfaces;
+using HedgePlatform.BLL.Services;
+using HedgePlatform.DAL;
+using Microsoft.AspNetCore.Routing;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace HedgePlatform
 {
@@ -24,10 +31,13 @@ namespace HedgePlatform
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-              
+            services.AddDbContext<HedgeDBContext>(options =>
+             options.UseNpgsql("HedgeDBContext"));
 
-            services.AddDbContext<HedgeContext>(options =>
-            options.UseNpgsql("HedgeContext"));
+            //DAL-services
+            services.AddTransient<IUnitOfWork, EFUnitOfWork>();
+            //BLL-services
+            services.AddTransient<ICounterTypeService, CounterTypeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,9 +58,6 @@ namespace HedgePlatform
             {
                 endpoints.MapControllers();
             });
-
-
-
-        }
+        }     
     }
 }
