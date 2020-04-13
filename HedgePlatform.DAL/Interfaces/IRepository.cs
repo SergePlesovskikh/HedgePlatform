@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+
+namespace HedgePlatform.DAL.Interfaces
+{
+    public interface IRepository<T> where T : class
+    {
+        IEnumerable<T> GetAll();
+        T Get(int id);
+        public IEnumerable<T> GetWithInclude(params Expression<Func<T, object>>[] includeProperties);
+        public IEnumerable<T> GetWithInclude(Func<T, bool> predicate,
+           params Expression<Func<T, object>>[] includeProperties);
+        IEnumerable<T> Find(Func<T, Boolean> predicate);
+        void Create(T item);
+        void Update(T item);
+        void Delete(int id);
+    }
+}

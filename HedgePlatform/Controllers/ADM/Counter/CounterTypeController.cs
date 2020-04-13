@@ -6,7 +6,7 @@ using HedgePlatform.BLL.DTO;
 using HedgePlatform.BLL.Infr;
 using AutoMapper;
 
-namespace HedgePlatform.Controllers.ADM.Counter
+namespace HedgePlatform.Controllers.ADM
 {
     [Route("api/counter/[controller]")]
     [ApiController]

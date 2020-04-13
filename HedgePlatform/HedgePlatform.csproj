@@ -29,13 +29,13 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Controllers\ADM\Appeal\" />
     <Folder Include="Controllers\ADM\Inform\" />
     <Folder Include="Controllers\ADM\Resident\" />
-    <Folder Include="Controllers\ADM\Territory\" />
     <Folder Include="Controllers\ADM\Admin\" />
     <Folder Include="Controllers\API\Auth\" />
     <Folder Include="Controllers\API\Counter\" />
@@ -44,15 +44,13 @@
     <Folder Include="Controllers\API\Appeal\" />
     <Folder Include="ViewModel\Admin\" />
     <Folder Include="ViewModel\Inform\" />
-    <Folder Include="ViewModel\Territory\" />
-    <Folder Include="ViewModel\Resident\" />
-    <Folder Include="ViewModel\Counter\" />
     <Folder Include="ViewModel\Appeal\" />
+    <Folder Include="logs\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\HedgePlatform.BLL\HedgePlatform.BLL.csproj" />
-    <ProjectReference Include="..\..\HedgePlatform.DAL\HedgePlatform.DAL.csproj" />
+    <ProjectReference Include="HedgePlatform.BLL\HedgePlatform.BLL.csproj" />
+    <ProjectReference Include="HedgePlatform.DAL\HedgePlatform.DAL.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" config_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

@@ -1,0 +1,7 @@
+2020-04-13 07:08:42.694 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 07:08:42.774 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 07:08:42.778 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 07:08:42.781 +00:00 [INF] Hosting environment: Development
+2020-04-13 07:08:42.785 +00:00 [INF] Content root path: /app
+2020-04-13 07:08:44.589 +00:00 [INF] Request starting HTTP/2 GET https://localhost:32772/weatherforecast  
+2020-04-13 07:08:44.614 +00:00 [INF] Request finished in 26.9176ms 404 

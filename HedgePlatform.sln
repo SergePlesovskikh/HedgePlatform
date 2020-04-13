@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HedgePlatform", "HedgePlatf
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{83C81CF2-252B-42FA-AF95-956446AD5EEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HedgePlatform.DAL", "..\HedgePlatform.DAL\HedgePlatform.DAL.csproj", "{E9B80097-F544-485D-92FE-3F71E4301670}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HedgePlatform.DAL", "HedgePlatform.DAL\HedgePlatform.DAL.csproj", "{E9B80097-F544-485D-92FE-3F71E4301670}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HedgePlatform.BLL", "..\HedgePlatform.BLL\HedgePlatform.BLL.csproj", "{4276D7D4-346C-42C0-8E4C-CD0FDFFA7A90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HedgePlatform.BLL", "HedgePlatform.BLL\HedgePlatform.BLL.csproj", "{4276D7D4-346C-42C0-8E4C-CD0FDFFA7A90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

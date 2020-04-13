@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using HedgePlatform.DAL.Interfaces;
+using HedgePlatform.BLL.Infr;
 using HedgePlatform.DAL.Repositories;
 using HedgePlatform.BLL.Interfaces;
 using HedgePlatform.BLL.Services;
@@ -36,13 +37,17 @@ namespace HedgePlatform
 
             //DAL-services
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
+           
             //BLL-services
             services.AddTransient<ICounterTypeService, CounterTypeService>();
+            services.AddTransient<ICounterStatusService, CounterStatusService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            Log.LoggerFactory = loggerFactory;
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

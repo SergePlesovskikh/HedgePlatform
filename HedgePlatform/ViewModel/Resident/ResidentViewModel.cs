@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 
 namespace HedgePlatform.ViewModel
 {
-    public class CounterTypeViewModel
+    public class ResidentViewModel
     {
-        public int? Id { get; set; }
-        public string Type { get; set; }
     }
 }
