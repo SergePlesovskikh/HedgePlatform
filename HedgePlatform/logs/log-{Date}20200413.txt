@@ -5,3 +5,341 @@
 2020-04-13 07:08:42.785 +00:00 [INF] Content root path: /app
 2020-04-13 07:08:44.589 +00:00 [INF] Request starting HTTP/2 GET https://localhost:32772/weatherforecast  
 2020-04-13 07:08:44.614 +00:00 [INF] Request finished in 26.9176ms 404 
+2020-04-13 08:18:40.721 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 08:18:40.832 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 08:18:40.841 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 08:18:40.846 +00:00 [INF] Hosting environment: Development
+2020-04-13 08:18:40.850 +00:00 [INF] Content root path: /app
+2020-04-13 08:18:42.231 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 08:18:42.286 +00:00 [INF] Request finished in 70.8284ms 404 
+2020-04-13 08:22:13.047 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 08:22:13.159 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 08:22:13.167 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 08:22:13.173 +00:00 [INF] Hosting environment: Development
+2020-04-13 08:22:13.179 +00:00 [INF] Content root path: /app
+2020-04-13 08:22:13.998 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 08:22:14.034 +00:00 [INF] Request finished in 39.4155ms 404 
+2020-04-13 08:22:27.958 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/counter/CounterType/ application/json 
+2020-04-13 08:22:28.007 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.CounterTypeController.Index (HedgePlatform)'
+2020-04-13 08:22:28.090 +00:00 [INF] Route matched with {action = "Index", controller = "CounterType"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.CounterTypeViewModel] Index() on controller HedgePlatform.Controllers.ADM.CounterTypeController (HedgePlatform).
+2020-04-13 08:22:30.398 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.CounterTypeViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-13 08:22:30.426 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.CounterTypeController.Index (HedgePlatform) in 2324.5312ms
+2020-04-13 08:22:30.436 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.CounterTypeController.Index (HedgePlatform)'
+2020-04-13 08:22:30.446 +00:00 [INF] Request finished in 2488.5981ms 200 application/json; charset=utf-8
+2020-04-13 08:22:46.202 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/housemanager/ application/json 
+2020-04-13 08:22:46.209 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform)'
+2020-04-13 08:22:46.220 +00:00 [INF] Route matched with {action = "Index", controller = "HouseManager"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseManagerViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseManagerController (HedgePlatform).
+2020-04-13 08:22:46.242 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform) in 6.3976ms
+2020-04-13 08:22:46.247 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform)'
+2020-04-13 08:22:46.258 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'HedgePlatform.BLL.Interfaces.IHouseManagerService' while attempting to activate 'HedgePlatform.Controllers.ADM.HouseManagerController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-04-13 08:22:46.338 +00:00 [INF] Request finished in 140.59ms 500 text/plain
+2020-04-13 08:25:23.150 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 08:25:23.242 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 08:25:23.249 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 08:25:23.261 +00:00 [INF] Hosting environment: Development
+2020-04-13 08:25:23.268 +00:00 [INF] Content root path: /app
+2020-04-13 08:25:24.011 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 08:25:24.092 +00:00 [INF] Request finished in 109.4801ms 404 
+2020-04-13 08:25:27.892 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/housemanager/ application/json 
+2020-04-13 08:25:27.938 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform)'
+2020-04-13 08:25:28.020 +00:00 [INF] Route matched with {action = "Index", controller = "HouseManager"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseManagerViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseManagerController (HedgePlatform).
+2020-04-13 08:25:28.037 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform) in 2.3668ms
+2020-04-13 08:25:28.049 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform)'
+2020-04-13 08:25:28.060 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'HedgePlatform.BLL.Interfaces.IHouseManagerService' while attempting to activate 'HedgePlatform.Controllers.ADM.HouseManagerController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-04-13 08:25:28.171 +00:00 [INF] Request finished in 279.0212ms 500 text/plain
+2020-04-13 08:27:40.901 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 08:27:41.017 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 08:27:41.022 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 08:27:41.028 +00:00 [INF] Hosting environment: Development
+2020-04-13 08:27:41.034 +00:00 [INF] Content root path: /app
+2020-04-13 08:27:41.611 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 08:27:41.645 +00:00 [INF] Request finished in 36.106ms 404 
+2020-04-13 08:27:50.696 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/housemanager/ application/json 
+2020-04-13 08:27:50.742 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform)'
+2020-04-13 08:27:50.818 +00:00 [INF] Route matched with {action = "Index", controller = "HouseManager"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseManagerViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseManagerController (HedgePlatform).
+2020-04-13 08:27:52.951 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseManagerViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-13 08:27:52.984 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform) in 2152.0538ms
+2020-04-13 08:27:52.994 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform)'
+2020-04-13 08:27:53.011 +00:00 [INF] Request finished in 2315.6648ms 200 application/json; charset=utf-8
+2020-04-13 08:28:48.359 +00:00 [INF] Request starting HTTP/2 POST https://localhost:44319/api/territory/housemanager/ application/json 34
+2020-04-13 08:28:48.390 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Create (HedgePlatform)'
+2020-04-13 08:28:48.406 +00:00 [INF] Route matched with {action = "Create", controller = "HouseManager"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Create(HedgePlatform.ViewModel.HouseManagerViewModel) on controller HedgePlatform.Controllers.ADM.HouseManagerController (HedgePlatform).
+2020-04-13 08:28:48.689 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-04-13 08:28:48.695 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseManagerController.Create (HedgePlatform) in 284.8671ms
+2020-04-13 08:28:48.699 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Create (HedgePlatform)'
+2020-04-13 08:28:48.706 +00:00 [INF] Request finished in 347.9906ms 200 text/plain; charset=utf-8
+2020-04-13 08:28:57.779 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/housemanager/ application/json 
+2020-04-13 08:28:57.785 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform)'
+2020-04-13 08:28:57.793 +00:00 [INF] Route matched with {action = "Index", controller = "HouseManager"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseManagerViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseManagerController (HedgePlatform).
+2020-04-13 08:28:57.828 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseManagerViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-13 08:28:57.841 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform) in 44.351ms
+2020-04-13 08:28:57.867 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform)'
+2020-04-13 08:28:57.873 +00:00 [INF] Request finished in 94.1883ms 200 application/json; charset=utf-8
+2020-04-13 08:29:51.102 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house/ application/json 
+2020-04-13 08:29:51.119 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-13 08:29:51.137 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-13 08:29:51.378 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-13 08:29:51.391 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 243.0758ms
+2020-04-13 08:29:51.401 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-13 08:29:51.412 +00:00 [INF] Request finished in 309.7495ms 200 application/json; charset=utf-8
+2020-04-13 08:32:15.057 +00:00 [INF] Request starting HTTP/2 POST https://localhost:44319/api/territory/house/ application/json 109
+2020-04-13 08:32:15.106 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Create (HedgePlatform)'
+2020-04-13 08:32:15.119 +00:00 [INF] Route matched with {action = "Create", controller = "House"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Create(HedgePlatform.ViewModel.HouseViewModel) on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-13 08:32:15.256 +00:00 [ERR] Database error exception: 23503: insert or update on table "House" violates foreign key constraint "FK_House_HouseManager_HouseManagerId"
+2020-04-13 08:32:15.289 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-04-13 08:32:15.294 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Create (HedgePlatform) in 169.8471ms
+2020-04-13 08:32:15.299 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Create (HedgePlatform)'
+2020-04-13 08:32:15.306 +00:00 [INF] Request finished in 249.3895ms 400 text/plain; charset=utf-8
+2020-04-13 10:23:49.352 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 10:23:49.486 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 10:23:49.494 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 10:23:49.505 +00:00 [INF] Hosting environment: Development
+2020-04-13 10:23:49.513 +00:00 [INF] Content root path: /app
+2020-04-13 10:23:50.591 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 10:23:50.630 +00:00 [INF] Request finished in 65.2746ms 404 
+2020-04-13 10:25:36.874 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 10:25:36.977 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 10:25:36.985 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 10:25:36.990 +00:00 [INF] Hosting environment: Development
+2020-04-13 10:25:36.996 +00:00 [INF] Content root path: /app
+2020-04-13 10:25:37.630 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 10:25:37.670 +00:00 [INF] Request finished in 42.747ms 404 
+2020-04-13 10:26:01.043 +00:00 [INF] Request starting HTTP/2 POST https://localhost:44319/api/territory/housemanager/ application/json 34
+2020-04-13 10:26:01.075 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Create (HedgePlatform)'
+2020-04-13 10:26:01.136 +00:00 [INF] Route matched with {action = "Create", controller = "HouseManager"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Create(HedgePlatform.ViewModel.HouseManagerViewModel) on controller HedgePlatform.Controllers.ADM.HouseManagerController (HedgePlatform).
+2020-04-13 10:26:02.936 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-04-13 10:26:02.949 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseManagerController.Create (HedgePlatform) in 1801.8215ms
+2020-04-13 10:26:02.957 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Create (HedgePlatform)'
+2020-04-13 10:26:02.968 +00:00 [INF] Request finished in 1925.6429ms 200 text/plain; charset=utf-8
+2020-04-13 10:26:45.366 +00:00 [INF] Request starting HTTP/2 POST https://localhost:44319/api/territory/house/ application/json 109
+2020-04-13 10:26:45.434 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Create (HedgePlatform)'
+2020-04-13 10:26:45.444 +00:00 [INF] Route matched with {action = "Create", controller = "House"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Create(HedgePlatform.ViewModel.HouseViewModel) on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-13 10:28:52.211 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 10:28:52.299 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 10:28:52.307 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 10:28:52.312 +00:00 [INF] Hosting environment: Development
+2020-04-13 10:28:52.318 +00:00 [INF] Content root path: /app
+2020-04-13 10:28:52.940 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 10:28:52.978 +00:00 [INF] Request finished in 41.9506ms 404 
+2020-04-13 10:29:01.544 +00:00 [INF] Request starting HTTP/2 POST https://localhost:44319/api/territory/house/ application/json 102
+2020-04-13 10:29:01.575 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Create (HedgePlatform)'
+2020-04-13 10:29:01.638 +00:00 [INF] Route matched with {action = "Create", controller = "House"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Create(HedgePlatform.ViewModel.HouseViewModel) on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-13 10:29:20.977 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-04-13 10:29:20.990 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Create (HedgePlatform) in 19341.8175ms
+2020-04-13 10:29:20.997 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Create (HedgePlatform)'
+2020-04-13 10:29:21.006 +00:00 [INF] Request finished in 19462.2369ms 200 text/plain; charset=utf-8
+2020-04-13 10:29:28.371 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house/ application/json 
+2020-04-13 10:29:28.379 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-13 10:29:28.388 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-13 10:31:50.062 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 10:31:50.135 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 10:31:50.144 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 10:31:50.150 +00:00 [INF] Hosting environment: Development
+2020-04-13 10:31:50.174 +00:00 [INF] Content root path: /app
+2020-04-13 10:31:50.719 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 10:31:50.750 +00:00 [INF] Request finished in 34.5797ms 404 
+2020-04-13 10:31:59.100 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house/ application/json 
+2020-04-13 10:31:59.146 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-13 10:31:59.204 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-13 10:33:15.904 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 10:33:16.013 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 10:33:16.019 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 10:33:16.025 +00:00 [INF] Hosting environment: Development
+2020-04-13 10:33:16.031 +00:00 [INF] Content root path: /app
+2020-04-13 10:33:16.593 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 10:33:16.637 +00:00 [INF] Request finished in 47.5704ms 404 
+2020-04-13 10:33:21.168 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house/ application/json 
+2020-04-13 10:33:21.190 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-13 10:33:21.247 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-13 10:38:44.988 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 10:38:45.083 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 10:38:45.093 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 10:38:45.102 +00:00 [INF] Hosting environment: Development
+2020-04-13 10:38:45.108 +00:00 [INF] Content root path: /app
+2020-04-13 10:38:46.205 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 10:38:46.240 +00:00 [INF] Request finished in 38.4298ms 404 
+2020-04-13 10:38:59.019 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house/ application/json 
+2020-04-13 10:38:59.116 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-13 10:38:59.173 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-13 10:51:44.569 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 10:51:44.668 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 10:51:44.674 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 10:51:44.680 +00:00 [INF] Hosting environment: Development
+2020-04-13 10:51:44.687 +00:00 [INF] Content root path: /app
+2020-04-13 10:51:45.377 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 10:51:45.410 +00:00 [INF] Request finished in 35.9632ms 404 
+2020-04-13 10:51:51.802 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house/ application/json 
+2020-04-13 10:51:51.844 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-13 10:51:51.946 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-13 11:19:43.000 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 11:19:43.090 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 11:19:43.095 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 11:19:43.103 +00:00 [INF] Hosting environment: Development
+2020-04-13 11:19:43.108 +00:00 [INF] Content root path: /app
+2020-04-13 11:19:43.797 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 11:19:43.832 +00:00 [INF] Request finished in 39.8072ms 404 
+2020-04-13 11:19:48.156 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house/ application/json 
+2020-04-13 11:19:48.186 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-13 11:19:48.243 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-13 11:20:01.273 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 13018.5449ms
+2020-04-13 11:20:01.283 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-13 11:20:01.291 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+IEnumerable`1 -> List`1
+System.Collections.Generic.IEnumerable`1[[HedgePlatform.BLL.DTO.HouseDTO, HedgePlatform.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+ ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+HouseDTO -> HouseViewModel
+HedgePlatform.BLL.DTO.HouseDTO -> HedgePlatform.ViewModel.HouseViewModel
+
+Type Map configuration:
+HouseDTO -> HouseViewModel
+HedgePlatform.BLL.DTO.HouseDTO -> HedgePlatform.ViewModel.HouseViewModel
+
+Destination Member:
+HouseManager
+
+ ---> AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+HouseManagerDTO -> HouseManagerViewModel
+HedgePlatform.BLL.DTO.HouseManagerDTO -> HedgePlatform.ViewModel.HouseManagerViewModel
+   at lambda_method(Closure , HouseManagerDTO , HouseManagerViewModel , ResolutionContext )
+   at lambda_method(Closure , IEnumerable`1 , List`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , IEnumerable`1 , List`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , IEnumerable`1 , List`1 , ResolutionContext )
+   at HedgePlatform.Controllers.ADM.HouseController.Index() in C:\Users\MI\Source\Repos\SergePlesovskikh\HedgePlatform\HedgePlatform\Controllers\ADM\Territory\HouseController.cs:line 26
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-04-13 11:20:01.378 +00:00 [INF] Request finished in 13221.8876ms 500 text/plain
+2020-04-13 11:46:31.541 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 11:46:31.624 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 11:46:31.631 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 11:46:31.638 +00:00 [INF] Hosting environment: Development
+2020-04-13 11:46:31.643 +00:00 [INF] Content root path: /app
+2020-04-13 11:46:32.368 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 11:46:32.403 +00:00 [INF] Request finished in 37.4881ms 404 
+2020-04-13 11:46:36.673 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house/ application/json 
+2020-04-13 11:46:36.739 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-13 11:46:36.794 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-13 11:46:59.896 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-13 11:46:59.933 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 23127.4221ms
+2020-04-13 11:46:59.940 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-13 11:46:59.951 +00:00 [INF] Request finished in 23277.1561ms 200 application/json; charset=utf-8
+2020-04-13 11:52:30.180 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 11:52:30.259 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 11:52:30.267 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 11:52:30.274 +00:00 [INF] Hosting environment: Development
+2020-04-13 11:52:30.281 +00:00 [INF] Content root path: /app
+2020-04-13 11:52:30.939 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 11:52:30.999 +00:00 [INF] Request finished in 65.8419ms 404 
+2020-04-13 11:52:45.248 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house/ application/json 
+2020-04-13 11:52:45.308 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-13 11:52:45.363 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-13 11:52:47.266 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-13 11:52:47.301 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1926.013ms
+2020-04-13 11:52:47.309 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-13 11:52:47.317 +00:00 [INF] Request finished in 2069.2013ms 200 application/json; charset=utf-8
+2020-04-13 12:00:14.101 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 12:00:14.240 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 12:00:14.249 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 12:00:14.254 +00:00 [INF] Hosting environment: Development
+2020-04-13 12:00:14.258 +00:00 [INF] Content root path: /app
+2020-04-13 12:00:14.818 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 12:00:14.854 +00:00 [INF] Request finished in 38.452ms 404 
+2020-04-13 12:01:14.743 +00:00 [INF] Request starting HTTP/2 POST https://localhost:44319/api/territory/housemanager/ application/json 34
+2020-04-13 12:01:14.773 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Create (HedgePlatform)'
+2020-04-13 12:01:14.836 +00:00 [INF] Route matched with {action = "Create", controller = "HouseManager"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Create(HedgePlatform.ViewModel.HouseManagerViewModel) on controller HedgePlatform.Controllers.ADM.HouseManagerController (HedgePlatform).
+2020-04-13 12:01:16.616 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-04-13 12:01:16.632 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseManagerController.Create (HedgePlatform) in 1785.1978ms
+2020-04-13 12:01:16.637 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Create (HedgePlatform)'
+2020-04-13 12:01:16.647 +00:00 [INF] Request finished in 1926.179ms 200 text/plain; charset=utf-8
+2020-04-13 12:01:26.528 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/housemanager/ application/json 
+2020-04-13 12:01:26.537 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform)'
+2020-04-13 12:01:26.547 +00:00 [INF] Route matched with {action = "Index", controller = "HouseManager"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseManagerViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseManagerController (HedgePlatform).
+2020-04-13 12:01:26.771 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseManagerViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-13 12:01:26.787 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform) in 235.3693ms
+2020-04-13 12:01:26.792 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform)'
+2020-04-13 12:01:26.799 +00:00 [INF] Request finished in 273.0821ms 200 application/json; charset=utf-8
+2020-04-13 12:03:04.190 +00:00 [INF] Request starting HTTP/2 PUT https://localhost:44319/api/territory/house/ application/json 110
+2020-04-13 12:03:04.197 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Edit (HedgePlatform)'
+2020-04-13 12:03:04.227 +00:00 [INF] Route matched with {action = "Edit", controller = "House"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Edit(HedgePlatform.ViewModel.HouseViewModel) on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-13 12:03:04.307 +00:00 [INF] Edit house: 1
+2020-04-13 12:03:04.313 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-04-13 12:03:04.318 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Edit (HedgePlatform) in 86.238ms
+2020-04-13 12:03:04.325 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Edit (HedgePlatform)'
+2020-04-13 12:03:04.330 +00:00 [INF] Request finished in 140.322ms 200 text/plain; charset=utf-8
+2020-04-13 12:03:15.165 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house/ application/json 
+2020-04-13 12:03:15.177 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-13 12:03:15.186 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-13 12:03:15.357 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-13 12:03:15.368 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 175.4783ms
+2020-04-13 12:03:15.373 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-13 12:03:15.378 +00:00 [INF] Request finished in 215.5328ms 200 application/json; charset=utf-8
+2020-04-13 12:05:35.529 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 12:05:35.609 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 12:05:35.614 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 12:05:35.621 +00:00 [INF] Hosting environment: Development
+2020-04-13 12:05:35.626 +00:00 [INF] Content root path: /app
+2020-04-13 12:05:36.299 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 12:05:36.345 +00:00 [INF] Request finished in 49.0359ms 404 
+2020-04-13 12:05:50.131 +00:00 [INF] Request starting HTTP/2 PUT https://localhost:44319/api/territory/house/ application/json 111
+2020-04-13 12:05:50.209 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Edit (HedgePlatform)'
+2020-04-13 12:05:50.280 +00:00 [INF] Route matched with {action = "Edit", controller = "House"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Edit(HedgePlatform.ViewModel.HouseViewModel) on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-13 12:05:52.005 +00:00 [ERR] house edit db error: 23503: insert or update on table "House" violates foreign key constraint "FK_House_HouseManager_HouseManagerId"
+2020-04-13 12:05:52.043 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-04-13 12:05:52.056 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Edit (HedgePlatform) in 1765.5263ms
+2020-04-13 12:05:52.063 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Edit (HedgePlatform)'
+2020-04-13 12:05:52.072 +00:00 [INF] Request finished in 1940.7332ms 400 text/plain; charset=utf-8
+2020-04-13 12:07:58.452 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-13 12:07:58.523 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-13 12:07:58.531 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-13 12:07:58.535 +00:00 [INF] Hosting environment: Development
+2020-04-13 12:07:58.540 +00:00 [INF] Content root path: /app
+2020-04-13 12:07:59.312 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/weatherforecast  
+2020-04-13 12:07:59.368 +00:00 [INF] Request finished in 60.3916ms 404 

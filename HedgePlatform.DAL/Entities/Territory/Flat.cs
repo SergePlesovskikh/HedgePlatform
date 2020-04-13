@@ -18,7 +18,7 @@ namespace HedgePlatform.DAL.Entities
 
         public virtual ICollection<Counter> Counters { get; set; }
         public virtual ICollection<Resident> Resident { get; set; }
-        public virtual ICollection<Resident> Cars { get; set; }
+        public virtual ICollection<Car> Cars { get; set; }
 
     }
 }

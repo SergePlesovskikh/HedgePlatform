@@ -21,9 +21,14 @@ namespace HedgePlatform.Controllers.ADM
         public IEnumerable<HouseViewModel> Index()
         {
             IEnumerable<HouseDTO> houseDTOs = houseService.GetHouses();
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<HouseDTO, HouseViewModel>()).CreateMapper();
-            var counterStats = mapper.Map<IEnumerable<HouseDTO>, List<HouseViewModel>>(houseDTOs);
-            return counterStats;
+            
+            var mapper = new MapperConfiguration(cfg => { 
+                cfg.CreateMap<HouseDTO, HouseViewModel>().ForMember(s=>s.HouseManager, h=>h.MapFrom( src=>src.HouseManager));
+                cfg.CreateMap<HouseManagerDTO, HouseManagerViewModel>();            
+            }).CreateMapper();
+            
+            var houses = mapper.Map<IEnumerable<HouseDTO>, List<HouseViewModel>>(houseDTOs);
+            return houses;
         }
 
         [HttpPost]

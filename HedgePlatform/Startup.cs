@@ -41,6 +41,8 @@ namespace HedgePlatform
             //BLL-services
             services.AddTransient<ICounterTypeService, CounterTypeService>();
             services.AddTransient<ICounterStatusService, CounterStatusService>();
+            services.AddTransient<IHouseManagerService, HouseManagerService>();
+            services.AddTransient<IHouseService, HouseService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

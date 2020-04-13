@@ -13,7 +13,7 @@ namespace HedgePlatform.ViewModel
         public int Number { get; set; }
 
         [Required]
-        public int HouseViewModelId { get; set; }
+        public int HouseId { get; set; }
         public HouseViewModel House { get; set; }
 
         public int MaxCounters { get; set; }

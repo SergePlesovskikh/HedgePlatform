@@ -11,7 +11,8 @@ namespace HedgePlatform.BLL.DTO
         public string Street { get; set; }
         public string Home { get; set; }
         public string Corpus { get; set; }
+        public ICollection<FlatDTO> Flats { get; set; }
         public int HouseManagerId { get; set; }
-        public HouseManagerDTO HouseManagerDTO { get; set; }
+        public HouseManagerDTO HouseManager { get; set; }
     }
 }

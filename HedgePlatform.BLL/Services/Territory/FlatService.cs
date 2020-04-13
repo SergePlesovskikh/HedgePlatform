@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HedgePlatform.BLL.Services.Territory
+namespace HedgePlatform.BLL.Services
 {
     class FlatService
     {

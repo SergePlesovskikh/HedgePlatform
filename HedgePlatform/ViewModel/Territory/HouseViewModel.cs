@@ -18,7 +18,7 @@ namespace HedgePlatform.ViewModel
         public string Home { get; set; }
         public string Corpus { get; set; }
         public ICollection<FlatViewModel> Flats { get; set; }
-        public int HouseManagerViewModelId { get; set; }
+        public int HouseManagerId { get; set; }
         public HouseManagerViewModel HouseManager { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
-namespace HedgePlatform.BLL.Services.Territory
+namespace HedgePlatform.BLL.Services
 {
     public class HouseService : IHouseService
     {
@@ -34,14 +34,19 @@ namespace HedgePlatform.BLL.Services.Territory
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<HouseManager, HouseManagerDTO>()).CreateMapper();
 
             return new HouseDTO { Id = house.Id, City = house.City, Corpus = house.Corpus, Home = house.Home,
-                HouseManagerId = house.HouseManagerId, Street = house.Street, HouseManagerDTO = mapper.Map<HouseManager,HouseManagerDTO> (houseManager)
+                HouseManagerId = house.HouseManagerId, Street = house.Street, HouseManager = mapper.Map<HouseManager,HouseManagerDTO> (houseManager)
             };
         }
 
         public IEnumerable<HouseDTO> GetHouses()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<House, HouseDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<House>, List<HouseDTO>>(db.Houses.GetWithInclude(x=>x.HouseManager));
+
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<House, HouseDTO>().ForMember(s => s.HouseManager, h => h.MapFrom(src => src.HouseManager));
+                cfg.CreateMap<HouseManager, HouseManagerDTO>();
+            }).CreateMapper();
+            var houses = db.Houses.GetWithInclude(x => x.HouseManager);
+            return mapper.Map<IEnumerable<House>, List<HouseDTO>>(houses);
         }
 
         public void CreateHouse(HouseDTO house)

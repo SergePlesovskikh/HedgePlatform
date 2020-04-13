@@ -5,7 +5,7 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectGuid>83c81cf2-252b-42fa-af95-956446ad5eea</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/weatherforecast</DockerServiceUrl>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/api/territory/house</DockerServiceUrl>
     <DockerServiceName>hedgeplatform</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

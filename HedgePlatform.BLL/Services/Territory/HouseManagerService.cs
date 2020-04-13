@@ -9,7 +9,7 @@ using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
-namespace HedgePlatform.BLL.Services.Territory
+namespace HedgePlatform.BLL.Services
 {
     public class HouseManagerService : IHouseManagerService
     {
