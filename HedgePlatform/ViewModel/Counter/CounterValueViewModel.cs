@@ -1,15 +1,17 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace HedgePlatform.BLL.DTO
+namespace HedgePlatform.ViewModel
 {
-    public class CounterValueDTO
+    public class CounterValueViewModel
     {
         public int Id { get; set; }
         public double Value { get; set; }
         public DateTime DateValue { get; set; }
         public int CounterId { get; set; }
-        public CounterDTO Counter { get; set; }
+        public CounterViewModel Counter { get; set; }
         public byte[] Image { get; set; }
     }
 }

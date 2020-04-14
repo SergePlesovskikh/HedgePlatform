@@ -5,6 +5,9 @@ using HedgePlatform.DAL.Interfaces;
 using HedgePlatform.DAL.Entities;
 using HedgePlatform.BLL.Infr;
 using System.Collections.Generic;
+using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace HedgePlatform.BLL.Services
 {
@@ -17,23 +20,41 @@ namespace HedgePlatform.BLL.Services
             db = uow;
         }
 
+        private readonly ILogger _logger = Log.CreateLogger<ResidentService>();
+
         public ResidentDTO GetResident(int? id)
         {
             if (id == null)
-                throw new ValidationException("Resident id is null", "");
+                throw new ValidationException("NULL", "");
             var resident = db.Residents.Get(id.Value);
             if (resident == null)
-                throw new ValidationException("resident is not found", "");
+                throw new ValidationException("NOT_FOUND", "");
 
-            return new ResidentDTO { Id = resident.Id, BirthDate = resident.BirthDate, DateChange = resident.DateChange, DateRegistration = resident.DateRegistration,
-                                    FIO = resident.FIO, FlatId = resident.FlatId, Phone = resident.Phone
+            Flat flat = db.Flats.Get(resident.FlatId.Value);
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Flat, FlatDTO>()).CreateMapper();
+
+            return new ResidentDTO
+            {
+                Id = resident.Id,
+                FlatId = resident.FlatId,
+                Flat = mapper.Map<Flat, FlatDTO>(flat),
+                FIO = resident.FIO,
+                BirthDate = resident.BirthDate,
+                DateChange = resident.DateChange,
+                DateRegistration = resident.DateRegistration,
+                Phone = resident.Phone
             };
         }
 
-        public IEnumerable<ResidentDTO> GetResident()
+        public IEnumerable<ResidentDTO> GetResidents()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Resident, ResidentDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Resident>, List<ResidentDTO>>(db.Residents.GetAll());
+
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<Resident, ResidentDTO>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat));
+                cfg.CreateMap<Flat, FlatDTO>();
+            }).CreateMapper();
+            var residents = db.Residents.GetWithInclude(x => x.Flat);
+            return mapper.Map<IEnumerable<Resident>, List<ResidentDTO>>(residents);
         }
 
         public void CreateResident(ResidentDTO resident)
@@ -45,9 +66,16 @@ namespace HedgePlatform.BLL.Services
                 db.Save();
             }
 
-            catch
+            catch (DbUpdateException ex)
             {
-                throw new ValidationException("Error for creating resident", "");
+                _logger.LogError("Database error exception: " + ex.InnerException.Message);
+                throw new ValidationException("DB_ERROR", "");
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError("resident creating error: " + ex.Message);
+                throw new ValidationException("UNKNOWN_ERROR", "");
             }
 
         }
@@ -60,28 +88,45 @@ namespace HedgePlatform.BLL.Services
             {
                 db.Residents.Update(mapper.Map<ResidentDTO, Resident>(resident));
                 db.Save();
+                _logger.LogInformation("Edit resident: " + resident.Id);
             }
 
-            catch
+            catch (DbUpdateException ex)
             {
-                throw new ValidationException("Error for editing Resident", "");
+                _logger.LogError("resident edit db error: " + ex.InnerException.Message);
+                throw new ValidationException("DB_ERROR", "");
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError("resident edit error: " + ex.Message);
+                throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
         public void DeleteResident(int? id)
         {
             if (id == null)
-                throw new ValidationException("Resident id is null", "");
+                throw new ValidationException("NULL", "");
+
             var resident = db.Residents.Get(id.Value);
             if (resident == null)
-                throw new ValidationException("Resident is not found", "");
+                throw new ValidationException("NOT_FOUND", "");
             try
             {
                 db.Residents.Delete(id.Value);
                 db.Save();
+                _logger.LogInformation("Delete resident: " + resident.Id);
             }
-            catch
+            catch (DbUpdateException ex)
             {
-                throw new ValidationException("Error for editing Resident", "");
+                _logger.LogError("resident delete db error: " + ex.InnerException.Message);
+                throw new ValidationException("DB_ERROR", "");
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError("resident delete error: " + ex.Message);
+                throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
 

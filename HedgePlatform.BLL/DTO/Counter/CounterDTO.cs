@@ -9,9 +9,12 @@ namespace HedgePlatform.BLL.DTO
         public int Id { get; set; }
         public string Number { get; set; }
         public string Location { get; set; }
-        public string Type { get; set; }
+        public int CounterTypeId { get; set; }
+        public CounterTypeDTO CounterType { get; set; }
         public int? CounterStatusId { get; set; }
+        public CounterStatusDTO CounterStatus { get; set; }
         public int FlatId { get; set; }
+        public FlatDTO Flat { get; set; }
 
     }
 }
