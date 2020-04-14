@@ -13,5 +13,6 @@ namespace HedgePlatform.BLL.DTO
         public DateTime DateRegistration { get; set; }
         public DateTime DateChange { get; set; }
         public int? FlatId { get; set; }
+        public FlatDTO Flat { get; set; }
     }
 }
