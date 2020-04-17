@@ -12,10 +12,8 @@
   <ItemGroup>
     <Folder Include="DTO\Admin\" />
     <Folder Include="DTO\Appeal\" />
-    <Folder Include="DTO\Inform\" />
     <Folder Include="Interfaces\Admin\" />
     <Folder Include="Interfaces\Appeal\" />
-    <Folder Include="Interfaces\Inform\" />
   </ItemGroup>
 
   <ItemGroup>

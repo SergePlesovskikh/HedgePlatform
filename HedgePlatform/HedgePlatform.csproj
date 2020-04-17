@@ -42,7 +42,6 @@
     <Folder Include="Controllers\API\Message\" />
     <Folder Include="Controllers\API\Appeal\" />
     <Folder Include="ViewModel\Admin\" />
-    <Folder Include="ViewModel\Inform\" />
     <Folder Include="ViewModel\Appeal\" />
     <Folder Include="logs\" />
   </ItemGroup>

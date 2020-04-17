@@ -9,8 +9,8 @@ namespace HedgePlatform.BLL.Interfaces
     {
         CarDTO GetCar(int? id);
         IEnumerable<CarDTO> GetCars();
-        void CreateCar(CarDTO flat);
-        void EditCar(CarDTO flat);
+        void CreateCar(CarDTO car);
+        void EditCar(CarDTO car);
         void DeleteCar(int? id);
         void Dispose();
     }

@@ -19,6 +19,11 @@ namespace HedgePlatform.DAL.Interfaces
         IRepository<House> Houses { get; }
         IRepository<HouseManager> HouseManagers { get; }
 
+        IRepository<Message> Messages { get; }
+        IRepository<Vote> Votes { get; }
+        IRepository<VoteOption> VoteOptions { get; }
+        IRepository<VoteResult> VoteResults { get; }
+
         void Save();
     }
 }

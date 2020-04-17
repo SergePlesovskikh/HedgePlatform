@@ -22,6 +22,11 @@ namespace HedgePlatform.DAL.Repositories
         private AbstractRepository<House> houseRepository;
         private AbstractRepository<HouseManager> houseManagerRepository;
 
+        private AbstractRepository<Message> messageRepository;
+        private AbstractRepository<Vote> voteRepository;
+        private AbstractRepository<VoteResult> voteResultRepository;
+        private AbstractRepository<VoteOption> voteOptionRepository;
+
         private readonly IConfiguration Configuration;
 
         public EFUnitOfWork(IConfiguration configuration)
@@ -41,6 +46,11 @@ namespace HedgePlatform.DAL.Repositories
         public IRepository<Flat> Flats { get { return flatRepository ?? new AbstractRepository<Flat>(db); } }
         public IRepository<House> Houses { get { return houseRepository ?? new AbstractRepository<House>(db); } }
         public IRepository<HouseManager> HouseManagers { get { return houseManagerRepository ?? new AbstractRepository<HouseManager>(db); } }
+
+        public IRepository<Message> Messages { get { return messageRepository ?? new AbstractRepository<Message>(db); } }
+        public IRepository<Vote> Votes { get { return voteRepository ?? new AbstractRepository<Vote>(db); } }
+        public IRepository<VoteOption> VoteOptions { get { return voteOptionRepository ?? new AbstractRepository<VoteOption>(db); } }
+        public IRepository<VoteResult> VoteResults { get { return voteResultRepository ?? new AbstractRepository<VoteResult>(db); } }
 
         public void Save()
         {
