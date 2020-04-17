@@ -15,6 +15,6 @@ namespace HedgePlatform.BLL.DTO
         public CounterStatusDTO CounterStatus { get; set; }
         public int FlatId { get; set; }
         public FlatDTO Flat { get; set; }
-
+        public ICollection<CounterValueDTO> CounterValues { get; set; }
     }
 }

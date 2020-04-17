@@ -60,13 +60,15 @@ namespace HedgePlatform.BLL.Services
             {
 
                 var mapper = new MapperConfiguration(cfg => {
-                    cfg.CreateMap<Counter, CounterDTO>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat));
-                    cfg.CreateMap<Counter, CounterDTO>().ForMember(s => s.CounterType, h => h.MapFrom(src => src.CounterType));
-                    cfg.CreateMap<Counter, CounterDTO>().ForMember(s => s.CounterStatus, h => h.MapFrom(src => src.CounterStatus));
+                    cfg.CreateMap<Counter, CounterDTO>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat))
+                    .ForMember(s => s.CounterType, h => h.MapFrom(src => src.CounterType))
+                    .ForMember(s => s.CounterStatus, h => h.MapFrom(src => src.CounterStatus));
                     cfg.CreateMap<Flat, FlatDTO>();
+                    cfg.CreateMap<CounterType, CounterTypeDTO>();
+                    cfg.CreateMap<CounterStatus, CounterStatusDTO>();
                 }).CreateMapper();
 
-                var counters = db.Counters.GetWithInclude(x => x.Flat);
+                var counters = db.Counters.GetWithInclude(x => x.Flat, y=>y.CounterStatus,d =>d.CounterType);
                 return mapper.Map<IEnumerable<Counter>, List<CounterDTO>>(counters);
             }
 

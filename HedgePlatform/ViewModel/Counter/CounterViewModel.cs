@@ -16,5 +16,6 @@ namespace HedgePlatform.ViewModel
         public CounterStatusViewModel CounterStatus { get; set; }
         public int FlatId { get; set; }
         public FlatViewModel Flat { get; set; }
+        public ICollection<CounterValueViewModel> CounterValues { get; set; }
     }
 }

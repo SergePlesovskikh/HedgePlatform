@@ -23,10 +23,12 @@ namespace HedgePlatform.Controllers.ADM.Counter
             IEnumerable<CounterDTO> counterDTOs = counterService.GetCounters();
 
             var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<CounterDTO, CounterViewModel>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat));
-                cfg.CreateMap<CounterDTO, CounterViewModel>().ForMember(s => s.CounterType, h => h.MapFrom(src => src.CounterType));
-                cfg.CreateMap<CounterDTO, CounterViewModel>().ForMember(s => s.CounterStatus, h => h.MapFrom(src => src.CounterStatus));
-                cfg.CreateMap<FlatDTO, FlatDTO>();
+                cfg.CreateMap<CounterDTO, CounterViewModel>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat))
+                .ForMember(s => s.CounterType, h => h.MapFrom(src => src.CounterType))
+                .ForMember(s => s.CounterStatus, h => h.MapFrom(src => src.CounterStatus));
+                cfg.CreateMap<FlatDTO, FlatViewModel>();
+                cfg.CreateMap<CounterTypeDTO, CounterTypeViewModel>();
+                cfg.CreateMap<CounterStatusDTO, CounterStatusViewModel>();
             }).CreateMapper();
 
             var counters = mapper.Map<IEnumerable<CounterDTO>, List<CounterViewModel>>(counterDTOs);

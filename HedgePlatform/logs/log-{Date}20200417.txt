@@ -1,0 +1,553 @@
+2020-04-17 04:25:08.717 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-17 04:25:08.820 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-17 04:25:08.824 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-17 04:25:08.828 +00:00 [INF] Hosting environment: Development
+2020-04-17 04:25:08.831 +00:00 [INF] Content root path: /app
+2020-04-17 04:25:09.915 +00:00 [INF] Request starting HTTP/2 GET https://localhost:32768/weatherforecast  
+2020-04-17 04:25:09.941 +00:00 [INF] Request finished in 29.7247ms 404 
+2020-04-17 04:27:08.312 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-17 04:27:08.385 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-17 04:27:08.389 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-17 04:27:08.393 +00:00 [INF] Hosting environment: Development
+2020-04-17 04:27:08.395 +00:00 [INF] Content root path: /app
+2020-04-17 04:27:09.395 +00:00 [INF] Request starting HTTP/2 GET https://localhost:32770/weatherforecast  
+2020-04-17 04:27:09.459 +00:00 [INF] Request finished in 74.053ms 404 
+2020-04-17 04:28:04.348 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-17 04:28:04.425 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-17 04:28:04.430 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-17 04:28:04.433 +00:00 [INF] Hosting environment: Development
+2020-04-17 04:28:04.436 +00:00 [INF] Content root path: /app
+2020-04-17 04:28:05.100 +00:00 [INF] Request starting HTTP/2 GET https://localhost:32772/weatherforecast  
+2020-04-17 04:28:05.127 +00:00 [INF] Request finished in 28.8735ms 404 
+2020-04-17 04:28:51.273 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-17 04:28:51.338 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-17 04:28:51.341 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-17 04:28:51.344 +00:00 [INF] Hosting environment: Development
+2020-04-17 04:28:51.347 +00:00 [INF] Content root path: /app
+2020-04-17 04:28:51.892 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-04-17 04:28:51.958 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 04:28:51.995 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-17 04:30:17.735 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-17 04:30:17.788 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-17 04:30:17.794 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-17 04:30:17.797 +00:00 [INF] Hosting environment: Development
+2020-04-17 04:30:17.799 +00:00 [INF] Content root path: /app
+2020-04-17 04:30:18.114 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-04-17 04:30:18.146 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 04:30:18.222 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-17 04:30:19.430 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 04:30:19.446 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1215.6267ms
+2020-04-17 04:30:19.452 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 04:30:19.462 +00:00 [INF] Request finished in 1350.9192ms 200 application/json; charset=utf-8
+2020-04-17 04:30:19.507 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/favicon.ico  
+2020-04-17 04:30:19.512 +00:00 [INF] Request finished in 5.0417ms 404 
+2020-04-17 04:31:55.979 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/housemanager  
+2020-04-17 04:31:55.993 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform)'
+2020-04-17 04:31:56.003 +00:00 [INF] Route matched with {action = "Index", controller = "HouseManager"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseManagerViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseManagerController (HedgePlatform).
+2020-04-17 04:31:56.087 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseManagerViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 04:31:56.092 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform) in 70.9971ms
+2020-04-17 04:31:56.095 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform)'
+2020-04-17 04:31:56.100 +00:00 [INF] Request finished in 121.3581ms 200 application/json; charset=utf-8
+2020-04-17 04:32:56.272 +00:00 [INF] Request starting HTTP/2 POST https://localhost:44319/api/territory/housemanager application/json 35
+2020-04-17 04:32:56.279 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Create (HedgePlatform)'
+2020-04-17 04:32:56.296 +00:00 [INF] Route matched with {action = "Create", controller = "HouseManager"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Create(HedgePlatform.ViewModel.HouseManagerViewModel) on controller HedgePlatform.Controllers.ADM.HouseManagerController (HedgePlatform).
+2020-04-17 04:32:56.500 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-04-17 04:32:56.504 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseManagerController.Create (HedgePlatform) in 204.1459ms
+2020-04-17 04:32:56.509 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Create (HedgePlatform)'
+2020-04-17 04:32:56.516 +00:00 [INF] Request finished in 246.8107ms 200 text/plain; charset=utf-8
+2020-04-17 04:33:08.867 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/housemanager  
+2020-04-17 04:33:08.875 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform)'
+2020-04-17 04:33:08.881 +00:00 [INF] Route matched with {action = "Index", controller = "HouseManager"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseManagerViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseManagerController (HedgePlatform).
+2020-04-17 04:33:08.914 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseManagerViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 04:33:08.925 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform) in 37.1681ms
+2020-04-17 04:33:08.929 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseManagerController.Index (HedgePlatform)'
+2020-04-17 04:33:08.935 +00:00 [INF] Request finished in 68.7469ms 200 application/json; charset=utf-8
+2020-04-17 04:35:08.539 +00:00 [INF] Request starting HTTP/2 POST https://localhost:44319/api/territory/house application/json 89
+2020-04-17 04:35:08.547 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Create (HedgePlatform)'
+2020-04-17 04:35:08.605 +00:00 [INF] Route matched with {action = "Create", controller = "House"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Create(HedgePlatform.ViewModel.HouseViewModel) on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-17 04:35:08.665 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-04-17 04:35:08.669 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Create (HedgePlatform) in 59.8947ms
+2020-04-17 04:35:08.674 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Create (HedgePlatform)'
+2020-04-17 04:35:08.679 +00:00 [INF] Request finished in 140.4483ms 200 text/plain; charset=utf-8
+2020-04-17 04:35:14.858 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house application/json 
+2020-04-17 04:35:14.867 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 04:35:14.874 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-17 04:35:14.927 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 04:35:14.935 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 54.6455ms
+2020-04-17 04:35:14.940 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 04:35:14.944 +00:00 [INF] Request finished in 86.4564ms 200 application/json; charset=utf-8
+2020-04-17 04:36:54.193 +00:00 [INF] Request starting HTTP/2 POST https://localhost:44319/api/territory/flat application/json 46
+2020-04-17 04:36:54.244 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Territory.FlatController.Create (HedgePlatform)'
+2020-04-17 04:36:54.262 +00:00 [INF] Route matched with {action = "Create", controller = "Flat"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Create(HedgePlatform.ViewModel.FlatViewModel) on controller HedgePlatform.Controllers.ADM.Territory.FlatController (HedgePlatform).
+2020-04-17 04:36:54.272 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.Territory.FlatController.Create (HedgePlatform) in 2.9368ms
+2020-04-17 04:36:54.278 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.Territory.FlatController.Create (HedgePlatform)'
+2020-04-17 04:36:54.287 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'HedgePlatform.BLL.Interfaces.IFlatService' while attempting to activate 'HedgePlatform.Controllers.ADM.Territory.FlatController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-04-17 04:36:54.341 +00:00 [INF] Request finished in 148.9724ms 500 text/plain
+2020-04-17 04:39:08.780 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-17 04:39:08.853 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-17 04:39:08.861 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-17 04:39:08.864 +00:00 [INF] Hosting environment: Development
+2020-04-17 04:39:08.867 +00:00 [INF] Content root path: /app
+2020-04-17 04:39:09.187 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-04-17 04:39:09.227 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 04:39:09.263 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-17 04:39:10.516 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 04:39:10.542 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1271.5599ms
+2020-04-17 04:39:10.548 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 04:39:10.557 +00:00 [INF] Request finished in 1370.8907ms 200 application/json; charset=utf-8
+2020-04-17 04:39:19.812 +00:00 [INF] Request starting HTTP/2 POST https://localhost:44319/api/territory/flat application/json 46
+2020-04-17 04:39:19.821 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Territory.FlatController.Create (HedgePlatform)'
+2020-04-17 04:39:19.836 +00:00 [INF] Route matched with {action = "Create", controller = "Flat"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Create(HedgePlatform.ViewModel.FlatViewModel) on controller HedgePlatform.Controllers.ADM.Territory.FlatController (HedgePlatform).
+2020-04-17 04:39:20.101 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-04-17 04:39:20.105 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.Territory.FlatController.Create (HedgePlatform) in 265.3607ms
+2020-04-17 04:39:20.111 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.Territory.FlatController.Create (HedgePlatform)'
+2020-04-17 04:39:20.116 +00:00 [INF] Request finished in 304.6219ms 200 text/plain; charset=utf-8
+2020-04-17 04:39:29.100 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/flat application/json 
+2020-04-17 04:39:29.105 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Territory.FlatController.Index (HedgePlatform)'
+2020-04-17 04:39:29.136 +00:00 [INF] Route matched with {action = "Index", controller = "Flat"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.FlatViewModel] Index() on controller HedgePlatform.Controllers.ADM.Territory.FlatController (HedgePlatform).
+2020-04-17 04:39:29.214 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.FlatViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 04:39:29.221 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.Territory.FlatController.Index (HedgePlatform) in 81.2561ms
+2020-04-17 04:39:29.226 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.Territory.FlatController.Index (HedgePlatform)'
+2020-04-17 04:39:29.234 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+System.Text.Json.JsonException: A possible object cycle was detected which is not supported. This can either be due to a cycle or if the object depth is larger than the maximum allowed depth of 32.
+   at System.Text.Json.ThrowHelper.ThrowInvalidOperationException_SerializerCycleDetected(Int32 maxDepth)
+   at System.Text.Json.JsonSerializer.Write(Utf8JsonWriter writer, Int32 originalWriterDepth, Int32 flushThreshold, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.JsonSerializer.WriteAsyncCore(Stream utf8Json, Object value, Type inputType, JsonSerializerOptions options, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-04-17 04:39:29.282 +00:00 [INF] Request finished in 182.6822ms 500 text/plain
+2020-04-17 04:39:54.608 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/flat application/json 
+2020-04-17 04:39:54.615 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Territory.FlatController.Index (HedgePlatform)'
+2020-04-17 04:39:54.626 +00:00 [INF] Route matched with {action = "Index", controller = "Flat"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.FlatViewModel] Index() on controller HedgePlatform.Controllers.ADM.Territory.FlatController (HedgePlatform).
+2020-04-17 04:39:54.678 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.FlatViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 04:39:54.684 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.Territory.FlatController.Index (HedgePlatform) in 51.6151ms
+2020-04-17 04:39:54.687 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.Territory.FlatController.Index (HedgePlatform)'
+2020-04-17 04:39:54.690 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+System.Text.Json.JsonException: A possible object cycle was detected which is not supported. This can either be due to a cycle or if the object depth is larger than the maximum allowed depth of 32.
+   at System.Text.Json.ThrowHelper.ThrowInvalidOperationException_SerializerCycleDetected(Int32 maxDepth)
+   at System.Text.Json.JsonSerializer.Write(Utf8JsonWriter writer, Int32 originalWriterDepth, Int32 flushThreshold, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.JsonSerializer.WriteAsyncCore(Stream utf8Json, Object value, Type inputType, JsonSerializerOptions options, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-04-17 04:39:54.723 +00:00 [INF] Request finished in 93.8541ms 500 text/plain
+2020-04-17 04:40:29.030 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/flat application/json 
+2020-04-17 04:40:29.042 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Territory.FlatController.Index (HedgePlatform)'
+2020-04-17 04:40:29.047 +00:00 [INF] Route matched with {action = "Index", controller = "Flat"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.FlatViewModel] Index() on controller HedgePlatform.Controllers.ADM.Territory.FlatController (HedgePlatform).
+2020-04-17 04:42:14.326 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.FlatViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 04:42:14.332 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.Territory.FlatController.Index (HedgePlatform) in 105280.1757ms
+2020-04-17 04:42:14.336 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.Territory.FlatController.Index (HedgePlatform)'
+2020-04-17 04:42:14.341 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+System.Text.Json.JsonException: A possible object cycle was detected which is not supported. This can either be due to a cycle or if the object depth is larger than the maximum allowed depth of 32.
+   at System.Text.Json.ThrowHelper.ThrowInvalidOperationException_SerializerCycleDetected(Int32 maxDepth)
+   at System.Text.Json.JsonSerializer.Write(Utf8JsonWriter writer, Int32 originalWriterDepth, Int32 flushThreshold, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.JsonSerializer.WriteAsyncCore(Stream utf8Json, Object value, Type inputType, JsonSerializerOptions options, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-04-17 04:42:14.351 +00:00 [INF] Request finished in 105321.0993ms 500 text/plain
+2020-04-17 04:45:59.308 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-17 04:45:59.364 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-17 04:45:59.367 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-17 04:45:59.370 +00:00 [INF] Hosting environment: Development
+2020-04-17 04:45:59.375 +00:00 [INF] Content root path: /app
+2020-04-17 04:45:59.715 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-04-17 04:45:59.753 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 04:45:59.783 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-17 04:46:01.167 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 04:46:01.281 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1491.5915ms
+2020-04-17 04:46:01.286 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 04:46:01.293 +00:00 [INF] Request finished in 1579.5016ms 200 application/json; charset=utf-8
+2020-04-17 04:46:06.333 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/flat application/json 
+2020-04-17 04:46:06.339 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Territory.FlatController.Index (HedgePlatform)'
+2020-04-17 04:46:06.348 +00:00 [INF] Route matched with {action = "Index", controller = "Flat"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.FlatViewModel] Index() on controller HedgePlatform.Controllers.ADM.Territory.FlatController (HedgePlatform).
+2020-04-17 04:46:11.822 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.FlatViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 04:46:11.836 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.Territory.FlatController.Index (HedgePlatform) in 5482.9624ms
+2020-04-17 04:46:11.839 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.Territory.FlatController.Index (HedgePlatform)'
+2020-04-17 04:46:11.844 +00:00 [INF] Request finished in 5510.9873ms 200 application/json; charset=utf-8
+2020-04-17 05:00:17.154 +00:00 [INF] Request starting HTTP/2 POST https://localhost:44319/api/counter/countertype application/json 39
+2020-04-17 05:00:17.181 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.CounterTypeController.Create (HedgePlatform)'
+2020-04-17 05:00:17.196 +00:00 [INF] Route matched with {action = "Create", controller = "CounterType"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Create(HedgePlatform.ViewModel.CounterTypeViewModel) on controller HedgePlatform.Controllers.ADM.CounterTypeController (HedgePlatform).
+2020-04-17 05:00:17.418 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-04-17 05:00:17.424 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.CounterTypeController.Create (HedgePlatform) in 224.8878ms
+2020-04-17 05:00:17.427 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.CounterTypeController.Create (HedgePlatform)'
+2020-04-17 05:00:17.431 +00:00 [INF] Request finished in 277.9578ms 200 text/plain; charset=utf-8
+2020-04-17 05:00:54.733 +00:00 [INF] Request starting HTTP/2 POST https://localhost:44319/api/counter/counterstatus application/json 36
+2020-04-17 05:00:54.744 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.CounterStatusController.Create (HedgePlatform)'
+2020-04-17 05:00:54.756 +00:00 [INF] Route matched with {action = "Create", controller = "CounterStatus"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Create(HedgePlatform.ViewModel.CounterStatusViewModel) on controller HedgePlatform.Controllers.ADM.CounterStatusController (HedgePlatform).
+2020-04-17 05:00:54.816 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-04-17 05:00:54.822 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.CounterStatusController.Create (HedgePlatform) in 56.5632ms
+2020-04-17 05:00:54.828 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.CounterStatusController.Create (HedgePlatform)'
+2020-04-17 05:00:54.832 +00:00 [INF] Request finished in 99.3375ms 200 text/plain; charset=utf-8
+2020-04-17 05:01:46.967 +00:00 [INF] Request starting HTTP/2 POST https://localhost:44319/api/counter/ application/json 96
+2020-04-17 05:01:46.994 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Create (HedgePlatform)'
+2020-04-17 05:01:47.002 +00:00 [INF] Route matched with {action = "Create", controller = "Counter"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Create(HedgePlatform.ViewModel.CounterViewModel) on controller HedgePlatform.Controllers.ADM.Counter.CounterController (HedgePlatform).
+2020-04-17 05:01:47.104 +00:00 [ERR] Database error exception: 42703: column "CounterTypeId" of relation "Counter" does not exist
+2020-04-17 05:01:47.130 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-04-17 05:01:47.134 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.Counter.CounterController.Create (HedgePlatform) in 128.0462ms
+2020-04-17 05:01:47.137 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Create (HedgePlatform)'
+2020-04-17 05:01:47.141 +00:00 [INF] Request finished in 174.2766ms 400 text/plain; charset=utf-8
+2020-04-17 05:03:45.934 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-17 05:03:46.007 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-17 05:03:46.013 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-17 05:03:46.016 +00:00 [INF] Hosting environment: Development
+2020-04-17 05:03:46.020 +00:00 [INF] Content root path: /app
+2020-04-17 05:03:46.393 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-04-17 05:03:46.429 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 05:03:46.461 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-17 05:03:47.687 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 05:03:47.799 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1327.7327ms
+2020-04-17 05:03:47.804 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 05:03:47.813 +00:00 [INF] Request finished in 1422.0065ms 200 application/json; charset=utf-8
+2020-04-17 05:03:55.820 +00:00 [INF] Request starting HTTP/2 POST https://localhost:44319/api/counter/ application/json 96
+2020-04-17 05:03:55.827 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Create (HedgePlatform)'
+2020-04-17 05:03:55.841 +00:00 [INF] Route matched with {action = "Create", controller = "Counter"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Create(HedgePlatform.ViewModel.CounterViewModel) on controller HedgePlatform.Controllers.ADM.Counter.CounterController (HedgePlatform).
+2020-04-17 05:03:56.114 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-04-17 05:03:56.119 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.Counter.CounterController.Create (HedgePlatform) in 273.5445ms
+2020-04-17 05:03:56.125 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Create (HedgePlatform)'
+2020-04-17 05:03:56.129 +00:00 [INF] Request finished in 309.7214ms 200 text/plain; charset=utf-8
+2020-04-17 05:04:02.434 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/counter/ application/json 
+2020-04-17 05:04:02.447 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform)'
+2020-04-17 05:04:02.464 +00:00 [INF] Route matched with {action = "Index", controller = "Counter"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.CounterViewModel] Index() on controller HedgePlatform.Controllers.ADM.Counter.CounterController (HedgePlatform).
+2020-04-17 05:04:44.407 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform) in 41934.2795ms
+2020-04-17 05:04:44.415 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform)'
+2020-04-17 05:04:44.420 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+IEnumerable`1 -> List`1
+System.Collections.Generic.IEnumerable`1[[HedgePlatform.BLL.DTO.CounterDTO, HedgePlatform.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.List`1[[HedgePlatform.ViewModel.CounterViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+ ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+CounterDTO -> CounterViewModel
+HedgePlatform.BLL.DTO.CounterDTO -> HedgePlatform.ViewModel.CounterViewModel
+
+Type Map configuration:
+CounterDTO -> CounterViewModel
+HedgePlatform.BLL.DTO.CounterDTO -> HedgePlatform.ViewModel.CounterViewModel
+
+Destination Member:
+Flat
+
+ ---> AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+FlatDTO -> FlatViewModel
+HedgePlatform.BLL.DTO.FlatDTO -> HedgePlatform.ViewModel.FlatViewModel
+   at lambda_method(Closure , FlatDTO , FlatViewModel , ResolutionContext )
+   at lambda_method(Closure , IEnumerable`1 , List`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , IEnumerable`1 , List`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , IEnumerable`1 , List`1 , ResolutionContext )
+   at HedgePlatform.Controllers.ADM.Counter.CounterController.Index() in C:\Users\plesovskih\source\repos\SergePlesovskikh\Hedge\HedgePlatform\HedgePlatform\Controllers\ADM\Counter\CounterController.cs:line 32
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-04-17 05:04:44.486 +00:00 [INF] Request finished in 42052.8048ms 500 text/plain
+2020-04-17 05:19:57.477 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-17 05:19:57.527 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-17 05:19:57.530 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-17 05:19:57.534 +00:00 [INF] Hosting environment: Development
+2020-04-17 05:19:57.537 +00:00 [INF] Content root path: /app
+2020-04-17 05:19:57.900 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-04-17 05:19:57.937 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 05:19:57.968 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-17 05:19:59.183 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 05:19:59.293 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1318.5706ms
+2020-04-17 05:19:59.299 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 05:19:59.309 +00:00 [INF] Request finished in 1411.1277ms 200 application/json; charset=utf-8
+2020-04-17 05:20:07.612 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/counter/ application/json 
+2020-04-17 05:20:07.618 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform)'
+2020-04-17 05:20:07.625 +00:00 [INF] Route matched with {action = "Index", controller = "Counter"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.CounterViewModel] Index() on controller HedgePlatform.Controllers.ADM.Counter.CounterController (HedgePlatform).
+2020-04-17 05:20:24.154 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform) in 16524.6729ms
+2020-04-17 05:20:24.162 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform)'
+2020-04-17 05:20:24.170 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+IEnumerable`1 -> List`1
+System.Collections.Generic.IEnumerable`1[[HedgePlatform.BLL.DTO.CounterDTO, HedgePlatform.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.List`1[[HedgePlatform.ViewModel.CounterViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+ ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+CounterDTO -> CounterViewModel
+HedgePlatform.BLL.DTO.CounterDTO -> HedgePlatform.ViewModel.CounterViewModel
+
+Type Map configuration:
+CounterDTO -> CounterViewModel
+HedgePlatform.BLL.DTO.CounterDTO -> HedgePlatform.ViewModel.CounterViewModel
+
+Destination Member:
+Flat
+
+ ---> AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+FlatDTO -> FlatViewModel
+HedgePlatform.BLL.DTO.FlatDTO -> HedgePlatform.ViewModel.FlatViewModel
+   at lambda_method(Closure , FlatDTO , FlatViewModel , ResolutionContext )
+   at lambda_method(Closure , IEnumerable`1 , List`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , IEnumerable`1 , List`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , IEnumerable`1 , List`1 , ResolutionContext )
+   at HedgePlatform.Controllers.ADM.Counter.CounterController.Index() in C:\Users\plesovskih\source\repos\SergePlesovskikh\Hedge\HedgePlatform\HedgePlatform\Controllers\ADM\Counter\CounterController.cs:line 32
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-04-17 05:20:24.242 +00:00 [INF] Request finished in 16629.7535ms 500 text/plain
+2020-04-17 05:20:29.927 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/counter/ application/json 
+2020-04-17 05:20:29.934 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform)'
+2020-04-17 05:20:29.943 +00:00 [INF] Route matched with {action = "Index", controller = "Counter"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.CounterViewModel] Index() on controller HedgePlatform.Controllers.ADM.Counter.CounterController (HedgePlatform).
+2020-04-17 05:21:45.169 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform) in 75219.5747ms
+2020-04-17 05:21:45.173 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform)'
+2020-04-17 05:21:45.177 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+IEnumerable`1 -> List`1
+System.Collections.Generic.IEnumerable`1[[HedgePlatform.BLL.DTO.CounterDTO, HedgePlatform.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.List`1[[HedgePlatform.ViewModel.CounterViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+ ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+CounterDTO -> CounterViewModel
+HedgePlatform.BLL.DTO.CounterDTO -> HedgePlatform.ViewModel.CounterViewModel
+
+Type Map configuration:
+CounterDTO -> CounterViewModel
+HedgePlatform.BLL.DTO.CounterDTO -> HedgePlatform.ViewModel.CounterViewModel
+
+Destination Member:
+Flat
+
+ ---> AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+FlatDTO -> FlatViewModel
+HedgePlatform.BLL.DTO.FlatDTO -> HedgePlatform.ViewModel.FlatViewModel
+   at lambda_method(Closure , FlatDTO , FlatViewModel , ResolutionContext )
+   at lambda_method(Closure , IEnumerable`1 , List`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , IEnumerable`1 , List`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , IEnumerable`1 , List`1 , ResolutionContext )
+   at HedgePlatform.Controllers.ADM.Counter.CounterController.Index() in C:\Users\plesovskih\source\repos\SergePlesovskikh\Hedge\HedgePlatform\HedgePlatform\Controllers\ADM\Counter\CounterController.cs:line 32
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-04-17 05:21:45.218 +00:00 [INF] Request finished in 75287.2792ms 500 text/plain
+2020-04-17 05:21:48.604 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/counter/ application/json 
+2020-04-17 05:21:48.622 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform)'
+2020-04-17 05:21:48.628 +00:00 [INF] Route matched with {action = "Index", controller = "Counter"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.CounterViewModel] Index() on controller HedgePlatform.Controllers.ADM.Counter.CounterController (HedgePlatform).
+2020-04-17 05:24:55.663 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-17 05:24:55.738 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-17 05:24:55.763 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-17 05:24:55.766 +00:00 [INF] Hosting environment: Development
+2020-04-17 05:24:55.769 +00:00 [INF] Content root path: /app
+2020-04-17 05:24:56.122 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-04-17 05:24:56.177 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 05:24:56.208 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-17 05:24:57.434 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 05:24:57.549 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1334.0323ms
+2020-04-17 05:24:57.555 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 05:24:57.565 +00:00 [INF] Request finished in 1444.5934ms 200 application/json; charset=utf-8
+2020-04-17 05:25:03.167 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/counter/ application/json 
+2020-04-17 05:25:03.177 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform)'
+2020-04-17 05:25:03.189 +00:00 [INF] Route matched with {action = "Index", controller = "Counter"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.CounterViewModel] Index() on controller HedgePlatform.Controllers.ADM.Counter.CounterController (HedgePlatform).
+2020-04-17 05:30:20.284 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-17 05:30:20.357 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-17 05:30:20.363 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-17 05:30:20.365 +00:00 [INF] Hosting environment: Development
+2020-04-17 05:30:20.368 +00:00 [INF] Content root path: /app
+2020-04-17 05:30:20.703 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-04-17 05:30:20.745 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 05:30:20.775 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-17 05:30:22.015 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 05:30:22.127 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1345.7616ms
+2020-04-17 05:30:22.133 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 05:30:22.143 +00:00 [INF] Request finished in 1443.5553ms 200 application/json; charset=utf-8
+2020-04-17 05:30:25.141 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/counter/ application/json 
+2020-04-17 05:30:25.151 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform)'
+2020-04-17 05:30:25.169 +00:00 [INF] Route matched with {action = "Index", controller = "Counter"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.CounterViewModel] Index() on controller HedgePlatform.Controllers.ADM.Counter.CounterController (HedgePlatform).
+2020-04-17 05:32:08.970 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform) in 103795.6217ms
+2020-04-17 05:32:09.002 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform)'
+2020-04-17 05:32:09.008 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+IEnumerable`1 -> List`1
+System.Collections.Generic.IEnumerable`1[[HedgePlatform.DAL.Entities.Counter, HedgePlatform.DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.List`1[[HedgePlatform.BLL.DTO.CounterDTO, HedgePlatform.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+ ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Counter -> CounterDTO
+HedgePlatform.DAL.Entities.Counter -> HedgePlatform.BLL.DTO.CounterDTO
+
+Type Map configuration:
+Counter -> CounterDTO
+HedgePlatform.DAL.Entities.Counter -> HedgePlatform.BLL.DTO.CounterDTO
+
+Destination Member:
+CounterType
+
+ ---> AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+CounterType -> CounterTypeDTO
+HedgePlatform.DAL.Entities.CounterType -> HedgePlatform.BLL.DTO.CounterTypeDTO
+   at lambda_method(Closure , CounterType , CounterTypeDTO , ResolutionContext )
+   at lambda_method(Closure , IEnumerable`1 , List`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , IEnumerable`1 , List`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , IEnumerable`1 , List`1 , ResolutionContext )
+   at HedgePlatform.BLL.Services.CounterService.GetCounters() in C:\Users\plesovskih\source\repos\SergePlesovskikh\Hedge\HedgePlatform\HedgePlatform.BLL\Services\Counter\CounterService.cs:line 70
+   at HedgePlatform.Controllers.ADM.Counter.CounterController.Index() in C:\Users\plesovskih\source\repos\SergePlesovskikh\Hedge\HedgePlatform\HedgePlatform\Controllers\ADM\Counter\CounterController.cs:line 23
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-04-17 05:32:09.034 +00:00 [INF] Request finished in 103892.7626ms 500 text/plain
+2020-04-17 05:37:47.075 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-17 05:37:47.146 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-17 05:37:47.149 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-17 05:37:47.153 +00:00 [INF] Hosting environment: Development
+2020-04-17 05:37:47.156 +00:00 [INF] Content root path: /app
+2020-04-17 05:37:47.678 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-04-17 05:37:47.751 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 05:37:47.782 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-17 05:37:49.020 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 05:37:49.134 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1345.1318ms
+2020-04-17 05:37:49.142 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 05:37:49.151 +00:00 [INF] Request finished in 1476.2522ms 200 application/json; charset=utf-8
+2020-04-17 05:37:51.044 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/counter/ application/json 
+2020-04-17 05:37:51.052 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform)'
+2020-04-17 05:37:51.064 +00:00 [INF] Route matched with {action = "Index", controller = "Counter"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.CounterViewModel] Index() on controller HedgePlatform.Controllers.ADM.Counter.CounterController (HedgePlatform).
+2020-04-17 05:46:52.389 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-17 05:46:52.458 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-17 05:46:52.461 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-17 05:46:52.464 +00:00 [INF] Hosting environment: Development
+2020-04-17 05:46:52.468 +00:00 [INF] Content root path: /app
+2020-04-17 05:46:53.072 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-04-17 05:46:53.109 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 05:46:53.142 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-17 05:46:54.386 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 05:46:54.499 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1349.448ms
+2020-04-17 05:46:54.507 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 05:46:54.518 +00:00 [INF] Request finished in 1448.0308ms 200 application/json; charset=utf-8
+2020-04-17 05:50:06.778 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/counter/ application/json 
+2020-04-17 05:50:06.784 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform)'
+2020-04-17 05:50:06.789 +00:00 [INF] Route matched with {action = "Index", controller = "Counter"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.CounterViewModel] Index() on controller HedgePlatform.Controllers.ADM.Counter.CounterController (HedgePlatform).
+2020-04-17 05:52:42.425 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-17 05:52:42.518 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-17 05:52:42.522 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-17 05:52:42.526 +00:00 [INF] Hosting environment: Development
+2020-04-17 05:52:42.530 +00:00 [INF] Content root path: /app
+2020-04-17 05:52:43.159 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-04-17 05:52:43.239 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 05:52:43.277 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-17 05:52:44.677 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 05:52:44.788 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1503.5691ms
+2020-04-17 05:52:44.796 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-17 05:52:44.806 +00:00 [INF] Request finished in 1649.5887ms 200 application/json; charset=utf-8
+2020-04-17 05:52:48.680 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/counter/ application/json 
+2020-04-17 05:52:48.689 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform)'
+2020-04-17 05:52:48.721 +00:00 [INF] Route matched with {action = "Index", controller = "Counter"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.CounterViewModel] Index() on controller HedgePlatform.Controllers.ADM.Counter.CounterController (HedgePlatform).
+2020-04-17 05:52:59.411 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.CounterViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-17 05:52:59.442 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform) in 10715.9589ms
+2020-04-17 05:52:59.452 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.Counter.CounterController.Index (HedgePlatform)'
+2020-04-17 05:52:59.456 +00:00 [INF] Request finished in 10776.3314ms 200 application/json; charset=utf-8

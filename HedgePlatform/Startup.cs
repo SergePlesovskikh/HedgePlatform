@@ -31,7 +31,9 @@ namespace HedgePlatform
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+   options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddDbContext<HedgeDBContext>(options =>
              options.UseNpgsql("HedgeDBContext"));
 
@@ -43,6 +45,12 @@ namespace HedgePlatform
             services.AddTransient<ICounterStatusService, CounterStatusService>();
             services.AddTransient<IHouseManagerService, HouseManagerService>();
             services.AddTransient<IHouseService, HouseService>();
+            services.AddTransient<IFlatService, FlatService>();
+            services.AddTransient<IResidentService, ResidentService>();
+            services.AddTransient<ICarService, CarService>();
+            services.AddTransient<ICounterService, CounterService>();
+            services.AddTransient<ICounterValueService, CounterValueService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
