@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HedgePlatform.BLL.Interfaces
 {
-    public interface IVoteResult
+    public interface IVoteResultService
     {
         VoteResultDTO GetVoteResult(int? id);
         IEnumerable<VoteResultDTO> GetVoteResults();

@@ -2,6 +2,7 @@
 using HedgePlatform.DAL.Interfaces;
 using HedgePlatform.DAL.Entities;
 using HedgePlatform.BLL.Infr;
+using HedgePlatform.BLL.Interfaces;
 using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.Logging;
@@ -10,7 +11,7 @@ using AutoMapper;
 
 namespace HedgePlatform.BLL.Services
 {
-    public class MessageService
+    public class MessageService : IMessageService
     {
         IUnitOfWork db { get; set; }
 
@@ -38,7 +39,7 @@ namespace HedgePlatform.BLL.Services
             return mapper.Map<IEnumerable<Message>, List<MessageDTO>>(db.Messages.GetAll());
         }
 
-        public void CreateMessages(MessageDTO message)
+        public void CreateMessage(MessageDTO message)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<MessageDTO, Message>()).CreateMapper();
             try
@@ -60,7 +61,7 @@ namespace HedgePlatform.BLL.Services
             }
 
         }
-        public void EditMessages(MessageDTO message)
+        public void EditMessage(MessageDTO message)
         {
             if (message == null)
                 throw new ValidationException("No Message object", "");

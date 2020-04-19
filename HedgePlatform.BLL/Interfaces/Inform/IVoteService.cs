@@ -7,11 +7,11 @@ namespace HedgePlatform.BLL.Interfaces
 {
     public interface IVoteService
     {
-        VoteResultDTO GetVoteResult(int? id);
-        IEnumerable<VoteResultDTO> GetVoteResults();
-        void CreateVoteResult(VoteResultDTO voteResult);
-        void EditVoteResult(VoteResultDTO voteResult);
-        void DeleteVoteResult(int? id);
+        VoteDTO GetVote(int? id);
+        IEnumerable<VoteDTO> GetVotes();
+        void CreateVote(VoteDTO vote);
+        void EditVote(VoteDTO vote);
+        void DeleteVote(int? id);
         void Dispose();
     }
 }

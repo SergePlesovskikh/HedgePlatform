@@ -1,0 +1,22 @@
+2020-04-19 08:34:08.878 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-19 08:34:09.058 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-19 08:34:09.069 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-19 08:34:09.082 +00:00 [INF] Hosting environment: Development
+2020-04-19 08:34:09.103 +00:00 [INF] Content root path: /app
+2020-04-19 08:34:15.681 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-04-19 08:34:16.024 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-19 08:34:16.349 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-19 08:38:08.481 +00:00 [INF] Now listening on: https://[::]:443
+2020-04-19 08:38:08.662 +00:00 [INF] Now listening on: http://[::]:80
+2020-04-19 08:38:08.676 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-04-19 08:38:08.689 +00:00 [INF] Hosting environment: Development
+2020-04-19 08:38:08.699 +00:00 [INF] Content root path: /app
+2020-04-19 08:38:09.948 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-04-19 08:38:10.057 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-19 08:38:10.146 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-04-19 08:38:13.631 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-19 08:38:13.895 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 3717.8604ms
+2020-04-19 08:38:13.942 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-04-19 08:38:14.027 +00:00 [INF] Request finished in 4083.9565ms 200 application/json; charset=utf-8
+2020-04-19 08:38:14.232 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/favicon.ico  
+2020-04-19 08:38:14.244 +00:00 [INF] Request finished in 11.7994ms 404 
