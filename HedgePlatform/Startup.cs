@@ -43,13 +43,20 @@ namespace HedgePlatform
             //BLL-services
             services.AddTransient<ICounterTypeService, CounterTypeService>();
             services.AddTransient<ICounterStatusService, CounterStatusService>();
+            services.AddTransient<ICounterService, CounterService>();
+            services.AddTransient<ICounterValueService, CounterValueService>();
+
             services.AddTransient<IHouseManagerService, HouseManagerService>();
             services.AddTransient<IHouseService, HouseService>();
             services.AddTransient<IFlatService, FlatService>();
+
             services.AddTransient<IResidentService, ResidentService>();
             services.AddTransient<ICarService, CarService>();
-            services.AddTransient<ICounterService, CounterService>();
-            services.AddTransient<ICounterValueService, CounterValueService>();
+
+            services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<IVoteService, VoteService>();
+            services.AddTransient<IVoteOptionService, VoteOptionService>();
+            services.AddTransient<IVoteResultService, VoteResultService>();
 
         }
 

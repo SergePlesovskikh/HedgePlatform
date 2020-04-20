@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HedgePlatform.BLL.Services
 {
-    public class VoteResultService
+    public class VoteResultService : IVoteResultService
     {
         IUnitOfWork db { get; set; }
 

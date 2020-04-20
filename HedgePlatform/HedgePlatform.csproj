@@ -34,7 +34,6 @@
 
   <ItemGroup>
     <Folder Include="Controllers\ADM\Appeal\" />
-    <Folder Include="Controllers\ADM\Inform\" />
     <Folder Include="Controllers\ADM\Admin\" />
     <Folder Include="Controllers\API\Auth\" />
     <Folder Include="Controllers\API\Counter\" />
