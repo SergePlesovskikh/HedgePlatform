@@ -24,6 +24,10 @@ namespace HedgePlatform.DAL.Interfaces
         IRepository<VoteOption> VoteOptions { get; }
         IRepository<VoteResult> VoteResults { get; }
 
+        IRepository<User> Users { get; }
+        IRepository<Session> Sessions { get; }
+        IRepository<Check> Checks { get; }
+
         void Save();
     }
 }

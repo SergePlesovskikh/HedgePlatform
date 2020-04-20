@@ -27,6 +27,11 @@ namespace HedgePlatform.DAL.Repositories
         private AbstractRepository<VoteResult> voteResultRepository;
         private AbstractRepository<VoteOption> voteOptionRepository;
 
+        private AbstractRepository<User> userRepository;
+        private AbstractRepository<Session> sessionRepository;
+        private AbstractRepository<Check> checkRepository;
+
+
         private readonly IConfiguration Configuration;
 
         public EFUnitOfWork(IConfiguration configuration)
@@ -51,6 +56,10 @@ namespace HedgePlatform.DAL.Repositories
         public IRepository<Vote> Votes { get { return voteRepository ?? new AbstractRepository<Vote>(db); } }
         public IRepository<VoteOption> VoteOptions { get { return voteOptionRepository ?? new AbstractRepository<VoteOption>(db); } }
         public IRepository<VoteResult> VoteResults { get { return voteResultRepository ?? new AbstractRepository<VoteResult>(db); } }
+
+        public IRepository<User> Users { get { return userRepository ?? new AbstractRepository<User>(db); } }
+        public IRepository<Session> Sessions { get { return sessionRepository ?? new AbstractRepository<Session>(db); } }
+        public IRepository<Check> Checks { get { return checkRepository ?? new AbstractRepository<Check>(db); } }
 
         public void Save()
         {
