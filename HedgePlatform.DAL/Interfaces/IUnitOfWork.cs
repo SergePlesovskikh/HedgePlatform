@@ -27,6 +27,7 @@ namespace HedgePlatform.DAL.Interfaces
         IRepository<User> Users { get; }
         IRepository<Session> Sessions { get; }
         IRepository<Check> Checks { get; }
+        IRepository<Phone> Phones { get; }
 
         void Save();
     }

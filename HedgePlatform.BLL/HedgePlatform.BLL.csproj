@@ -7,12 +7,11 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\Admin\" />
     <Folder Include="DTO\Appeal\" />
-    <Folder Include="Interfaces\Admin\" />
     <Folder Include="Interfaces\Appeal\" />
   </ItemGroup>
 

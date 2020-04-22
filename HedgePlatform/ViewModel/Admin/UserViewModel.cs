@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HedgePlatform.DAL.Entities
+namespace HedgePlatform.ViewModel
 {
-    public class User
+    public class UserViewModel
     {
         public int Id { get; set; }
         [Required]

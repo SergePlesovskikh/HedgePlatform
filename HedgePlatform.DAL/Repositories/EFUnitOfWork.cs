@@ -30,6 +30,7 @@ namespace HedgePlatform.DAL.Repositories
         private AbstractRepository<User> userRepository;
         private AbstractRepository<Session> sessionRepository;
         private AbstractRepository<Check> checkRepository;
+        private AbstractRepository<Phone> phoneRepository;
 
 
         private readonly IConfiguration Configuration;
@@ -60,6 +61,7 @@ namespace HedgePlatform.DAL.Repositories
         public IRepository<User> Users { get { return userRepository ?? new AbstractRepository<User>(db); } }
         public IRepository<Session> Sessions { get { return sessionRepository ?? new AbstractRepository<Session>(db); } }
         public IRepository<Check> Checks { get { return checkRepository ?? new AbstractRepository<Check>(db); } }
+        public IRepository<Phone> Phones { get { return phoneRepository ?? new AbstractRepository<Phone>(db); } }
 
         public void Save()
         {

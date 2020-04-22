@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace HedgePlatform.DAL.Entities
+﻿
+namespace HedgePlatform.BLL.DTO
 {
-    public class User
+    public class UserDTO
     {
         public int Id { get; set; }
-        [Required]
         public string Login { get; set; }
         public string Psw { get; set; }
     }

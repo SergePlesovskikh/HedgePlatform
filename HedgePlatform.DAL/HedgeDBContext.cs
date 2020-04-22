@@ -28,6 +28,18 @@ namespace HedgePlatform.DAL
         public DbSet<House> House { get; set; }
         public DbSet<HouseManager> HouseManager { get; set; }
 
+        //Inform
+        public DbSet<Message> Message { get; set; }
+        public DbSet<Vote> Vote { get; set; }
+        public DbSet<VoteOption> VoteOption { get; set; }
+        public DbSet<VoteResult> VoteResult { get; set; }
+
+        //Admin
+        public DbSet<User> User { get; set; }
+        public DbSet<Session> Session { get; set; }
+        public DbSet<Phone> Phone { get; set; }
+        public DbSet<Check> Check { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql(Configuration.GetConnectionString("PostgreConnection"), b => b.MigrationsAssembly("HedgePlatform.DAL"));
 

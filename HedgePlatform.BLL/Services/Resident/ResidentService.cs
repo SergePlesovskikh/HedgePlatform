@@ -21,7 +21,7 @@ namespace HedgePlatform.BLL.Services
         }
 
         private readonly ILogger _logger = Log.CreateLogger<ResidentService>();
-
+        
         public ResidentDTO GetResident(int? id)
         {
             if (id == null)
@@ -31,7 +31,13 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("NOT_FOUND", "");
 
             Flat flat = db.Flats.Get(resident.FlatId.Value);
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Flat, FlatDTO>()).CreateMapper();
+            Phone phone = db.Phones.Get(resident.PhoneId);
+
+            var mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Flat, FlatDTO>();
+                cfg.CreateMap<Phone, PhoneDTO>();
+            }).CreateMapper();
 
             return new ResidentDTO
             {
@@ -42,19 +48,30 @@ namespace HedgePlatform.BLL.Services
                 BirthDate = resident.BirthDate,
                 DateChange = resident.DateChange,
                 DateRegistration = resident.DateRegistration,
-                Phone = resident.Phone
+                PhoneId = resident.PhoneId,
+                Phone = mapper.Map<Phone, PhoneDTO>(phone),
+                Status = resident.ResidentStatus
             };
         }
 
+        public string GetResidentStatus (int? id)
+        {
+            return GetResident(id).Status;
+        }       
+
         public IEnumerable<ResidentDTO> GetResidents()
         {
-
             var mapper = new MapperConfiguration(cfg => {
                 cfg.CreateMap<Resident, ResidentDTO>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat));
                 cfg.CreateMap<Flat, FlatDTO>();
             }).CreateMapper();
             var residents = db.Residents.GetWithInclude(x => x.Flat);
             return mapper.Map<IEnumerable<Resident>, List<ResidentDTO>>(residents);
+        }
+
+        public void RegistrationResident(string uid, ResidentDTO resident)
+        {
+
         }
 
         public void CreateResident(ResidentDTO resident)
