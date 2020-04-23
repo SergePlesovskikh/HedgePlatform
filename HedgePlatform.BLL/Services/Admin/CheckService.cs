@@ -55,6 +55,7 @@ namespace HedgePlatform.BLL.Services.Admin
                             {
                                 SessionDTO session = _sessionService.CreateSession(new SessionDTO { PhoneId = phone.Id, Phone = phone, Uid = _tokenService.GenerateUid() });
                                 conf_stat = session.Uid;
+                                DeleteCheck(check.Id);                                
                             }
                             else conf_stat = "INVALID_PHONE_NUMBER";
                         }
