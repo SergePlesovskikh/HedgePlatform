@@ -7,8 +7,7 @@ namespace HedgePlatform.BLL.DTO
 
         public string Uid { get; set; }
 
-        public int? ResidentId { get; set; }
-
-        public ResidentDTO Resident { get; set; }
+        public int PhoneId { get; set; }
+        public PhoneDTO Phone { get; set; }
     }
 }

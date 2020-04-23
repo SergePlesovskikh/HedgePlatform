@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using HedgePlatform.BLL.Interfaces;
-using System;
 using HedgePlatform.BLL.Infr;
 
 namespace HedgePlatform.Middleware

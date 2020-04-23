@@ -14,14 +14,19 @@ namespace HedgePlatform.BLL.Services
     public class ResidentService : IResidentService
     {
         IUnitOfWork db { get; set; }
+        private ISessionService _sessionService;
+        private IPhoneService _phoneService;
+        private IResidentService _residentService;
 
-        public ResidentService(IUnitOfWork uow)
+        public ResidentService(IUnitOfWork uow, ISessionService sessionService, IPhoneService phoneService, IResidentService residentService )
         {
             db = uow;
+            _sessionService = sessionService;
+            _phoneService = phoneService;
+            _residentService = residentService;
         }
 
-        private readonly ILogger _logger = Log.CreateLogger<ResidentService>();
-        
+        private readonly ILogger _logger = Log.CreateLogger<ResidentService>();        
         public ResidentDTO GetResident(int? id)
         {
             if (id == null)
@@ -71,16 +76,31 @@ namespace HedgePlatform.BLL.Services
 
         public void RegistrationResident(string uid, ResidentDTO resident)
         {
+            SessionDTO session = _sessionService.GetSession(uid);           
+           
+            PhoneDTO phone = _phoneService.GetPhone(session.PhoneId);
+            if (phone == null)
+            {
+                _logger.LogError("Not found phone for uid. Uid=" + uid);
+                throw new ValidationException("SERVER_ERROR", "");
+            }            
 
+            resident.PhoneId = phone.Id;
+            resident.Phone = phone;
+
+            ResidentDTO new_resident = _residentService.CreateResident(resident);
+            phone.ResidentId = new_resident.Id;
+            phone.resident = new_resident;  
         }
 
-        public void CreateResident(ResidentDTO resident)
+        public ResidentDTO CreateResident(ResidentDTO resident)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ResidentDTO, Resident>()).CreateMapper();
             try
             {
-                db.Residents.Create(mapper.Map<ResidentDTO, Resident>(resident));
+                Resident new_resident =  db.Residents.Create(mapper.Map<ResidentDTO, Resident>(resident));
                 db.Save();
+                return mapper.Map<Resident, ResidentDTO>(new_resident);
             }
 
             catch (DbUpdateException ex)

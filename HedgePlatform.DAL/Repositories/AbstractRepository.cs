@@ -27,19 +27,26 @@ namespace HedgePlatform.DAL.Repositories
             return _db.Find(id);
         }
 
-        public void Create(T item)
+        public T Create(T item)
         {
-            _db.Add(item);
+             _db.Add(item);
+            return item;
         }
     
-        public void Update(T item)
+        public T Update(T item)
         {
             _context.Entry(item).State = EntityState.Modified;
+            return item;
         }
 
         public IEnumerable<T> Find(Func<T, Boolean> predicate)
         {
             return _db.AsNoTracking().Where(predicate).ToList();
+        }
+
+        public T FindFirst(Func<T, Boolean> predicate)
+        {
+            return _db.AsNoTracking().Where(predicate).ToList().FirstOrDefault();
         }
 
         public void Delete(int id)

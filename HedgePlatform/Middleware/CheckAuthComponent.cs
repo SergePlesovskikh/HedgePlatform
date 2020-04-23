@@ -27,7 +27,7 @@ namespace HedgePlatform.Middleware
             }
             else
             {
-                httpContext.Items["ResidentId"] = session.ResidentId;
+                httpContext.Items["PhoneId"] = session.PhoneId;
                 await _next(httpContext);
             }           
         }

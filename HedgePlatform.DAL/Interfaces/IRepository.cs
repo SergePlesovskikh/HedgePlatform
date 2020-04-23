@@ -14,8 +14,9 @@ namespace HedgePlatform.DAL.Interfaces
         public IEnumerable<T> GetWithInclude(Func<T, bool> predicate,
            params Expression<Func<T, object>>[] includeProperties);
         IEnumerable<T> Find(Func<T, Boolean> predicate);
-        void Create(T item);
-        void Update(T item);
+        T FindFirst(Func<T, Boolean> predicate);
+        T Create(T item);
+        T Update(T item);
         void Delete(int id);
     }
 }

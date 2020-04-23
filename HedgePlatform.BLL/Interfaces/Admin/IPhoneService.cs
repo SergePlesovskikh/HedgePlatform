@@ -9,8 +9,9 @@ namespace HedgePlatform.BLL.Interfaces
     {
         PhoneDTO GetPhone(int? id);
         bool CheckPhone(string phone);
+        PhoneDTO GetOrCreate(string phone_number);
         IEnumerable<PhoneDTO> GetPhones();
-        void CreatePhone(PhoneDTO phone);
+        PhoneDTO CreatePhone(PhoneDTO phone);
         void EditPhone(PhoneDTO phone);
         void DeletePhone(int? id);
         void Dispose();

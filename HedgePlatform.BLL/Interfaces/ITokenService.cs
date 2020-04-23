@@ -7,5 +7,6 @@ namespace HedgePlatform.BLL.Interfaces
     public interface ITokenService
     {
         public string GenerateToken();
+        public string GenerateUid();
     }
 }
