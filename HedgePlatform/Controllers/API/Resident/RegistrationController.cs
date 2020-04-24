@@ -5,7 +5,7 @@ using HedgePlatform.BLL.Interfaces;
 using HedgePlatform.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HedgePlatform.Controllers.API.Auth
+namespace HedgePlatform.Controllers.API
 {
     [Route("api/mobile/[controller]")]
     [ApiController]

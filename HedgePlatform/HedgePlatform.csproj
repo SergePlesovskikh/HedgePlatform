@@ -35,12 +35,10 @@
   <ItemGroup>
     <Folder Include="Controllers\ADM\Appeal\" />
     <Folder Include="Controllers\ADM\Admin\" />
-    <Folder Include="Controllers\API\Counter\" />
-    <Folder Include="Controllers\API\Resident\" />
-    <Folder Include="Controllers\API\Message\" />
     <Folder Include="Controllers\API\Appeal\" />
     <Folder Include="ViewModel\Appeal\" />
     <Folder Include="logs\" />
+    <Folder Include="ViewModel\API\" />
   </ItemGroup>
 
   <ItemGroup>
