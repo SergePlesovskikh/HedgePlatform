@@ -38,7 +38,6 @@
     <Folder Include="Controllers\API\Appeal\" />
     <Folder Include="ViewModel\Appeal\" />
     <Folder Include="logs\" />
-    <Folder Include="ViewModel\API\" />
   </ItemGroup>
 
   <ItemGroup>

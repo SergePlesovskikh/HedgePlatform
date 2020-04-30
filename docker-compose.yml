@@ -16,7 +16,9 @@ services:
       POSTGRES_USER: 'ADM'
       POSTGRES_PASSWORD: '6470102926'
     networks:
-      - familynet
+      - familynet    
+    volumes:     
+      - db_volume:/var/lib/postgresql/data
 
   pgadmin:
     container_name: 'pgadmin4'
@@ -39,3 +41,6 @@ services:
     build:
       context: .
       dockerfile: HedgePlatform/Dockerfile
+
+volumes:
+    db_volume:
