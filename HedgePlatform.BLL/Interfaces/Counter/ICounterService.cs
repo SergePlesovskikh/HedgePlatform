@@ -9,6 +9,7 @@ namespace HedgePlatform.BLL.Interfaces
     {
         CounterDTO GetCounter(int? id);
         IEnumerable<CounterDTO> GetCounters();
+        IEnumerable<CounterDTO> GetCountersByFlat(int FlatId);
         void CreateCounter(CounterDTO counter);
         void EditCounter(CounterDTO counter);
         void DeleteCounter(int? id);

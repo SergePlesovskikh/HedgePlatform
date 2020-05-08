@@ -7,7 +7,7 @@ namespace HedgePlatform.BLL.Interfaces
 {
     public interface IFlatService
     {
-        FlatDTO GetFlat(int? id);
+        FlatDTO GetFlat(int? id);       
         IEnumerable<FlatDTO> GetFlats();
         void CreateFlat(FlatDTO flat);
         void EditFlat(FlatDTO flat);

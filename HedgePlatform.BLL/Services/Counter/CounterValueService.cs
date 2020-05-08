@@ -55,6 +55,19 @@ namespace HedgePlatform.BLL.Services
             return mapper.Map<IEnumerable<CounterValue>, List<CounterValueDTO>>(counterValues);
         }
 
+        public IEnumerable<CounterValueDTO> GetCounterValuesByCounter(int? CounterId)
+        {
+            if (CounterId == null)
+                throw new ValidationException("NULL", "");
+
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<CounterValue, CounterValueDTO>().ForMember(s => s.Counter, h => h.MapFrom(src => src.Counter));
+                cfg.CreateMap<Counter, CounterDTO>();
+            }).CreateMapper();
+            var counterValues = db.CounterValues.GetWithInclude(p=>p.CounterId == CounterId,x => x.Counter);
+            return mapper.Map<IEnumerable<CounterValue>, List<CounterValueDTO>>(counterValues);
+        }
+
         public void CreateCounterValue(CounterValueDTO counterValue)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterValueDTO, CounterValue>()).CreateMapper();

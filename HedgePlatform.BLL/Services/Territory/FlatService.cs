@@ -11,9 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HedgePlatform.BLL.Services
     {
-        public class FlatService : IFlatService
-        {
-            IUnitOfWork db { get; set; }
+    public class FlatService : IFlatService
+    {
+        IUnitOfWork db { get; set; }       
 
             public FlatService(IUnitOfWork uow)
             {
@@ -42,8 +42,9 @@ namespace HedgePlatform.BLL.Services
                     Number = flat.Number
                 };
             }
+      
 
-            public IEnumerable<FlatDTO> GetFlats()
+        public IEnumerable<FlatDTO> GetFlats()
             {
 
                 var mapper = new MapperConfiguration(cfg => {

@@ -8,16 +8,19 @@ using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace HedgePlatform.BLL.Services
 {
         public class CounterService : ICounterService
         {
             IUnitOfWork db { get; set; }
+            private ICounterValueService _counterValueService;
 
-            public CounterService(IUnitOfWork uow)
+            public CounterService(IUnitOfWork uow, ICounterValueService counterValueService)
             {
                 db = uow;
+                _counterValueService = counterValueService;
             }
 
             private readonly ILogger _logger = Log.CreateLogger<CounterService>();
@@ -72,8 +75,30 @@ namespace HedgePlatform.BLL.Services
                 return mapper.Map<IEnumerable<Counter>, List<CounterDTO>>(counters);
             }
 
-            public void CreateCounter(CounterDTO counter)
+        public IEnumerable<CounterDTO> GetCountersByFlat(int FlatId)
+        {
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<Counter, CounterDTO>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat))
+                .ForMember(s => s.CounterType, h => h.MapFrom(src => src.CounterType))
+                .ForMember(s => s.CounterStatus, h => h.MapFrom(src => src.CounterStatus));
+                cfg.CreateMap<Flat, FlatDTO>();
+                cfg.CreateMap<CounterType, CounterTypeDTO>();
+                cfg.CreateMap<CounterStatus, CounterStatusDTO>();
+            }).CreateMapper();
+
+            var counters = db.Counters.GetWithInclude(p=>p.FlatId==FlatId, x => x.Flat, y => y.CounterStatus, d => d.CounterType);
+            IEnumerable<CounterDTO> counterDTOs = mapper.Map<IEnumerable<Counter>, List<CounterDTO>>(counters);
+
+            foreach (var counter in counterDTOs)
             {
+                counter.CounterValues = _counterValueService.GetCounterValuesByCounter(counter.Id).ToList();
+            }
+
+            return counterDTOs;
+        }
+
+        public void CreateCounter(CounterDTO counter)
+        {
                 var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterDTO, Counter>()).CreateMapper();
                 try
                 {
@@ -92,8 +117,7 @@ namespace HedgePlatform.BLL.Services
                     _logger.LogError("counter creating error: " + ex.Message);
                     throw new ValidationException("UNKNOWN_ERROR", "");
                 }
-
-            }
+        }
             public void EditCounter(CounterDTO counter)
             {
                 if (counter == null)

@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using HedgePlatform.BLL.Interfaces;
 using HedgePlatform.BLL.Infr;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using AutoMapper;
 using HedgePlatform.ViewModel.API;
 using HedgePlatform.BLL.DTO;
+using Microsoft.AspNetCore.Http;
 
 namespace HedgePlatform.Controllers.API
 {
@@ -22,14 +22,13 @@ namespace HedgePlatform.Controllers.API
         [HttpGet]
         public IEnumerable<CounterViewModel> Index()
         {
-            IEnumerable<CounterDTO> counterDTOs = counterService.GetCounters();
+
+            IEnumerable<CounterDTO> counterDTOs = counterService.GetCountersByFlat((int)HttpContext.Items["FlatId"]);
 
             var mapper = new MapperConfiguration(cfg => {
                 cfg.CreateMap<CounterDTO, CounterViewModel>()
-                .ForMember(s => s.CounterType, h => h.MapFrom(src => src.CounterType));       
-               
-             //   cfg.CreateMap<CounterTypeDTO, CounterTypeViewModel>();
-             //   cfg.CreateMap<CounterStatusDTO, CounterStatusViewModel>();
+                .ForMember(s => s.CounterType, h => h.MapFrom(src => src.CounterType));
+                cfg.CreateMap<CounterTypeDTO, CounterTypeViewModel>();
             }).CreateMapper();
 
             var counters = mapper.Map<IEnumerable<CounterDTO>, List<CounterViewModel>>(counterDTOs);
