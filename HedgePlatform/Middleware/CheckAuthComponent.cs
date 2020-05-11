@@ -13,16 +13,14 @@ namespace HedgePlatform.Middleware
         private ISessionService _sessionService;
         private IPhoneService _phoneService;
         private IResidentService _residentService;
-        private IFlatService _flatService;
 
         public CheckAuthComponent(RequestDelegate next, ISessionService sessionService, IPhoneService phoneService, 
-            IResidentService residentService, IFlatService flatService)
+            IResidentService residentService)
         {
             _next = next;
             _sessionService = sessionService;
             _phoneService = phoneService;
             _residentService = residentService;
-            _flatService = flatService;
         }
 
         public async Task Invoke(HttpContext httpContext)

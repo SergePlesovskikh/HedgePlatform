@@ -16,5 +16,8 @@ namespace HedgePlatform.BLL.DTO
         public int? FlatId { get; set; }
         public FlatDTO Flat { get; set; }
         public string Status { get; set; }
+        public bool? Chairman { get; set; }
+        [Required]
+        public bool Owner { get; set; }
     }
 }

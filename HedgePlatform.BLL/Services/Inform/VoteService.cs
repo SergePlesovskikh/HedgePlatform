@@ -62,6 +62,7 @@ namespace HedgePlatform.BLL.Services
             }
 
         }
+
         public void EditVote(VoteDTO vote)
         {
             if (vote == null)

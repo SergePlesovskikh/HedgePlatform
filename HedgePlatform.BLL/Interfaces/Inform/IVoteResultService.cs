@@ -10,6 +10,7 @@ namespace HedgePlatform.BLL.Interfaces
         VoteResultDTO GetVoteResult(int? id);
         IEnumerable<VoteResultDTO> GetVoteResults();
         void CreateVoteResult(VoteResultDTO voteResult);
+        void CreateVoteResult(VoteResultDTO voteResult, int? ResidentId);
         void EditVoteResult(VoteResultDTO voteResult);
         void DeleteVoteResult(int? id);
         void Dispose();

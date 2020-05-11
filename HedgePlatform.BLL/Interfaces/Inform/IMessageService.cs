@@ -9,6 +9,7 @@ namespace HedgePlatform.BLL.Interfaces
     {
         MessageDTO GetMessage(int? id);
         IEnumerable<MessageDTO> GetMessages();
+        IEnumerable<VoteDTO> GetMessagesAndVotes(int? ResidentId);
         void CreateMessage(MessageDTO message);
         void EditMessage(MessageDTO message);
         void DeleteMessage(int? id);

@@ -22,6 +22,9 @@ namespace HedgePlatform.DAL.Entities
         public Flat Flat { get; set; }
         [Required]
         public string ResidentStatus { get; set; }
+        public bool? Chairman { get; set; }
+        [Required]
+        public bool Owner { get; set; }
 
     }
 }

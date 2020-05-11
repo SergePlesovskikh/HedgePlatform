@@ -85,6 +85,39 @@ namespace HedgePlatform.BLL.Services
             }
 
         }
+
+        public void CreateVoteResult(VoteResultDTO voteResult, int? ResidentId)
+        {
+            if (ResidentId == null)
+                throw new ValidationException("No Resident Id", "");
+
+            Resident resident = db.Residents.Get(ResidentId.Value);
+            if (resident == null)
+                throw new ValidationException("No Resident object", "");
+
+
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteResultDTO, VoteResult>()).CreateMapper();
+            try
+            {
+                VoteResult
+                db.VoteResults.Create(mapper.Map<VoteResultDTO, VoteResult>(voteResult));
+                db.Save();
+            }
+
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError("Database error exception: " + ex.InnerException.Message);
+                throw new ValidationException("DB_ERROR", "");
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError("voteResult creating error: " + ex.Message);
+                throw new ValidationException("UNKNOWN_ERROR", "");
+            }
+
+        }
         public void EditVoteResult(VoteResultDTO voteResult)
         {
             if (voteResult == null)
