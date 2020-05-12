@@ -4,17 +4,26 @@ using HedgePlatform.BLL.Interfaces;
 using HedgePlatform.BLL.DTO;
 using HedgePlatform.BLL.Infr;
 using AutoMapper;
+using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net;
 
 namespace HedgePlatform.Controllers.API.Message
 {
     [Route("api/inform/[controller]")]
     [ApiController]
-    public class VoteController : ControllerBase
+    public class VoteResultController : ControllerBase
     {
         private IVoteResultService _voteResultService;
-        public VoteController (IVoteResultService voteResultService)
+        public VoteResultController (IVoteResultService voteResultService)
         {
             _voteResultService = voteResultService;
+        }
+
+        [HttpGet]
+        public FileContentResult Get()
+        {            
+            return File(_voteResultService.GetVoteStat((int)HttpContext.Items["ResidentId"]), "application/pdf");
         }
 
         [HttpPost]

@@ -14,7 +14,7 @@ namespace HedgePlatform.ViewModel
         [Required]
         public DateTime BirthDate { get; set; }
         public int PhoneId { get; set; }
-        public Phone Phone { get; set; }
+        public PhoneViewModel Phone { get; set; }
         public DateTime DateRegistration { get; set; }
         public DateTime DateChange { get; set; }
         public int? FlatId { get; set; }

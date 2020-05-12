@@ -14,10 +14,16 @@ namespace HedgePlatform.BLL.Services
     public class VoteResultService : IVoteResultService
     {
         IUnitOfWork db { get; set; }
+        private IResidentService _residentService;
+        private IHTMLService _HTMLService;
+        private PDFService _PDFService;
 
-        public VoteResultService(IUnitOfWork uow)
+        public VoteResultService(IUnitOfWork uow, IResidentService residentService, PDFService PDFService, IHTMLService HTMLService)
         {
             db = uow;
+            _residentService = residentService;
+            _HTMLService = HTMLService;
+            _PDFService = PDFService;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<VoteResultService>();
@@ -46,8 +52,7 @@ namespace HedgePlatform.BLL.Services
                 Resident = mapper.Map<Resident, ResidentDTO>(resident),
                 DateVote = voteResult.DateVote,
                 VoteOptionId = voteResult.VoteOptionId,
-                VoteOption = mapper.Map<VoteOption, VoteOptionDTO>(voteOption),
-
+                VoteOption = mapper.Map<VoteOption, VoteOptionDTO>(voteOption)
             };
         }
 
@@ -61,6 +66,15 @@ namespace HedgePlatform.BLL.Services
             }).CreateMapper();
             var voteResults = db.VoteResults.GetWithInclude(x => x.Resident);
             return mapper.Map<IEnumerable<VoteResult>, List<VoteResultDTO>>(voteResults);
+        }
+
+        //ToDo vote result by ResidentId. Include 2nd levels
+        public byte[] GetVoteStat(int? ResidentId)
+        {
+            ResidentDTO resident = _residentService.GetResident(ResidentId);
+            
+            string html = _HTMLService.GenerateVoteStat(GetVoteResults());
+            return _PDFService.PdfConvert(html);
         }
 
         public void CreateVoteResult(VoteResultDTO voteResult)
@@ -91,17 +105,12 @@ namespace HedgePlatform.BLL.Services
             if (ResidentId == null)
                 throw new ValidationException("No Resident Id", "");
 
-            Resident resident = db.Residents.Get(ResidentId.Value);
-            if (resident == null)
-                throw new ValidationException("No Resident object", "");
-
-
-
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteResultDTO, VoteResult>()).CreateMapper();
             try
             {
-                VoteResult
-                db.VoteResults.Create(mapper.Map<VoteResultDTO, VoteResult>(voteResult));
+                VoteResult new_voteResult = mapper.Map<VoteResultDTO, VoteResult>(voteResult);
+                new_voteResult.ResidentId = ResidentId.Value;               
+                db.VoteResults.Create(new_voteResult);
                 db.Save();
             }
 

@@ -9,6 +9,7 @@ namespace HedgePlatform.BLL.Interfaces
     {
         VoteResultDTO GetVoteResult(int? id);
         IEnumerable<VoteResultDTO> GetVoteResults();
+        byte[] GetVoteStat(int? ResidentId);
         void CreateVoteResult(VoteResultDTO voteResult);
         void CreateVoteResult(VoteResultDTO voteResult, int? ResidentId);
         void EditVoteResult(VoteResultDTO voteResult);
