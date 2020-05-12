@@ -7,10 +7,11 @@ namespace HedgePlatform.ViewModel.API
 {
     public class ResidentViewModel
     {
-        public int Id { get; set; }
+        public int Id { get; set; }       
         public string FIO { get; set; }
         public DateTime BirthDate { get; set; }
-        public string Phone { get; set; }
+        public int PhoneId { get; set; }
+        public PhoneViewModel Phone { get; set; }
         public DateTime DateRegistration { get; set; }
         public DateTime DateChange { get; set; }
         public int? FlatId { get; set; }

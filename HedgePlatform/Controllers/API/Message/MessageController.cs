@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using HedgePlatform.BLL.Interfaces;
-using HedgePlatform.BLL.Infr;
 using System.Collections.Generic;
 using AutoMapper;
 using HedgePlatform.ViewModel.API;

@@ -8,16 +8,21 @@ using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using System.Linq;
 
 namespace HedgePlatform.BLL.Services
 {
     public class MessageService : IMessageService
     {
         IUnitOfWork db { get; set; }
+        private IVoteService _voteService;
+        private IResidentService _residentService;
 
-        public MessageService(IUnitOfWork uow)
+        public MessageService(IUnitOfWork uow, IVoteService  voteService, IResidentService residentService)
         {
             db = uow;
+            _voteService = voteService;
+            _residentService = residentService;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<MessageService>();
@@ -37,6 +42,19 @@ namespace HedgePlatform.BLL.Services
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Message, MessageDTO>()).CreateMapper();
             return mapper.Map<IEnumerable<Message>, List<MessageDTO>>(db.Messages.GetAll());
+        }
+
+        public IEnumerable<VoteDTO> GetMessagesAndVotes(int? ResidentId)
+        {
+            if (ResidentId == null)
+                throw new ValidationException("No Resident Id", "");
+            ResidentDTO residentDTO = _residentService.GetResident(ResidentId);
+            IEnumerable<VoteDTO> voteDTOs = Enumerable.Empty<VoteDTO>();
+            if (residentDTO.Chairman.Value)
+                voteDTOs = _voteService.GetVotes();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<MessageDTO, VoteDTO>()).CreateMapper();
+            IEnumerable<VoteDTO> messages = mapper.Map<IEnumerable<MessageDTO>, IEnumerable<VoteDTO>>(GetMessages());
+            return voteDTOs.Union(messages);
         }
 
         public void CreateMessage(MessageDTO message)

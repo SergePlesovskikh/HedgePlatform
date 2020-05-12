@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using HedgePlatform.ViewModel;
 using HedgePlatform.BLL.Interfaces;
 using HedgePlatform.BLL.DTO;
@@ -8,24 +7,24 @@ using AutoMapper;
 
 namespace HedgePlatform.Controllers.API.Message
 {
-    [Route("api/[controller]")]
+    [Route("api/inform/[controller]")]
     [ApiController]
     public class VoteController : ControllerBase
     {
-        private IVoteOptionService _voteOptionService;
-        public VoteController (IVoteOptionService voteOptionService)
+        private IVoteResultService _voteResultService;
+        public VoteController (IVoteResultService voteResultService)
         {
-            _voteOptionService = voteOptionService;
+            _voteResultService = voteResultService;
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] VoteResultViewModel voteResult)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteOptionViewModel, VoteOptionDTO>()).CreateMapper();
-            var voteOptionDTO = mapper.Map<VoteOptionViewModel, VoteOptionDTO>(voteOption);
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteResultViewModel, VoteResultDTO>()).CreateMapper();
+            var voteOptionDTO = mapper.Map<VoteResultViewModel, VoteResultDTO>(voteResult);
             try
             {
-                _voteOptionService.CreateVoteOption(voteOptionDTO);
+                _voteResultService.CreateVoteResult(voteOptionDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
