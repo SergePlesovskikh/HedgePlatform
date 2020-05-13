@@ -10,7 +10,7 @@ using System.Net;
 
 namespace HedgePlatform.Controllers.API.Message
 {
-    [Route("api/inform/[controller]")]
+    [Route("api/mobile/[controller]")]
     [ApiController]
     public class VoteResultController : ControllerBase
     {

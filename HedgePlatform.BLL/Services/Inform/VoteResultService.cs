@@ -16,14 +16,16 @@ namespace HedgePlatform.BLL.Services
         IUnitOfWork db { get; set; }
         private IResidentService _residentService;
         private IHTMLService _HTMLService;
-        private PDFService _PDFService;
+        private IPDFService _PDFService;
+        private IVoteService _voteService;
 
-        public VoteResultService(IUnitOfWork uow, IResidentService residentService, PDFService PDFService, IHTMLService HTMLService)
+        public VoteResultService(IUnitOfWork uow, IResidentService residentService, IVoteService voteService, IPDFService PDFService, IHTMLService HTMLService)
         {
             db = uow;
             _residentService = residentService;
+            _voteService = voteService;
             _HTMLService = HTMLService;
-            _PDFService = PDFService;
+            _PDFService = PDFService;            
         }
 
         private readonly ILogger _logger = Log.CreateLogger<VoteResultService>();
@@ -67,13 +69,27 @@ namespace HedgePlatform.BLL.Services
             var voteResults = db.VoteResults.GetWithInclude(x => x.Resident);
             return mapper.Map<IEnumerable<VoteResult>, List<VoteResultDTO>>(voteResults);
         }
-
-        //ToDo vote result by ResidentId. Include 2nd levels
+      
         public byte[] GetVoteStat(int? ResidentId)
         {
             ResidentDTO resident = _residentService.GetResident(ResidentId);
-            
-            string html = _HTMLService.GenerateVoteStat(GetVoteResults());
+
+            IEnumerable <VoteResult> voteResults = db.VoteResults.GetWithInclude(x => x.VoteOption, p => p.ResidentId == ResidentId);
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<VoteResult, VoteResultDTO>().ForMember(s => s.Resident, h => h.MapFrom(src => src.Resident))
+                .ForMember(s => s.VoteOption, h => h.MapFrom(src => src.VoteOption));
+                cfg.CreateMap<Resident, ResidentDTO>();
+                cfg.CreateMap<VoteOption, VoteOptionDTO>();
+            }).CreateMapper();
+
+            IEnumerable<VoteResultDTO> voteDTOs = mapper.Map<IEnumerable<VoteResult>, List<VoteResultDTO>>(voteResults);
+
+            foreach (var voteResult in voteDTOs)
+            {
+                voteResult.VoteOption.Vote = _voteService.GetVote(voteResult.VoteOption.VoteId);
+            }
+
+            string html = _HTMLService.GenerateVoteStat(voteDTOs);
             return _PDFService.PdfConvert(html);
         }
 
@@ -97,7 +113,6 @@ namespace HedgePlatform.BLL.Services
                 _logger.LogError("voteResult creating error: " + ex.Message);
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
-
         }
 
         public void CreateVoteResult(VoteResultDTO voteResult, int? ResidentId)
@@ -125,7 +140,6 @@ namespace HedgePlatform.BLL.Services
                 _logger.LogError("voteResult creating error: " + ex.Message);
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
-
         }
         public void EditVoteResult(VoteResultDTO voteResult)
         {
@@ -182,6 +196,5 @@ namespace HedgePlatform.BLL.Services
         {
             db.Dispose();
         }
-
     }
 }

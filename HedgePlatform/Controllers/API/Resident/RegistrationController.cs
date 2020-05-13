@@ -16,6 +16,7 @@ namespace HedgePlatform.Controllers.API
         {
             _residentService = residentService;
         }
+
         [HttpPost]
         public ActionResult<string> Registration([FromBody] ResidentViewModel resident, string uid)
         {
@@ -30,6 +31,12 @@ namespace HedgePlatform.Controllers.API
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet]
+        public FileContentResult RequestForm()
+        {
+            return File(_residentService.GetRequest((int)HttpContext.Items["ResidentId"]), "application/pdf");
         }
     }
 }

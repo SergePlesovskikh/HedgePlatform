@@ -9,7 +9,8 @@ namespace HedgePlatform.BLL.Interfaces
     {
         ResidentDTO GetResident(int? id);
         string GetResidentStatus(int? id);
-        void RegistrationResident(string uid, ResidentDTO resident);    
+        void RegistrationResident(string uid, ResidentDTO resident);
+        byte[] GetRequest(int? ResidentId);
         IEnumerable<ResidentDTO> GetResidents();
         ResidentDTO CreateResident(ResidentDTO resident);
         void EditResident(ResidentDTO resident);

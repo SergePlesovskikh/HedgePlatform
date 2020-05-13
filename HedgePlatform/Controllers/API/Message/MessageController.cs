@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace HedgePlatform.Controllers.API.Message
 {
-    [Route("api/inform/[controller]")]
+    [Route("api/mobile/[controller]")]
     [ApiController]
     public class MessageController : ControllerBase
     {

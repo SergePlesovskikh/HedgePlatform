@@ -4,14 +4,17 @@ using HedgePlatform.BLL.Infr;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.Logging;
 
 namespace HedgePlatform.BLL.Services
 {
     public class HTMLService : IHTMLService
     {
-        private readonly ILogger _logger = Log.CreateLogger<HTMLService>();
+        
+        public string GenerateHTMLRequest(ResidentDTO resident)
+        {
+            var document = GetHTMLDocument("pdfrequest.html");
+            return HTMLResidentRequestBuilder(resident,document).DocumentNode.OuterHtml;
+        }
 
         public string GenerateVoteStat(IEnumerable<VoteResultDTO> voteResults)
         {
@@ -32,7 +35,7 @@ namespace HedgePlatform.BLL.Services
             }
             catch (Exception ex)
             {
-                throw new ValidationException("HTML template load error", ex.Message);
+                throw new ValidationException("HTML template load error", ex.Message);                
             }
         }
 
@@ -51,5 +54,23 @@ namespace HedgePlatform.BLL.Services
             }
             return html;
         }
+
+        private static HtmlDocument HTMLResidentRequestBuilder(ResidentDTO resident, HtmlDocument document)
+        {
+            HtmlNode fio = document.GetElementbyId("FIO");
+            var newNode = HtmlNode.CreateNode(resident.FIO);
+            fio.InnerHtml = resident.FIO;
+
+            document.GetElementbyId("Phone").InnerHtml = resident.Phone.Number;
+
+            string address = resident.Flat.House.City + ", " + resident.Flat.House.Street + " д. " + resident.Flat.House.Home;
+            if (resident.Flat.House.Corpus != null && resident.Flat.House.Corpus != "") 
+                address += " корп. " + resident.Flat.House.Corpus;
+            address += " кв. " + resident.Flat.House.Home;
+            document.GetElementbyId("Address").InnerHtml = address;
+
+            return document;
+        }
+
     }
 }

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace HedgePlatform.BLL.Services
 {
@@ -17,13 +18,20 @@ namespace HedgePlatform.BLL.Services
         private ISessionService _sessionService;
         private IPhoneService _phoneService;
         private IResidentService _residentService;
+        private IHouseService _houseService;
+        private IHTMLService _HTMLService;
+        private IPDFService _PDFService;
 
-        public ResidentService(IUnitOfWork uow, ISessionService sessionService, IPhoneService phoneService, IResidentService residentService )
+        public ResidentService(IUnitOfWork uow, ISessionService sessionService, IPhoneService phoneService, 
+            IResidentService residentService, IHouseService houseService, IHTMLService HTMLService, IPDFService PDFService)
         {
             db = uow;
             _sessionService = sessionService;
             _phoneService = phoneService;
             _residentService = residentService;
+            _houseService = houseService;
+            _HTMLService = HTMLService;
+            _PDFService = PDFService;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<ResidentService>();        
@@ -62,7 +70,28 @@ namespace HedgePlatform.BLL.Services
         public string GetResidentStatus (int? id)
         {
             return GetResident(id).Status;
-        }       
+        }
+
+       public byte[] GetRequest(int? ResidentId)
+        {
+            if (ResidentId == null)
+                throw new ValidationException("NULL", "");
+            var residents = db.Residents.GetWithInclude(x => x.Phone, x => x.Flat, x=>x.Flat.House);
+            if (residents == null)
+                throw new ValidationException("NOT_FOUND", "");
+
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<Resident, ResidentDTO>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat))
+                 .ForMember(s => s.Phone, h => h.MapFrom(src => src.Phone))
+                 .ForMember(s => s.Flat.House, h => h.MapFrom(src => src.Flat.House));
+                cfg.CreateMap<Flat, FlatDTO>();
+                cfg.CreateMap<Phone, PhoneDTO>();
+                cfg.CreateMap<House, House>();
+            }).CreateMapper();
+
+            string html = _HTMLService.GenerateHTMLRequest(mapper.Map<Resident, ResidentDTO>(residents.FirstOrDefault()));
+            return _PDFService.PdfConvert(html);
+        }
 
         public IEnumerable<ResidentDTO> GetResidents()
         {
