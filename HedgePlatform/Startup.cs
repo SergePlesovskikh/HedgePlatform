@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,9 +11,6 @@ using HedgePlatform.DAL.Repositories;
 using HedgePlatform.BLL.Interfaces;
 using HedgePlatform.BLL.Services;
 using HedgePlatform.DAL;
-using Microsoft.AspNetCore.Routing;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace HedgePlatform
 {
@@ -39,8 +34,13 @@ namespace HedgePlatform
 
             //DAL-services
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
-           
+
             //BLL-services
+            services.AddTransient<ICheckService, CheckService>();
+            services.AddTransient<IPhoneService, PhoneService>();
+            services.AddTransient<ISessionService, SessionService>();
+            services.AddTransient<IUserService, UserService>();
+
             services.AddTransient<ICounterTypeService, CounterTypeService>();
             services.AddTransient<ICounterStatusService, CounterStatusService>();
             services.AddTransient<ICounterService, CounterService>();
@@ -58,6 +58,10 @@ namespace HedgePlatform
             services.AddTransient<IVoteOptionService, VoteOptionService>();
             services.AddTransient<IVoteResultService, VoteResultService>();
 
+            services.AddTransient<IHTMLService, HTMLService>();
+            services.AddTransient<IPDFService, PDFService>();
+            services.AddTransient<ISMSSendService, SMSSendService>();
+            services.AddTransient<ITokenService, TokenService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

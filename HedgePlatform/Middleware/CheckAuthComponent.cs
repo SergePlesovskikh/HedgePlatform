@@ -36,8 +36,8 @@ namespace HedgePlatform.Middleware
                 httpContext.Items["PhoneId"] = session.PhoneId;
                 PhoneDTO phone = _phoneService.GetPhone(session.PhoneId);
 
-                httpContext.Items["ResidentId"] = phone.ResidentId;
-                ResidentDTO resident = _residentService.GetResident(phone.ResidentId);
+                httpContext.Items["ResidentId"] = phone.resident.Id;
+                ResidentDTO resident = _residentService.GetResident(phone.resident.Id);
 
                 httpContext.Items["FlatId"] = resident.FlatId;
 

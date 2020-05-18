@@ -10,7 +10,6 @@ namespace HedgePlatform.DAL.Entities
         public int Id { get; set; }
         [Required]
         public string Number { get; set; }
-        public int? ResidentId { get; set; }
-        public Resident resident { get; set; }
+        public Resident Resident { get; set; }
     }
 }

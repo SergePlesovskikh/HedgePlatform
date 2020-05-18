@@ -35,10 +35,10 @@ namespace HedgePlatform.BLL.Services
             if (phone == null)
                 throw new ValidationException("NOT_FOUND", "");
 
-            Resident resident = db.Residents.Get(phone.ResidentId.Value);
+            Resident resident = db.Residents.FindFirst(x => x.PhoneId == id);
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Resident, ResidentDTO>()).CreateMapper();
 
-            return new PhoneDTO { Id = phone.Id, Number = phone.Number, ResidentId = phone.ResidentId, resident = mapper.Map<Resident, ResidentDTO>(resident) };
+            return new PhoneDTO { Id = phone.Id, Number = phone.Number, resident = mapper.Map<Resident, ResidentDTO>(resident) };
         }
 
         public PhoneDTO GetOrCreate (string phone_number)

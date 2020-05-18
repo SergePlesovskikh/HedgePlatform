@@ -8,7 +8,7 @@ using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
-namespace HedgePlatform.BLL.Services.Admin
+namespace HedgePlatform.BLL.Services
 {
     public class SessionService : ISessionService
     {

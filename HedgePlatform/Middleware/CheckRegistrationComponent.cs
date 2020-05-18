@@ -23,14 +23,14 @@ namespace HedgePlatform.Middleware
             try
             {
                 PhoneDTO phone = _phoneService.GetPhone((int)httpContext.Items["PhoneId"]);                
-                if (phone.ResidentId == null)
+                if (phone.resident == null)
                 {
                     httpContext.Response.StatusCode = 200;
                     await httpContext.Response.WriteAsync("NO_REGISTRATION");
                 }
                 else
                 {
-                    httpContext.Items["ResidentId"] = phone.ResidentId;
+                    httpContext.Items["ResidentId"] = phone.resident.Id;
                     await _next(httpContext);
                 }
             }

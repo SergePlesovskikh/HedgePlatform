@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace HedgePlatform.Controllers.API
 {
-    [Route("api/[controller]")]
+    [Route("api/mobile/[controller]")]
     [ApiController]
     public class CounterController : ControllerBase
     {

@@ -17,19 +17,15 @@ namespace HedgePlatform.BLL.Services
         IUnitOfWork db { get; set; }
         private ISessionService _sessionService;
         private IPhoneService _phoneService;
-        private IResidentService _residentService;
-        private IHouseService _houseService;
         private IHTMLService _HTMLService;
         private IPDFService _PDFService;
 
         public ResidentService(IUnitOfWork uow, ISessionService sessionService, IPhoneService phoneService, 
-            IResidentService residentService, IHouseService houseService, IHTMLService HTMLService, IPDFService PDFService)
+            IHTMLService HTMLService, IPDFService PDFService)
         {
             db = uow;
             _sessionService = sessionService;
-            _phoneService = phoneService;
-            _residentService = residentService;
-            _houseService = houseService;
+            _phoneService = phoneService;      
             _HTMLService = HTMLService;
             _PDFService = PDFService;
         }
@@ -63,13 +59,13 @@ namespace HedgePlatform.BLL.Services
                 DateRegistration = resident.DateRegistration,
                 PhoneId = resident.PhoneId,
                 Phone = mapper.Map<Phone, PhoneDTO>(phone),
-                Status = resident.ResidentStatus
+                ResidentStatus = resident.ResidentStatus
             };
         }
 
         public string GetResidentStatus (int? id)
         {
-            return GetResident(id).Status;
+            return GetResident(id).ResidentStatus;
         }
 
        public byte[] GetRequest(int? ResidentId)
@@ -117,8 +113,7 @@ namespace HedgePlatform.BLL.Services
             resident.PhoneId = phone.Id;
             resident.Phone = phone;
 
-            ResidentDTO new_resident = _residentService.CreateResident(resident);
-            phone.ResidentId = new_resident.Id;
+            ResidentDTO new_resident = CreateResident(resident);           
             phone.resident = new_resident;  
         }
 
@@ -195,11 +190,9 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-
         public void Dispose()
         {
             db.Dispose();
         }
-
     }
 }

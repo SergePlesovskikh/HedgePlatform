@@ -15,9 +15,8 @@ namespace HedgePlatform.BLL.DTO
         public DateTime DateChange { get; set; }
         public int? FlatId { get; set; }
         public FlatDTO Flat { get; set; }
-        public string Status { get; set; }
-        public bool? Chairman { get; set; }
-        [Required]
+        public string ResidentStatus { get; set; }
+        public bool? Chairman { get; set; }        
         public bool Owner { get; set; }
     }
 }

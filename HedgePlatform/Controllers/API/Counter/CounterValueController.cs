@@ -8,7 +8,7 @@ using AutoMapper;
 
 namespace HedgePlatform.Controllers.API.Counter
 {
-    [Route("api/counter/[controller]")]
+    [Route("api/mobile/[controller]")]
     [ApiController]
     public class CounterValueController : ControllerBase
     {
