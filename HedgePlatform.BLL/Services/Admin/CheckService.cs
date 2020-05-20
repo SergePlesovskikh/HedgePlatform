@@ -41,31 +41,23 @@ namespace HedgePlatform.BLL.Services
         public string Confirmation(string token, int checkcode, string phone_number)
         {
             string conf_stat = "INVALID_TOKEN";
-            if (token!=null)
+           
+            Check check = db.Checks.FindFirst(x => x.token == token);
+            if (check!=null)
             {
-                Check check = db.Checks.FindFirst(x => x.token == token);
-                if (check!=null)
+                if (check.CheckCode==checkcode)
                 {
-                    if (check.CheckCode==checkcode)
+                    PhoneDTO phone = _phoneService.GetOrCreate(phone_number);
+                    if (phone != null)
                     {
-                        if (phone_number!=null)
-                        {
-                            PhoneDTO phone = _phoneService.GetOrCreate(phone_number);
-                            if (phone != null)
-                            {
-                                SessionDTO session = _sessionService.CreateSession(new SessionDTO { PhoneId = phone.Id, Phone = phone, Uid = _tokenService.GenerateUid() });
-                                conf_stat = session.Uid;
-                                DeleteCheck(check.Id);                                
-                            }
-                            else conf_stat = "INVALID_PHONE_NUMBER";
-                        }
-                        else 
-                            conf_stat = "INVALID_PHONE_NUMBER";
+                        SessionDTO session = _sessionService.CreateSession(new SessionDTO { PhoneId = phone.Id, Uid = _tokenService.GenerateUid() });
+                        conf_stat = session.Uid;
+                        DeleteCheck(check.Id);   
                     }
-                    else
-                        conf_stat = "INVALID_CHECK_CODE";                    
+                    else conf_stat = "INVALID_PHONE_NUMBER";
                 }
-            }
+                else conf_stat = "INVALID_CHECK_CODE";   
+            }            
             return conf_stat;
         }
 
@@ -77,13 +69,11 @@ namespace HedgePlatform.BLL.Services
                 db.Checks.Create(mapper.Map<CheckDTO, Check>(check));
                 db.Save();
             }
-
             catch (DbUpdateException ex)
             {
                 _logger.LogError("Database error exception: " + ex.InnerException.Message);
                 throw new ValidationException("DB_ERROR", "");
             }
-
             catch (Exception ex)
             {
                 _logger.LogError("Check creating error: " + ex.Message);
@@ -95,12 +85,12 @@ namespace HedgePlatform.BLL.Services
         {
             if (id == null)
                 throw new ValidationException("NULL", "");
-            var counterType = db.CounterStats.Get(id.Value);
-            if (counterType == null)
+            var check = db.Checks.Get(id.Value);
+            if (check == null)
                 throw new ValidationException("NOT_FOUND", "");
             try
             {
-                db.CounterStats.Delete(id.Value);
+                db.Checks.Delete(id.Value);
                 db.Save();
             }
             catch

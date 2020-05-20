@@ -33,14 +33,10 @@ namespace HedgePlatform.BLL.Services
         }
         //ToDo добавить include для 1 объекта
         public SessionDTO GetSession(string uid)
-        {
-            if (uid == null)
-                throw new ValidationException("NULL", "");
+        {           
             var session = db.Sessions.FindFirst(x => x.Uid == uid);
-            if (session == null)
-                throw new ValidationException("NOT_FOUND", "");
-
-            return new SessionDTO { Id = session.Id, Uid = session.Uid, PhoneId = session.PhoneId };
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Session, SessionDTO> ()).CreateMapper();
+            return mapper.Map<Session, SessionDTO>(session);
         }
 
         public SessionDTO CreateSession(SessionDTO session)
@@ -50,6 +46,8 @@ namespace HedgePlatform.BLL.Services
             {
                 Session new_session = db.Sessions.Create(mapper.Map<SessionDTO, Session>(session));
                 db.Save();
+                mapper = new MapperConfiguration(cfg => cfg.CreateMap<Session, SessionDTO>()).CreateMapper();
+
                 return mapper.Map<Session, SessionDTO>(new_session);
             }
 
@@ -84,7 +82,6 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-
         public void Dispose()
         {
             db.Dispose();

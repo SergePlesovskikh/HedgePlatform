@@ -23,7 +23,7 @@ namespace HedgePlatform.BLL.Services
         private readonly ILogger _logger = Log.CreateLogger<PhoneService>();
         public bool CheckPhone(string phone)
         {
-            if (db.Phones.Find(x => x.Number == phone) == null)
+            if (db.Phones.Find(x => x.Number == phone) != null)
                 return true;
             else return false;
         }

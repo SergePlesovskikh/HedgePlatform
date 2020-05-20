@@ -34,16 +34,17 @@ namespace HedgePlatform.BLL.Services
         {
             string request_path = RequestPathBuilder();
             string data = DataBuilder(phone);
-            HttpResponseMessage response = await SendRequest(request_path, data);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                _checkService.CreateCheck(new CheckDTO { CheckCode = Checkcode, Phone = phone, SendTime = DateTime.Now, token = _tokenService.GenerateToken() });
-            }
-            else
+            //   HttpResponseMessage response = await SendRequest(request_path, data);
+            //   if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            //   {
+            token = _tokenService.GenerateToken();
+                _checkService.CreateCheck(new CheckDTO { CheckCode = Checkcode, Phone = phone, SendTime = DateTime.Now, token = token});
+          //  }
+          /*  else
             {
                 _logger.LogError("SMS sending error. Sms server status code: " + response.StatusCode);
                 throw new ValidationException("SMS_SEND_FAIL", "");
-            }
+            }*/
         }
 
         private string RequestPathBuilder()
@@ -59,7 +60,7 @@ namespace HedgePlatform.BLL.Services
             JObject data = new JObject{
                 { "message", message },
                 { "from", _configuration["SMSSender:sms_name"] },
-                { "to", Int32.Parse(phone)}
+                { "to", long.Parse(phone)}
             };
 
             return data.ToString();

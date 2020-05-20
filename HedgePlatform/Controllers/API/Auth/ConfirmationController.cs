@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HedgePlatform.Controllers.API
 {
-    [Route("api/mobile/[controller]")]
+    [Route("api/auth/[controller]")]
     [ApiController]
     public class ConfirmationController : ControllerBase
     {

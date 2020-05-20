@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HedgePlatform.Controllers.API
 {
-    [Route("api/mobile/[controller]")]
+    [Route("api/auth/[controller]")]
     [ApiController]
     public class CheckPhoneController : ControllerBase
     {
@@ -21,7 +21,8 @@ namespace HedgePlatform.Controllers.API
         public async Task<ActionResult<string>> Get (string phone)
         {
             try
-            {   if (_phoneService.CheckPhone(phone))
+            {   
+                if (_phoneService.CheckPhone(phone))
                 {
                     await _smsSendService.SendSMS(phone);
                     return Ok(_smsSendService.token);

@@ -11,6 +11,7 @@ using HedgePlatform.DAL.Repositories;
 using HedgePlatform.BLL.Interfaces;
 using HedgePlatform.BLL.Services;
 using HedgePlatform.DAL;
+using HedgePlatform.Middleware;
 
 namespace HedgePlatform
 {
@@ -80,10 +81,17 @@ namespace HedgePlatform
 
             app.UseAuthorization();
 
+            app.Map("/api/mobile", mobile =>
+            {
+                mobile.UseMiddleware<CheckAuthComponent>();
+                mobile.UseMiddleware<CheckRegistrationComponent>();
+                mobile.UseMiddleware<CheckAccessComponent>();
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
+            });          
         }     
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HedgePlatform.Controllers.API
 {
-    [Route("api/mobile/[controller]")]
+    
     [ApiController]
     public class RegistrationController : ControllerBase
     {
@@ -17,6 +17,7 @@ namespace HedgePlatform.Controllers.API
             _residentService = residentService;
         }
 
+        [Route("api/auth/[controller]")]
         [HttpPost]
         public ActionResult<string> Registration([FromBody] ResidentViewModel resident, string uid)
         {
@@ -33,6 +34,7 @@ namespace HedgePlatform.Controllers.API
             }
         }
 
+        [Route("api/mobile/[controller]")]
         [HttpGet]
         public FileContentResult RequestForm()
         {
