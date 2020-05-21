@@ -10,17 +10,13 @@ namespace HedgePlatform.Middleware
     public class CheckAuthComponent
     {
         private readonly RequestDelegate _next;
-        private ISessionService _sessionService;
-        private IPhoneService _phoneService;
-        private IResidentService _residentService;
+        private ISessionService _sessionService;     
 
-        public CheckAuthComponent(RequestDelegate next, ISessionService sessionService, IPhoneService phoneService, 
-            IResidentService residentService)
+        public CheckAuthComponent(RequestDelegate next, ISessionService sessionService)
         {
             _next = next;
-            _sessionService = sessionService;
-            _phoneService = phoneService;
-            _residentService = residentService;
+            _sessionService = sessionService;     
+          
         }
 
         public async Task Invoke(HttpContext httpContext)
@@ -33,14 +29,7 @@ namespace HedgePlatform.Middleware
             }
             else
             {
-                httpContext.Items["PhoneId"] = session.PhoneId;
-                PhoneDTO phone = _phoneService.GetPhone(session.PhoneId);
-
-                httpContext.Items["ResidentId"] = phone.resident.Id;
-                ResidentDTO resident = _residentService.GetResident(phone.resident.Id);
-
-                httpContext.Items["FlatId"] = resident.FlatId;
-
+                httpContext.Items["PhoneId"] = session.PhoneId;   
                 await _next(httpContext);
             }           
         }

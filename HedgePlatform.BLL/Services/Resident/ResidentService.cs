@@ -17,15 +17,18 @@ namespace HedgePlatform.BLL.Services
         IUnitOfWork db { get; set; }
         private ISessionService _sessionService;
         private IPhoneService _phoneService;
+        private IHouseService _houseService;
+        private IFlatService _flatService;
         private IHTMLService _HTMLService;
         private IPDFService _PDFService;
 
-        public ResidentService(IUnitOfWork uow, ISessionService sessionService, IPhoneService phoneService, 
-            IHTMLService HTMLService, IPDFService PDFService)
+        public ResidentService(IUnitOfWork uow, ISessionService sessionService, IPhoneService phoneService, IFlatService flatService, 
+            IHouseService houseService, IHTMLService HTMLService, IPDFService PDFService)
         {
             db = uow;
             _sessionService = sessionService;
-            _phoneService = phoneService;      
+            _phoneService = phoneService;
+            
             _HTMLService = HTMLService;
             _PDFService = PDFService;
         }
@@ -101,21 +104,61 @@ namespace HedgePlatform.BLL.Services
 
         public void RegistrationResident(string uid, ResidentDTO resident)
         {
-            SessionDTO session = _sessionService.GetSession(uid);           
-           
+            SessionDTO session = _sessionService.GetSession(uid);   
             PhoneDTO phone = _phoneService.GetPhone(session.PhoneId);
+
+            CheckNullResidentData(phone, resident, uid);
+           
+            HouseDTO house = _houseService.GetHouse(resident.Flat.HouseId);
+            if (house == null)
+            {
+               throw new ValidationException("HOUSE_NOT_FOUND", "");
+            }
+
+            FlatDTO flat = _flatService.GetFlat(resident.FlatId);
+            if (flat == null)
+            {
+               throw new ValidationException("FLAT_NOT_FOUND", "");
+            }
+
+            resident = ResidentBuilder(resident, phone, flat);
+            ResidentDTO new_resident = CreateResident(resident);
+            phone.resident = new_resident;
+
+        }
+
+        private void CheckNullResidentData (PhoneDTO phone, ResidentDTO resident, string uid)
+        {
+
             if (phone == null)
             {
                 _logger.LogError("Not found phone for uid. Uid=" + uid);
                 throw new ValidationException("SERVER_ERROR", "");
-            }            
+            }
 
+            if (resident.Flat == null)
+            {
+                _logger.LogError("Not found flat object" + uid);
+                throw new ValidationException("REQUEST_ERROR", "");
+            }
+
+            if (resident.Flat.House == null)
+            {
+                _logger.LogError("Not found house object" + uid);
+                throw new ValidationException("REQUEST_ERROR", "");
+            }
+        }
+
+        private ResidentDTO ResidentBuilder (ResidentDTO resident, PhoneDTO phone, FlatDTO flat)
+        {
             resident.PhoneId = phone.Id;
             resident.Phone = phone;
-
-            ResidentDTO new_resident = CreateResident(resident);           
-            phone.resident = new_resident;  
+            resident.FlatId = flat.Id;
+            resident.Flat = flat;
+            resident.Flat.HouseId = flat.HouseId;
+            return resident;
         }
+       
 
         public ResidentDTO CreateResident(ResidentDTO resident)
         {

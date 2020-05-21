@@ -1,0 +1,225 @@
+2020-05-21 00:03:44.771 +00:00 [INF] Now listening on: https://[::]:443
+2020-05-21 00:03:44.856 +00:00 [INF] Now listening on: http://[::]:80
+2020-05-21 00:03:44.860 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-05-21 00:03:44.867 +00:00 [INF] Hosting environment: Development
+2020-05-21 00:03:44.871 +00:00 [INF] Content root path: /app
+2020-05-21 00:03:46.300 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-05-21 00:03:46.359 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-05-21 00:03:46.387 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-05-21 00:03:47.929 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-05-21 00:03:48.039 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1642.5479ms
+2020-05-21 00:03:48.045 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-05-21 00:03:48.052 +00:00 [INF] Request finished in 1775.6542ms 200 application/json; charset=utf-8
+2020-05-21 00:03:48.152 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/favicon.ico  
+2020-05-21 00:03:48.156 +00:00 [INF] Request finished in 4.26ms 404 
+2020-05-21 04:41:34.287 +00:00 [INF] Now listening on: https://[::]:443
+2020-05-21 04:41:34.334 +00:00 [INF] Now listening on: http://[::]:80
+2020-05-21 04:41:34.337 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-05-21 04:41:34.341 +00:00 [INF] Hosting environment: Development
+2020-05-21 04:41:34.344 +00:00 [INF] Content root path: /app
+2020-05-21 04:41:35.417 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-05-21 04:41:35.448 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-05-21 04:41:35.471 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-05-21 04:41:36.704 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-05-21 04:41:36.820 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1342.1346ms
+2020-05-21 04:41:36.827 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-05-21 04:41:36.843 +00:00 [INF] Request finished in 1428.8536ms 200 application/json; charset=utf-8
+2020-05-21 04:42:31.493 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/auth/checkphone?phone=79242162689 application/json 
+2020-05-21 04:42:31.523 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform)'
+2020-05-21 04:42:31.541 +00:00 [INF] Route matched with {action = "Get", controller = "CheckPhone"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.String]] Get(System.String) on controller HedgePlatform.Controllers.API.CheckPhoneController (HedgePlatform).
+2020-05-21 04:42:31.768 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-05-21 04:42:31.775 +00:00 [INF] Executed action HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform) in 230.6108ms
+2020-05-21 04:42:31.778 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform)'
+2020-05-21 04:42:31.781 +00:00 [INF] Request finished in 288.5218ms 200 text/plain; charset=utf-8
+2020-05-21 04:43:22.191 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/auth/checkphone?phone=79246666666 application/json 
+2020-05-21 04:43:22.199 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform)'
+2020-05-21 04:43:22.228 +00:00 [INF] Route matched with {action = "Get", controller = "CheckPhone"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.String]] Get(System.String) on controller HedgePlatform.Controllers.API.CheckPhoneController (HedgePlatform).
+2020-05-21 04:43:22.251 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-05-21 04:43:22.255 +00:00 [INF] Executed action HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform) in 23.1998ms
+2020-05-21 04:43:22.259 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform)'
+2020-05-21 04:43:22.264 +00:00 [INF] Request finished in 72.3725ms 200 text/plain; charset=utf-8
+2020-05-21 04:44:36.782 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/auth/checkphone?phone=79246666666&token=1cftdmR62mDIr1EUKNBPf8/PdOu0JYb/0gzfdNtq680= application/json 
+2020-05-21 04:44:36.794 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform)'
+2020-05-21 04:44:36.801 +00:00 [INF] Route matched with {action = "Get", controller = "CheckPhone"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.String]] Get(System.String) on controller HedgePlatform.Controllers.API.CheckPhoneController (HedgePlatform).
+2020-05-21 04:44:36.823 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-05-21 04:44:36.827 +00:00 [INF] Executed action HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform) in 22.8599ms
+2020-05-21 04:44:36.829 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform)'
+2020-05-21 04:44:36.833 +00:00 [INF] Request finished in 51.3833ms 200 text/plain; charset=utf-8
+2020-05-21 04:45:03.558 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/auth/confirmation?phone=79246666666&token=1cftdmR62mDIr1EUKNBPf8/PdOu0JYb/0gzfdNtq680= application/json 
+2020-05-21 04:45:03.564 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform)'
+2020-05-21 04:45:03.573 +00:00 [INF] Route matched with {action = "Confirmation", controller = "Confirmation"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.String] Confirmation(Int32, System.String, System.String) on controller HedgePlatform.Controllers.API.ConfirmationController (HedgePlatform).
+2020-05-21 04:45:18.145 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-05-21 04:45:18.150 +00:00 [INF] Executed action HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform) in 14573.6157ms
+2020-05-21 04:45:18.155 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform)'
+2020-05-21 04:45:18.161 +00:00 [INF] Request finished in 14603.3134ms 422 text/plain; charset=utf-8
+2020-05-21 04:45:41.308 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/auth/confirmation?phone=79246666666&token=1cftdmR62mDIr1EUKNBPf8/PdOu0JYb/0gzfdNtq680=&checkcode=fghfgh application/json 
+2020-05-21 04:45:41.355 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform)'
+2020-05-21 04:45:41.362 +00:00 [INF] Route matched with {action = "Confirmation", controller = "Confirmation"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.String] Confirmation(Int32, System.String, System.String) on controller HedgePlatform.Controllers.API.ConfirmationController (HedgePlatform).
+2020-05-21 04:45:41.372 +00:00 [INF] Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2020-05-21 04:45:41.399 +00:00 [INF] Executed action HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform) in 32.0445ms
+2020-05-21 04:45:41.402 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform)'
+2020-05-21 04:45:41.408 +00:00 [INF] Request finished in 101.003ms 400 application/problem+json; charset=utf-8
+2020-05-21 04:46:00.269 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/auth/confirmation?phone=79246666666&token=1cftdmR62mDIr1EUKNBPf8/PdOu0JYb/0gzfdNtq680=&checkcode=107056 application/json 
+2020-05-21 04:46:00.276 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform)'
+2020-05-21 04:46:00.282 +00:00 [INF] Route matched with {action = "Confirmation", controller = "Confirmation"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.String] Confirmation(Int32, System.String, System.String) on controller HedgePlatform.Controllers.API.ConfirmationController (HedgePlatform).
+2020-05-21 04:46:02.926 +00:00 [ERR] Phone creating error: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+Phone -> PhoneDTO
+HedgePlatform.DAL.Entities.Phone -> HedgePlatform.BLL.DTO.PhoneDTO
+2020-05-21 04:46:10.571 +00:00 [INF] Executed action HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform) in 10283.3852ms
+2020-05-21 04:46:10.576 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform)'
+2020-05-21 04:46:10.582 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+HedgePlatform.BLL.Infr.ValidationException: UNKNOWN_ERROR
+   at HedgePlatform.BLL.Services.PhoneService.CreatePhone(PhoneDTO phone) in C:\Users\plesovskih\source\repos\SergePlesovskikh\Hedge\HedgePlatform\HedgePlatform.BLL\Services\Admin\PhoneService.cs:line 84
+   at HedgePlatform.BLL.Services.PhoneService.GetOrCreate(String phone_number) in C:\Users\plesovskih\source\repos\SergePlesovskikh\Hedge\HedgePlatform\HedgePlatform.BLL\Services\Admin\PhoneService.cs:line 56
+   at HedgePlatform.BLL.Services.CheckService.Confirmation(String token, Int32 checkcode, String phone_number) in C:\Users\plesovskih\source\repos\SergePlesovskikh\Hedge\HedgePlatform\HedgePlatform.BLL\Services\Admin\CheckService.cs:line 50
+   at HedgePlatform.Controllers.API.ConfirmationController.Confirmation(Int32 checkcode, String token, String phone) in C:\Users\plesovskih\source\repos\SergePlesovskikh\Hedge\HedgePlatform\HedgePlatform\Controllers\API\Auth\ConfirmationController.cs:line 24
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Builder.Extensions.MapMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-05-21 04:46:10.656 +00:00 [INF] Request finished in 10387.7052ms 500 text/plain
+2020-05-21 04:47:52.182 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/auth/checkphone?phone=79246666666 application/json 
+2020-05-21 04:47:52.188 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform)'
+2020-05-21 04:47:52.191 +00:00 [INF] Route matched with {action = "Get", controller = "CheckPhone"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.String]] Get(System.String) on controller HedgePlatform.Controllers.API.CheckPhoneController (HedgePlatform).
+2020-05-21 04:47:52.215 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-05-21 04:47:52.220 +00:00 [INF] Executed action HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform) in 25.1198ms
+2020-05-21 04:47:52.223 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform)'
+2020-05-21 04:47:52.227 +00:00 [INF] Request finished in 44.9071ms 200 text/plain; charset=utf-8
+2020-05-21 04:48:47.598 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/auth/confirmation?phone=79246666666&token=+yynr110+BQjBErxyfmFQmMjsAT80wp+EWFRocHREaA=&checkcode=912231 application/json 
+2020-05-21 04:48:47.624 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform)'
+2020-05-21 04:48:47.629 +00:00 [INF] Route matched with {action = "Confirmation", controller = "Confirmation"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.String] Confirmation(Int32, System.String, System.String) on controller HedgePlatform.Controllers.API.ConfirmationController (HedgePlatform).
+2020-05-21 04:48:55.382 +00:00 [INF] Executing ForbidResult with authentication schemes (["INVALID_TOKEN"]).
+2020-05-21 04:48:55.395 +00:00 [INF] Executed action HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform) in 7762.333ms
+2020-05-21 04:48:55.398 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform)'
+2020-05-21 04:48:55.402 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: No authentication handlers are registered. Did you forget to call AddAuthentication().Add[SomeAuthHandler]("INVALID_TOKEN",...)?
+   at Microsoft.AspNetCore.Authentication.AuthenticationService.ForbidAsync(HttpContext context, String scheme, AuthenticationProperties properties)
+   at Microsoft.AspNetCore.Mvc.ForbidResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Builder.Extensions.MapMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-05-21 04:48:55.414 +00:00 [INF] Request finished in 7815.9648ms 500 text/plain
+2020-05-21 04:49:18.119 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/auth/confirmation?phone=79246666666&token=+yynr110+BQjBErxyfmFQmMjsAT80wp+EWFRocHREaA=&checkcode=912231 application/json 
+2020-05-21 04:49:18.129 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform)'
+2020-05-21 04:49:18.163 +00:00 [INF] Route matched with {action = "Confirmation", controller = "Confirmation"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.String] Confirmation(Int32, System.String, System.String) on controller HedgePlatform.Controllers.API.ConfirmationController (HedgePlatform).
+2020-05-21 04:49:37.258 +00:00 [INF] Executing ForbidResult with authentication schemes (["INVALID_TOKEN"]).
+2020-05-21 04:49:37.267 +00:00 [INF] Executed action HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform) in 19100.4743ms
+2020-05-21 04:49:37.276 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform)'
+2020-05-21 04:49:37.281 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: No authentication handlers are registered. Did you forget to call AddAuthentication().Add[SomeAuthHandler]("INVALID_TOKEN",...)?
+   at Microsoft.AspNetCore.Authentication.AuthenticationService.ForbidAsync(HttpContext context, String scheme, AuthenticationProperties properties)
+   at Microsoft.AspNetCore.Mvc.ForbidResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Builder.Extensions.MapMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-05-21 04:49:37.290 +00:00 [INF] Request finished in 19170.9598ms 500 text/plain
+2020-05-21 04:49:52.664 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/auth/checkphone?phone=79246666666 application/json 
+2020-05-21 04:49:52.668 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform)'
+2020-05-21 04:49:52.673 +00:00 [INF] Route matched with {action = "Get", controller = "CheckPhone"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.String]] Get(System.String) on controller HedgePlatform.Controllers.API.CheckPhoneController (HedgePlatform).
+2020-05-21 04:49:52.691 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-05-21 04:49:52.696 +00:00 [INF] Executed action HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform) in 19.6514ms
+2020-05-21 04:49:52.700 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform)'
+2020-05-21 04:49:52.705 +00:00 [INF] Request finished in 41.9568ms 200 text/plain; charset=utf-8
+2020-05-21 04:49:56.142 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/auth/checkphone?phone=79246666666 application/json 
+2020-05-21 04:49:56.146 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform)'
+2020-05-21 04:49:56.153 +00:00 [INF] Route matched with {action = "Get", controller = "CheckPhone"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.String]] Get(System.String) on controller HedgePlatform.Controllers.API.CheckPhoneController (HedgePlatform).
+2020-05-21 04:49:56.190 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-05-21 04:49:56.197 +00:00 [INF] Executed action HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform) in 31.5965ms
+2020-05-21 04:49:56.200 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.API.CheckPhoneController.Get (HedgePlatform)'
+2020-05-21 04:49:56.204 +00:00 [INF] Request finished in 62.4531ms 200 text/plain; charset=utf-8
+2020-05-21 04:50:59.616 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/auth/confirmation?phone=79246666666&token=oYFndWhx1rNcUixoVQ3bSBp6jQ0UHb30xSZ3ZV5ibNQ=&checkcode=534757 application/json 
+2020-05-21 04:50:59.622 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform)'
+2020-05-21 04:50:59.632 +00:00 [INF] Route matched with {action = "Confirmation", controller = "Confirmation"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.String] Confirmation(Int32, System.String, System.String) on controller HedgePlatform.Controllers.API.ConfirmationController (HedgePlatform).
+2020-05-21 04:53:26.707 +00:00 [INF] Now listening on: https://[::]:443
+2020-05-21 04:53:26.753 +00:00 [INF] Now listening on: http://[::]:80
+2020-05-21 04:53:26.762 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-05-21 04:53:26.767 +00:00 [INF] Hosting environment: Development
+2020-05-21 04:53:26.771 +00:00 [INF] Content root path: /app
+2020-05-21 04:53:27.208 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-05-21 04:53:27.236 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-05-21 04:53:27.256 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-05-21 04:53:28.644 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-05-21 04:53:28.756 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1493.456ms
+2020-05-21 04:53:28.762 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-05-21 04:53:28.769 +00:00 [INF] Request finished in 1562.9017ms 200 application/json; charset=utf-8
+2020-05-21 04:53:36.796 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/auth/confirmation?phone=79246666666&token=oYFndWhx1rNcUixoVQ3bSBp6jQ0UHb30xSZ3ZV5ibNQ=&checkcode=534757 application/json 
+2020-05-21 04:53:36.803 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform)'
+2020-05-21 04:53:36.817 +00:00 [INF] Route matched with {action = "Confirmation", controller = "Confirmation"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.String] Confirmation(Int32, System.String, System.String) on controller HedgePlatform.Controllers.API.ConfirmationController (HedgePlatform).
+2020-05-21 04:53:50.936 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2020-05-21 04:53:50.940 +00:00 [INF] Executed action HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform) in 14119.1491ms
+2020-05-21 04:53:50.944 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.API.ConfirmationController.Confirmation (HedgePlatform)'
+2020-05-21 04:53:50.949 +00:00 [INF] Request finished in 14153.3058ms 200 text/plain; charset=utf-8
+2020-05-21 04:58:59.087 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/mobile/message?uid=oJY8ujyglWc8duScGdJBfw== application/json 
+2020-05-21 04:58:59.167 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at HedgePlatform.Middleware.CheckAuthComponent.Invoke(HttpContext httpContext) in C:\Users\plesovskih\source\repos\SergePlesovskikh\Hedge\HedgePlatform\HedgePlatform\Middleware\CheckAuthComponent.cs:line 39
+   at Microsoft.AspNetCore.Builder.Extensions.MapMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-05-21 04:58:59.247 +00:00 [INF] Request finished in 160.3966ms 500 text/plain
+2020-05-21 04:59:26.056 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/mobile/message?uid=oJY8ujyglWc8duScGdJBfw== application/json 
+2020-05-21 04:59:26.123 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at HedgePlatform.Middleware.CheckAuthComponent.Invoke(HttpContext httpContext) in C:\Users\plesovskih\source\repos\SergePlesovskikh\Hedge\HedgePlatform\HedgePlatform\Middleware\CheckAuthComponent.cs:line 39
+   at Microsoft.AspNetCore.Builder.Extensions.MapMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-05-21 04:59:26.127 +00:00 [INF] Request finished in 71.5819ms 500 text/plain
+2020-05-21 05:01:10.011 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/mobile/message?uid=oJY8ujyglWc8duScGdJBfw== application/json 
+2020-05-21 05:42:22.540 +00:00 [INF] Now listening on: https://[::]:443
+2020-05-21 05:42:22.614 +00:00 [INF] Now listening on: http://[::]:80
+2020-05-21 05:42:22.618 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-05-21 05:42:22.622 +00:00 [INF] Hosting environment: Development
+2020-05-21 05:42:22.625 +00:00 [INF] Content root path: /app
+2020-05-21 05:42:23.108 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-05-21 05:42:23.139 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-05-21 05:42:23.163 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-05-21 05:42:24.367 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-05-21 05:42:24.477 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1306.1909ms
+2020-05-21 05:42:24.482 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-05-21 05:42:24.489 +00:00 [INF] Request finished in 1383.3637ms 200 application/json; charset=utf-8
+2020-05-21 05:42:33.251 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/mobile/message?uid=oJY8ujyglWc8duScGdJBfw== application/json 
+2020-05-21 05:42:33.413 +00:00 [INF] Request finished in 162.072ms 200 
+2020-05-21 05:47:33.863 +00:00 [INF] Now listening on: https://[::]:443
+2020-05-21 05:47:33.929 +00:00 [INF] Now listening on: http://[::]:80
+2020-05-21 05:47:33.933 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-05-21 05:47:33.937 +00:00 [INF] Hosting environment: Development
+2020-05-21 05:47:33.942 +00:00 [INF] Content root path: /app
+2020-05-21 05:47:34.389 +00:00 [INF] Request starting HTTP/2 GET https://localhost:44319/api/territory/house  
+2020-05-21 05:47:34.427 +00:00 [INF] Executing endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-05-21 05:47:34.455 +00:00 [INF] Route matched with {action = "Index", controller = "House"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[HedgePlatform.ViewModel.HouseViewModel] Index() on controller HedgePlatform.Controllers.ADM.HouseController (HedgePlatform).
+2020-05-21 05:47:35.754 +00:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[HedgePlatform.ViewModel.HouseViewModel, HedgePlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-05-21 05:47:35.865 +00:00 [INF] Executed action HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform) in 1401.6018ms
+2020-05-21 05:47:35.870 +00:00 [INF] Executed endpoint 'HedgePlatform.Controllers.ADM.HouseController.Index (HedgePlatform)'
+2020-05-21 05:47:35.880 +00:00 [INF] Request finished in 1493.73ms 200 application/json; charset=utf-8

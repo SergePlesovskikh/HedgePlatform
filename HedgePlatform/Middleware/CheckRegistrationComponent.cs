@@ -11,11 +11,13 @@ namespace HedgePlatform.Middleware
     {
         private readonly RequestDelegate _next;
         private IPhoneService _phoneService;
+        private IResidentService _residentService;
 
-        public CheckRegistrationComponent(RequestDelegate next, IPhoneService phoneService)
+        public CheckRegistrationComponent(RequestDelegate next, IPhoneService phoneService, IResidentService residentService)
         {
             _next = next;
             _phoneService = phoneService;
+            _residentService = residentService;
         }
 
         public async Task Invoke(HttpContext httpContext)
@@ -30,7 +32,10 @@ namespace HedgePlatform.Middleware
                 }
                 else
                 {
+                  
                     httpContext.Items["ResidentId"] = phone.resident.Id;
+                    ResidentDTO resident = _residentService.GetResident(phone.resident.Id);
+                    httpContext.Items["FlatId"] = resident.FlatId;                    
                     await _next(httpContext);
                 }
             }

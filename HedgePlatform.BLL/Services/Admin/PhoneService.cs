@@ -69,6 +69,8 @@ namespace HedgePlatform.BLL.Services
             {
                 Phone new_phone = db.Phones.Create(mapper.Map<PhoneDTO, Phone>(phone));
                 db.Save();
+
+                mapper = new MapperConfiguration(cfg => cfg.CreateMap<Phone, PhoneDTO>()).CreateMapper();
                 return mapper.Map<Phone, PhoneDTO>(new_phone);
             }
 
