@@ -28,7 +28,8 @@ namespace HedgePlatform.BLL.Services
             db = uow;
             _sessionService = sessionService;
             _phoneService = phoneService;
-            
+            _houseService = houseService;
+            _flatService = flatService;
             _HTMLService = HTMLService;
             _PDFService = PDFService;
         }
