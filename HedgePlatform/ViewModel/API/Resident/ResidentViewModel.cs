@@ -11,10 +11,6 @@ namespace HedgePlatform.ViewModel.API
         public string FIO { get; set; }
         public DateTime BirthDate { get; set; }
         public int PhoneId { get; set; }
-        public PhoneViewModel Phone { get; set; }
-        public DateTime DateRegistration { get; set; }
-        public DateTime DateChange { get; set; }
         public int? FlatId { get; set; }
-        public FlatViewModel Flat { get; set; }
     }
 }

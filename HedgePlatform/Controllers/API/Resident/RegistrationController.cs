@@ -2,7 +2,7 @@
 using AutoMapper;
 using HedgePlatform.BLL.DTO;
 using HedgePlatform.BLL.Interfaces;
-using HedgePlatform.ViewModel;
+using HedgePlatform.ViewModel.API;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HedgePlatform.Controllers.API
@@ -17,7 +17,7 @@ namespace HedgePlatform.Controllers.API
             _residentService = residentService;
         }
 
-        [Route("api/auth/[controller]")]
+        [Route("api/mobile/regist/[controller]")]
         [HttpPost]
         public ActionResult<string> Registration([FromBody] ResidentViewModel resident, string uid)
         {
@@ -34,7 +34,7 @@ namespace HedgePlatform.Controllers.API
             }
         }
 
-        [Route("api/mobile/[controller]")]
+        [Route("api/mobile/work/[controller]")]
         [HttpGet]
         public FileContentResult RequestForm()
         {

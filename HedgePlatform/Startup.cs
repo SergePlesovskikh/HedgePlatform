@@ -12,6 +12,7 @@ using HedgePlatform.BLL.Interfaces;
 using HedgePlatform.BLL.Services;
 using HedgePlatform.DAL;
 using HedgePlatform.Middleware;
+using Microsoft.AspNetCore.Routing;
 
 namespace HedgePlatform
 {
@@ -24,7 +25,6 @@ namespace HedgePlatform
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson(options =>
@@ -65,7 +65,6 @@ namespace HedgePlatform
             services.AddTransient<ITokenService, TokenService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             Log.LoggerFactory = loggerFactory;
@@ -81,17 +80,20 @@ namespace HedgePlatform
 
             app.UseAuthorization();
 
-            app.Map("/api/mobile", mobile =>
-            {
-                mobile.UseMiddleware<CheckAuthComponent>();
-                mobile.UseMiddleware<CheckRegistrationComponent>();
-                mobile.UseMiddleware<CheckAccessComponent>();
-            });
+            app.UseWhen(context => context.Request.Path.StartsWithSegments("/api/mobile/regist"),
+                appBuilder => appBuilder.UseMiddleware<CheckAuthComponent>());
+
+            app.UseWhen(context => context.Request.Path.StartsWithSegments("/api/mobile/work"),
+             appBuilder2 => {
+                 appBuilder2.UseMiddleware<CheckAuthComponent>();
+                 appBuilder2.UseMiddleware<CheckRegistrationComponent>();
+                 appBuilder2.UseMiddleware<CheckAccessComponent>();
+             });
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });          
-        }     
+            });         
+        }
     }
 }

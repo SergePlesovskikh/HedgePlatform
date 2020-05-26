@@ -7,7 +7,7 @@ using HedgePlatform.BLL.DTO;
 
 namespace HedgePlatform.Controllers.API.Territory
 {
-    [Route("api/mobile/[controller]")]
+    [Route("api/mobile/registration/[controller]")]
     [ApiController]
     public class FlatController : ControllerBase
     {

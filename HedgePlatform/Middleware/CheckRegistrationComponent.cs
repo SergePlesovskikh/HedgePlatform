@@ -31,8 +31,7 @@ namespace HedgePlatform.Middleware
                     await httpContext.Response.WriteAsync("NO_REGISTRATION");
                 }
                 else
-                {
-                  
+                {                  
                     httpContext.Items["ResidentId"] = phone.resident.Id;
                     ResidentDTO resident = _residentService.GetResident(phone.resident.Id);
                     httpContext.Items["FlatId"] = resident.FlatId;                    

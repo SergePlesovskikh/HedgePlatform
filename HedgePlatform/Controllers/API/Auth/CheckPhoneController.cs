@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HedgePlatform.Controllers.API
 {
-    [Route("api/auth/[controller]")]
+    [Route("api/mobile/auth/[controller]")]
     [ApiController]
     public class CheckPhoneController : ControllerBase
     {

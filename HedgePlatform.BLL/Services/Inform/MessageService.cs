@@ -50,7 +50,7 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("No Resident Id", "");
             ResidentDTO residentDTO = _residentService.GetResident(ResidentId);
             IEnumerable<VoteDTO> voteDTOs = Enumerable.Empty<VoteDTO>();
-            if (residentDTO.Chairman.Value)
+            if (residentDTO.Chairman == true)
                 voteDTOs = _voteService.GetVotes();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<MessageDTO, VoteDTO>()).CreateMapper();
             IEnumerable<VoteDTO> messages = mapper.Map<IEnumerable<MessageDTO>, IEnumerable<VoteDTO>>(GetMessages());

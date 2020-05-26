@@ -27,14 +27,11 @@ namespace HedgePlatform.BLL.Services
             var flat = db.Flats.Get(id.Value);
             if (flat == null)
                 throw new ValidationException("NOT_FOUND", "");
-            House house = db.Houses.Get(flat.HouseId);
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<House, HouseDTO>()).CreateMapper();
-            
+
             return new FlatDTO
             {
                 Id = flat.Id,
-                HouseId = flat.HouseId,
-                House = mapper.Map<House, HouseDTO>(house),
+                HouseId = flat.HouseId,                
                 MaxCounters = flat.MaxCounters,
                 Number = flat.Number
             };

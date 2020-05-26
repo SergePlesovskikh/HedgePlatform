@@ -43,26 +43,15 @@ namespace HedgePlatform.BLL.Services
             if (resident == null)
                 throw new ValidationException("NOT_FOUND", "");
 
-            Flat flat = db.Flats.Get(resident.FlatId.Value);
-            Phone phone = db.Phones.Get(resident.PhoneId);
-
-            var mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Flat, FlatDTO>();
-                cfg.CreateMap<Phone, PhoneDTO>();
-            }).CreateMapper();
-
             return new ResidentDTO
             {
                 Id = resident.Id,
-                FlatId = resident.FlatId,
-                Flat = mapper.Map<Flat, FlatDTO>(flat),
+                FlatId = resident.FlatId,            
                 FIO = resident.FIO,
                 BirthDate = resident.BirthDate,
                 DateChange = resident.DateChange,
                 DateRegistration = resident.DateRegistration,
                 PhoneId = resident.PhoneId,
-                Phone = mapper.Map<Phone, PhoneDTO>(phone),
                 ResidentStatus = resident.ResidentStatus
             };
         }
@@ -109,23 +98,15 @@ namespace HedgePlatform.BLL.Services
             PhoneDTO phone = _phoneService.GetPhone(session.PhoneId);
 
             CheckNullResidentData(phone, resident, uid);
-           
-            HouseDTO house = _houseService.GetHouse(resident.Flat.HouseId);
-            if (house == null)
-            {
-               throw new ValidationException("HOUSE_NOT_FOUND", "");
-            }
 
-            FlatDTO flat = _flatService.GetFlat(resident.FlatId);
-            if (flat == null)
+            if (_flatService.GetFlat(resident.FlatId) == null)
             {
-               throw new ValidationException("FLAT_NOT_FOUND", "");
-            }
+                throw new ValidationException("FLAT_NOT_FOUND", "");
+            }             
 
-            resident = ResidentBuilder(resident, phone, flat);
+            resident = ResidentBuilder(resident, phone);
             ResidentDTO new_resident = CreateResident(resident);
             phone.resident = new_resident;
-
         }
 
         private void CheckNullResidentData (PhoneDTO phone, ResidentDTO resident, string uid)
@@ -137,26 +118,19 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("SERVER_ERROR", "");
             }
 
-            if (resident.Flat == null)
+            if (resident.FlatId == null)
             {
                 _logger.LogError("Not found flat object" + uid);
                 throw new ValidationException("REQUEST_ERROR", "");
             }
-
-            if (resident.Flat.House == null)
-            {
-                _logger.LogError("Not found house object" + uid);
-                throw new ValidationException("REQUEST_ERROR", "");
-            }
         }
 
-        private ResidentDTO ResidentBuilder (ResidentDTO resident, PhoneDTO phone, FlatDTO flat)
+        private ResidentDTO ResidentBuilder (ResidentDTO resident, PhoneDTO phone)
         {
-            resident.PhoneId = phone.Id;
-            resident.Phone = phone;
-            resident.FlatId = flat.Id;
-            resident.Flat = flat;
-            resident.Flat.HouseId = flat.HouseId;
+            resident.PhoneId = phone.Id; 
+            resident.DateRegistration = DateTime.Now;
+            resident.DateChange = DateTime.Now;
+            resident.ResidentStatus = "На рассмотрении";
             return resident;
         }
        
@@ -168,9 +142,9 @@ namespace HedgePlatform.BLL.Services
             {
                 Resident new_resident =  db.Residents.Create(mapper.Map<ResidentDTO, Resident>(resident));
                 db.Save();
+                mapper = new MapperConfiguration(cfg => cfg.CreateMap<Resident, ResidentDTO>()).CreateMapper();
                 return mapper.Map<Resident, ResidentDTO>(new_resident);
             }
-
             catch (DbUpdateException ex)
             {
                 _logger.LogError("Database error exception: " + ex.InnerException.Message);

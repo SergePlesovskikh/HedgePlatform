@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace HedgePlatform.Controllers.API.Message
 {
-    [Route("api/mobile/[controller]")]
+    
     [ApiController]
+    [Route("api/mobile/work/[controller]")]
     public class MessageController : ControllerBase
     {
         private IMessageService _messageService;
@@ -18,7 +19,7 @@ namespace HedgePlatform.Controllers.API.Message
             _messageService = messageService;
         }
 
-        [HttpGet]
+        [HttpGet]        
         public IEnumerable<VoteViewModel> Index()
         {
             IEnumerable<VoteDTO> voteDTOs = _messageService.GetMessagesAndVotes((int)HttpContext.Items["ResidentId"]);
