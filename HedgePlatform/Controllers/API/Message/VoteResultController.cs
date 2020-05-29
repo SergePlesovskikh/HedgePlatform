@@ -4,9 +4,6 @@ using HedgePlatform.BLL.Interfaces;
 using HedgePlatform.BLL.DTO;
 using HedgePlatform.BLL.Infr;
 using AutoMapper;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Net;
 
 namespace HedgePlatform.Controllers.API.Message
 {
@@ -33,7 +30,7 @@ namespace HedgePlatform.Controllers.API.Message
             var voteOptionDTO = mapper.Map<VoteResultViewModel, VoteResultDTO>(voteResult);
             try
             {
-                _voteResultService.CreateVoteResult(voteOptionDTO);
+                _voteResultService.CreateVoteResult(voteOptionDTO, (int)HttpContext.Items["ResidentId"]);
                 return Ok("Ok");
             }
             catch (ValidationException ex)

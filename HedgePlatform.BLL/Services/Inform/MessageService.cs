@@ -17,12 +17,14 @@ namespace HedgePlatform.BLL.Services
         IUnitOfWork db { get; set; }
         private IVoteService _voteService;
         private IResidentService _residentService;
+        private IVoteResultService _voteResultService;
 
-        public MessageService(IUnitOfWork uow, IVoteService  voteService, IResidentService residentService)
+        public MessageService(IUnitOfWork uow, IVoteService  voteService, IResidentService residentService, IVoteResultService voteResultService)
         {
             db = uow;
             _voteService = voteService;
             _residentService = residentService;
+            _voteResultService = voteResultService;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<MessageService>();
@@ -41,17 +43,28 @@ namespace HedgePlatform.BLL.Services
         public IEnumerable<MessageDTO> GetMessages()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Message, MessageDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Message>, List<MessageDTO>>(db.Messages.GetAll());
+            return mapper.Map<IEnumerable<Message>, List<MessageDTO>>(db.Messages.Find(x=>x.Discriminator=="Message"));
         }
-
+        //ToDo переделать выборку на sql
         public IEnumerable<VoteDTO> GetMessagesAndVotes(int? ResidentId)
         {
             if (ResidentId == null)
                 throw new ValidationException("No Resident Id", "");
             ResidentDTO residentDTO = _residentService.GetResident(ResidentId);
-            IEnumerable<VoteDTO> voteDTOs = Enumerable.Empty<VoteDTO>();
+            List<VoteDTO> voteDTOs = new List<VoteDTO> { };
             if (residentDTO.Chairman == true)
-                voteDTOs = _voteService.GetVotes();
+            {
+                voteDTOs = _voteService.GetVotes().ToList();
+                List<VoteDTO> actual_voteDTOs = new List<VoteDTO> { };
+                IEnumerable<VoteResultDTO> voteResultDTOs = _voteResultService.GetVoteResultsByResident(ResidentId);
+                foreach (var voteResultDTO in voteResultDTOs)
+                {
+                   
+                   if(voteDTOs.Where(x=>x.Id==voteResultDTO.VoteOption.VoteId).Count()==0)
+                        actual_voteDTOs.Add(voteDTOs.FirstOrDefault(x=>x.Id== voteResultDTO.VoteOption.VoteId));
+                }
+                voteDTOs = actual_voteDTOs;
+            }               
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<MessageDTO, VoteDTO>()).CreateMapper();
             IEnumerable<VoteDTO> messages = mapper.Map<IEnumerable<MessageDTO>, IEnumerable<VoteDTO>>(GetMessages());
             return voteDTOs.Union(messages);
@@ -77,7 +90,6 @@ namespace HedgePlatform.BLL.Services
                 _logger.LogError("Message creating error: " + ex.Message);
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
-
         }
         public void EditMessage(MessageDTO message)
         {
@@ -107,7 +119,6 @@ namespace HedgePlatform.BLL.Services
         {
             if (id == null)
                 throw new ValidationException("NULL", "");
-
             var message = db.Messages.Get(id.Value);
             if (message == null)
                 throw new ValidationException("NOT_FOUND", "");
@@ -122,7 +133,6 @@ namespace HedgePlatform.BLL.Services
                 _logger.LogError("Message delete db error: " + ex.InnerException.Message);
                 throw new ValidationException("DB_ERROR", "");
             }
-
             catch (Exception ex)
             {
                 _logger.LogError("Message delete error: " + ex.Message);

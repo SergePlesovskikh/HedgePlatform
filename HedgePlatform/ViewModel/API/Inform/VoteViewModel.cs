@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HedgePlatform.ViewModel.API
 {
-    public class VoteViewModel
+    public class VoteViewModel : MessageViewModel
     {
         public ICollection<VoteOptionViewModel> VoteOptions { get; set; }
     }

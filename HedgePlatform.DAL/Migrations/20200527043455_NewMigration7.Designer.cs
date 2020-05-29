@@ -3,15 +3,17 @@ using System;
 using HedgePlatform.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HedgePlatform.DAL.Migrations
 {
     [DbContext(typeof(HedgeDBContext))]
-    partial class HedgeDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200527043455_NewMigration7")]
+    partial class NewMigration7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -405,7 +407,8 @@ namespace HedgePlatform.DAL.Migrations
 
                     b.HasIndex("ResidentId");
 
-                    b.HasIndex("VoteOptionId");
+                    b.HasIndex("VoteOptionId")
+                        .IsUnique();
 
                     b.ToTable("VoteResult");
                 });
@@ -514,8 +517,8 @@ namespace HedgePlatform.DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("HedgePlatform.DAL.Entities.VoteOption", "VoteOption")
-                        .WithMany("VoteResults")
-                        .HasForeignKey("VoteOptionId")
+                        .WithOne("VoteResult")
+                        .HasForeignKey("HedgePlatform.DAL.Entities.VoteResult", "VoteOptionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

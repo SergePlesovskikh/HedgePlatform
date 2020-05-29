@@ -11,7 +11,8 @@ namespace HedgePlatform.BLL.DTO
      
         public int VoteId { get; set; }
         public virtual VoteDTO Vote { get; set; }
-
         public string Description { get; set; }
+        public ICollection<VoteResultDTO> VoteResults { get; set; }
+
     }
 }

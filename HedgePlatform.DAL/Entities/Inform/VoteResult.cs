@@ -18,7 +18,5 @@ namespace HedgePlatform.DAL.Entities
 
         [Required]
         public DateTime DateVote { get; set; }
-
-
     }
 }

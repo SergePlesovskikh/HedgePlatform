@@ -13,7 +13,7 @@ namespace HedgePlatform.DAL.Entities
         public string Content { get; set; }
         [Required]
         public DateTime DateMessage { get; set; }
-        
+        public string Discriminator { get; set; }
 
     }
 }

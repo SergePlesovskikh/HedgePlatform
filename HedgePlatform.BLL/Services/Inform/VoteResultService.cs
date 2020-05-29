@@ -69,7 +69,20 @@ namespace HedgePlatform.BLL.Services
             var voteResults = db.VoteResults.GetWithInclude(x => x.Resident);
             return mapper.Map<IEnumerable<VoteResult>, List<VoteResultDTO>>(voteResults);
         }
-      
+
+        public IEnumerable<VoteResultDTO> GetVoteResultsByResident(int? ResidentId)
+        {
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<VoteResult, VoteResultDTO>().ForMember(s => s.Resident, h => h.MapFrom(src => src.Resident))
+                .ForMember(s => s.VoteOption, h => h.MapFrom(src => src.VoteOption));
+                cfg.CreateMap<Resident, ResidentDTO>();
+                cfg.CreateMap<VoteOption, VoteOptionDTO>();
+            }).CreateMapper();
+            var voteResults = db.VoteResults.GetWithInclude(x=>x.ResidentId==ResidentId, x=>x.VoteOption);
+            return mapper.Map<IEnumerable<VoteResult>, List<VoteResultDTO>>(voteResults);
+        }
+
+
         public byte[] GetVoteStat(int? ResidentId)
         {
             ResidentDTO resident = _residentService.GetResident(ResidentId);
@@ -191,7 +204,6 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-
         public void Dispose()
         {
             db.Dispose();

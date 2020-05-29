@@ -34,10 +34,14 @@ namespace HedgePlatform.BLL.Services
                 Header = vote.Header };
         }
 
-        public IEnumerable<VoteDTO> GetVotes()
+        public IEnumerable<VoteDTO> GetVotes()        
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Vote, VoteDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Vote>, List<VoteDTO>>(db.Votes.GetAll());
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<Vote, VoteDTO>().ForMember(s => s.VoteOptions, h => h.MapFrom(src => src.VoteOptions));
+                cfg.CreateMap<VoteOption, VoteOptionDTO>();
+            }).CreateMapper();
+            IEnumerable<Vote> votes = db.Votes.GetWithInclude(x => x.Discriminator == "Vote", x => x.VoteOptions);
+            return mapper.Map<IEnumerable<Vote>, List<VoteDTO>>(votes);
         }
 
         public void CreateVote(VoteDTO vote)

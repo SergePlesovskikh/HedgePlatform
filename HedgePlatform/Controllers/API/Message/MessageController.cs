@@ -27,12 +27,11 @@ namespace HedgePlatform.Controllers.API.Message
             var mapper = new MapperConfiguration(cfg => {
                 cfg.CreateMap<VoteDTO, VoteViewModel>()
                 .ForMember(s => s.VoteOptions, h => h.MapFrom(src => src.VoteOptions));
-                cfg.CreateMap<VoteOptionDTO, VoteViewModel>();
+                cfg.CreateMap<VoteOptionDTO, VoteOptionViewModel>();
             }).CreateMapper();
 
             var messages = mapper.Map<IEnumerable<VoteDTO>, List<VoteViewModel>>(voteDTOs);
             return messages;
         }
-
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace HedgePlatform.DAL.Entities
@@ -14,5 +13,6 @@ namespace HedgePlatform.DAL.Entities
 
         [Required]
         public string Description { get; set; }
+        public ICollection<VoteResult> VoteResults { get; set; }
     }
 }

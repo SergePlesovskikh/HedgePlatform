@@ -52,7 +52,9 @@ namespace HedgePlatform.BLL.Services
                 DateChange = resident.DateChange,
                 DateRegistration = resident.DateRegistration,
                 PhoneId = resident.PhoneId,
-                ResidentStatus = resident.ResidentStatus
+                ResidentStatus = resident.ResidentStatus,
+                Chairman = resident.Chairman,
+                Owner = resident.Owner
             };
         }
 
