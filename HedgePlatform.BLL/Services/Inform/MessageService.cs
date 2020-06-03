@@ -52,16 +52,15 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("No Resident Id", "");
             ResidentDTO residentDTO = _residentService.GetResident(ResidentId);
             List<VoteDTO> voteDTOs = new List<VoteDTO> { };
-            if (residentDTO.Chairman == true)
+            if (_residentService.CheckChairman(ResidentId.Value))
             {
                 voteDTOs = _voteService.GetVotes().ToList();
                 List<VoteDTO> actual_voteDTOs = new List<VoteDTO> { };
                 IEnumerable<VoteResultDTO> voteResultDTOs = _voteResultService.GetVoteResultsByResident(ResidentId);
-                foreach (var voteResultDTO in voteResultDTOs)
-                {
-                   
-                   if(voteDTOs.Where(x=>x.Id==voteResultDTO.VoteOption.VoteId).Count()==0)
-                        actual_voteDTOs.Add(voteDTOs.FirstOrDefault(x=>x.Id== voteResultDTO.VoteOption.VoteId));
+                foreach (var voteDTO in voteDTOs)
+                {                    
+                   if(_voteService.CheckVoteResident(voteDTO, ResidentId.Value, voteResultDTOs))
+                        actual_voteDTOs.Add(voteDTO);
                 }
                 voteDTOs = actual_voteDTOs;
             }               

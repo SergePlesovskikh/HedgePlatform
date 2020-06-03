@@ -40,9 +40,13 @@ namespace HedgePlatform.Controllers.API
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterViewModel, CounterDTO>()).CreateMapper();
             var counterDTO = mapper.Map<CounterViewModel, CounterDTO>(counter);
+
+            mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterValueViewModel, CounterValueDTO>()).CreateMapper();
+            var counterValue = mapper.Map<CounterValueViewModel, CounterValueDTO>(counter.LastCounterValue);
+
             try
             {
-                counterService.CreateCounter(counterDTO);
+                counterService.CreateCounter(counterDTO, counterValue, (int)HttpContext.Items["FlatId"]);
                 return Ok("Ok");
             }
             catch (ValidationException ex)

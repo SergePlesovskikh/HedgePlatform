@@ -38,7 +38,7 @@ namespace HedgePlatform.Controllers.API.Counter
             var counterValueDTO = mapper.Map<CounterValueViewModel, CounterValueDTO>(counterValue);
             try
             {
-                counterValueService.CreateCounterValue(counterValueDTO);
+                counterValueService.CreateCounterValue(counterValueDTO, (int)HttpContext.Items["FlatId"]);
                 return Ok("Ok");
             }
             catch (ValidationException ex)

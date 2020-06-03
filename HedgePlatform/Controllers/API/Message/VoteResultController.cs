@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using HedgePlatform.ViewModel;
+using HedgePlatform.ViewModel.API;
 using HedgePlatform.BLL.Interfaces;
 using HedgePlatform.BLL.DTO;
 using HedgePlatform.BLL.Infr;

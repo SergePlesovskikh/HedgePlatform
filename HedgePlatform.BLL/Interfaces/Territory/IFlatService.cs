@@ -9,7 +9,7 @@ namespace HedgePlatform.BLL.Interfaces
     {
         FlatDTO GetFlat(int? id);
         IEnumerable<FlatDTO> GetFlats();
-        IEnumerable<FlatDTO> GetFlats(int? HouseId);
+        IEnumerable<FlatDTO> GetFlats(int? HouseId);        
         void CreateFlat(FlatDTO flat);
         void EditFlat(FlatDTO flat);
         void DeleteFlat(int? id);

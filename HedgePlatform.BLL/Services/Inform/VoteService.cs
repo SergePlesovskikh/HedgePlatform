@@ -8,19 +8,19 @@ using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using System.Linq;
 
 namespace HedgePlatform.BLL.Services
 {
     public class VoteService : IVoteService
     {
         IUnitOfWork db { get; set; }
-
+        private readonly ILogger _logger = Log.CreateLogger<VoteService>();
+       
         public VoteService(IUnitOfWork uow)
         {
-            db = uow;
+            db = uow;           
         }
-
-        private readonly ILogger _logger = Log.CreateLogger<VoteService>();
 
         public VoteDTO GetVote(int? id)
         {
@@ -42,6 +42,11 @@ namespace HedgePlatform.BLL.Services
             }).CreateMapper();
             IEnumerable<Vote> votes = db.Votes.GetWithInclude(x => x.Discriminator == "Vote", x => x.VoteOptions);
             return mapper.Map<IEnumerable<Vote>, List<VoteDTO>>(votes);
+        }
+
+        public bool CheckVoteResident(VoteDTO voteDTO, int ResidentId, IEnumerable<VoteResultDTO> voteResultDTOs)
+        {
+            return (voteResultDTOs.Where(x => x.VoteOption.VoteId == voteDTO.Id).Count() == 0);           
         }
 
         public void CreateVote(VoteDTO vote)

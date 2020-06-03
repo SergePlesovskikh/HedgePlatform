@@ -108,6 +108,7 @@ namespace HedgePlatform.BLL.Services
 
         public void CreateVoteResult(VoteResultDTO voteResult)
         {
+
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteResultDTO, VoteResult>()).CreateMapper();
             try
             {
@@ -133,11 +134,18 @@ namespace HedgePlatform.BLL.Services
             if (ResidentId == null)
                 throw new ValidationException("No Resident Id", "");
 
+            if (!_residentService.CheckChairman(ResidentId.Value))
+                throw new ValidationException("No permission", "");
+
+            if (!CheckVoteResult(voteResult, ResidentId.Value))
+                throw new ValidationException("Already vote", "");
+
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteResultDTO, VoteResult>()).CreateMapper();
             try
             {
                 VoteResult new_voteResult = mapper.Map<VoteResultDTO, VoteResult>(voteResult);
-                new_voteResult.ResidentId = ResidentId.Value;               
+                new_voteResult.ResidentId = ResidentId.Value;
+                new_voteResult.DateVote = DateTime.Now;
                 db.VoteResults.Create(new_voteResult);
                 db.Save();
             }
@@ -154,6 +162,7 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
+
         public void EditVoteResult(VoteResultDTO voteResult)
         {
             if (voteResult == null)
@@ -207,6 +216,14 @@ namespace HedgePlatform.BLL.Services
         public void Dispose()
         {
             db.Dispose();
+        }
+
+        private bool CheckVoteResult(VoteResultDTO voteResult, int ResidentId)
+        {
+            if (db.VoteResults.FindFirst(x => x.ResidentId == ResidentId && x.VoteOptionId == voteResult.VoteOptionId) == null)
+                return true;
+            else
+                return false;
         }
     }
 }

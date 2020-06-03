@@ -11,6 +11,7 @@ namespace HedgePlatform.BLL.Interfaces
         IEnumerable<CounterValueDTO> GetCounterValues();
         IEnumerable<CounterValueDTO> GetCounterValuesByCounter(int? CounterId);
         void CreateCounterValue(CounterValueDTO counterValue);
+        void CreateCounterValue(CounterValueDTO counterValue, int? FlatId);
         void EditCounterValue(CounterValueDTO counterValue);
         void DeleteCounterValue(int? id);
         void Dispose();

@@ -8,16 +8,21 @@ using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace HedgePlatform.BLL.Services
 {
     public class CounterValueService : ICounterValueService
     {
         IUnitOfWork db { get; set; }
+        private IConfiguration _configuration;
+        private ICounterService _counterService;
 
-        public CounterValueService(IUnitOfWork uow)
+        public CounterValueService(IUnitOfWork uow, IConfiguration configuration, ICounterService counterService)
         {
             db = uow;
+            _configuration = configuration;
+            _counterService = counterService;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<CounterValueService>();
@@ -90,6 +95,38 @@ namespace HedgePlatform.BLL.Services
             }
 
         }
+
+        public void CreateCounterValue(CounterValueDTO counterValue, int? FlatId)
+        {
+            if (FlatId == null)
+                throw new ValidationException("REQ_ERROR", "");
+
+            if (_counterService.CheckCounterToFlat(FlatId.Value, counterValue.CounterId))
+                throw new ValidationException("WRONG_COUNTER", "");
+
+            if (!CheckCounterValueAdd(FlatId.Value))
+                throw new ValidationException("NO_PERMISSION", "");
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterValueDTO, CounterValue>()).CreateMapper();
+            try
+            {
+                db.CounterValues.Create(mapper.Map<CounterValueDTO, CounterValue>(counterValue));
+                db.Save();
+            }
+
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError("Database error exception: " + ex.InnerException.Message);
+                throw new ValidationException("DB_ERROR", "");
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError("counterValue creating error: " + ex.Message);
+                throw new ValidationException("UNKNOWN_ERROR", "");
+            }
+
+        }
         public void EditCounterValue(CounterValueDTO counterValue)
         {
             if (counterValue == null)
@@ -140,10 +177,31 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-
         public void Dispose()
         {
             db.Dispose();
+        }
+
+        public bool CheckCounterValueAdd(int CounterId)
+        {
+            return CheckAlwaysAdd() || (CheckDate() && CheckCurrentMonthVal(CounterId));
+        }
+
+        private bool CheckAlwaysAdd()
+        {
+            return bool.Parse(_configuration["CounterOptions:always_send_counter_value"]);
+        }
+
+        private bool CheckDate()
+        {
+            int start_day = int.Parse(_configuration["CounterOptions:start_send_value_counter_day"]);
+            int end_day = int.Parse(_configuration["CounterOptions:end_send_value_counter_day"]);
+            return DateTime.Now.Day <= end_day && DateTime.Now.Day >= start_day;
+        }
+
+        private bool CheckCurrentMonthVal(int CounterId)
+        {
+            return db.CounterValues.FindFirst(x => ( x.CounterId == CounterId) && (x.DateValue.Month==DateTime.Now.Month)) == null;
         }
     }
 }

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using HedgePlatform.BLL.Interfaces;
-using HedgePlatform.BLL.DTO;
 
 namespace HedgePlatform.Middleware
 {

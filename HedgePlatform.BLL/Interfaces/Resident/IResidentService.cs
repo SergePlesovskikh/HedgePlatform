@@ -1,7 +1,5 @@
 ﻿using HedgePlatform.BLL.DTO;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace HedgePlatform.BLL.Interfaces
 {
@@ -9,6 +7,7 @@ namespace HedgePlatform.BLL.Interfaces
     {
         ResidentDTO GetResident(int? id);
         string GetResidentStatus(int? id);
+        bool CheckChairman(int ResidentId);
         void RegistrationResident(string uid, ResidentDTO resident);
         byte[] GetRequest(int? ResidentId);
         IEnumerable<ResidentDTO> GetResidents();

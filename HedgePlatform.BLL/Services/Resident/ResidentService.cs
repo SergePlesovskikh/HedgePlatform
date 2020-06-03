@@ -17,18 +17,16 @@ namespace HedgePlatform.BLL.Services
         IUnitOfWork db { get; set; }
         private ISessionService _sessionService;
         private IPhoneService _phoneService;
-        private IHouseService _houseService;
         private IFlatService _flatService;
         private IHTMLService _HTMLService;
         private IPDFService _PDFService;
 
         public ResidentService(IUnitOfWork uow, ISessionService sessionService, IPhoneService phoneService, IFlatService flatService, 
-            IHouseService houseService, IHTMLService HTMLService, IPDFService PDFService)
+            IHTMLService HTMLService, IPDFService PDFService)
         {
             db = uow;
             _sessionService = sessionService;
-            _phoneService = phoneService;
-            _houseService = houseService;
+            _phoneService = phoneService;          
             _flatService = flatService;
             _HTMLService = HTMLService;
             _PDFService = PDFService;
@@ -93,6 +91,10 @@ namespace HedgePlatform.BLL.Services
             var residents = db.Residents.GetWithInclude(x => x.Flat);
             return mapper.Map<IEnumerable<Resident>, List<ResidentDTO>>(residents);
         }
+        public bool CheckChairman(int ResidentId)
+        {
+            return GetResident(ResidentId).Chairman.Value;
+        }
 
         public void RegistrationResident(string uid, ResidentDTO resident)
         {
@@ -134,8 +136,7 @@ namespace HedgePlatform.BLL.Services
             resident.DateChange = DateTime.Now;
             resident.ResidentStatus = "На рассмотрении";
             return resident;
-        }
-       
+        }       
 
         public ResidentDTO CreateResident(ResidentDTO resident)
         {
