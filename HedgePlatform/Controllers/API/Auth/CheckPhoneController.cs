@@ -7,7 +7,7 @@ namespace HedgePlatform.Controllers.API
 {
     [Route("api/mobile/auth/[controller]")]
     [ApiController]
-    public class CheckPhoneController : ControllerBase
+    public class CheckPhoneController : Controller
     {
         private ISMSSendService _smsSendService;
         private IPhoneService _phoneService;
@@ -16,7 +16,7 @@ namespace HedgePlatform.Controllers.API
             _smsSendService = smsSendService;
             _phoneService = phoneService;
         }
-        //TODO проверка корректности номера
+        //TODO проверка корректности номера в BLL
         [HttpGet]
         public async Task<ActionResult<string>> Get (string phone)
         {
@@ -36,6 +36,12 @@ namespace HedgePlatform.Controllers.API
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _phoneService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

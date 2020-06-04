@@ -10,35 +10,35 @@ namespace HedgePlatform.Controllers.ADM
 {
     [Route("api/inform/[controller]")]
     [ApiController]
-    public class VoteOptionController : ControllerBase
+    public class VoteOptionController : Controller
     {
-        IVoteOptionService voteOptionService;
-        public VoteOptionController(IVoteOptionService service)
+        private IVoteOptionService _voteOptionService;
+        public VoteOptionController(IVoteOptionService voteOptionService)
         {
-            voteOptionService = service;
+            _voteOptionService = voteOptionService;
         }
+
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<VoteOptionDTO, VoteOptionViewModel>().ForMember(s => s.Vote, h => h.MapFrom(src => src.Vote));
+            cfg.CreateMap<VoteDTO, VoteViewModel>();
+            cfg.CreateMap<VoteOptionViewModel, VoteOptionDTO>();
+        }).CreateMapper();
+
         [HttpGet]
         public IEnumerable<VoteOptionViewModel> Index()
         {
-            IEnumerable<VoteOptionDTO> voteOptionDTOs = voteOptionService.GetVoteOptions();
-
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<VoteOptionDTO, VoteOptionViewModel>().ForMember(s => s.Vote, h => h.MapFrom(src => src.Vote));
-                cfg.CreateMap<VoteDTO, VoteViewModel>();
-            }).CreateMapper();
-
-            var voteOptions = mapper.Map<IEnumerable<VoteOptionDTO>, List<VoteOptionViewModel>>(voteOptionDTOs);
+            IEnumerable<VoteOptionDTO> voteOptionDTOs = _voteOptionService.GetVoteOptions();
+            var voteOptions = _mapper.Map<IEnumerable<VoteOptionDTO>, List<VoteOptionViewModel>>(voteOptionDTOs);
             return voteOptions;
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] VoteOptionViewModel voteOption)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteOptionViewModel, VoteOptionDTO>()).CreateMapper();
-            var voteOptionDTO = mapper.Map<VoteOptionViewModel, VoteOptionDTO>(voteOption);
+            var voteOptionDTO = _mapper.Map<VoteOptionViewModel, VoteOptionDTO>(voteOption);
             try
             {
-                voteOptionService.CreateVoteOption(voteOptionDTO);
+                _voteOptionService.CreateVoteOption(voteOptionDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -50,11 +50,10 @@ namespace HedgePlatform.Controllers.ADM
         [HttpPut]
         public IActionResult Edit([FromBody] VoteOptionViewModel voteOption)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteOptionViewModel, VoteOptionDTO>()).CreateMapper();
-            var voteOptionDTO = mapper.Map<VoteOptionViewModel, VoteOptionDTO>(voteOption);
+            var voteOptionDTO = _mapper.Map<VoteOptionViewModel, VoteOptionDTO>(voteOption);
             try
             {
-                voteOptionService.EditVoteOption(voteOptionDTO);
+                _voteOptionService.EditVoteOption(voteOptionDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -68,13 +67,19 @@ namespace HedgePlatform.Controllers.ADM
         {
             try
             {
-                voteOptionService.DeleteVoteOption(id);
+                _voteOptionService.DeleteVoteOption(id);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _voteOptionService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

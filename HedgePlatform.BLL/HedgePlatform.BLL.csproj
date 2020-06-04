@@ -19,10 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\Appeal\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\HedgePlatform.DAL\HedgePlatform.DAL.csproj" />
   </ItemGroup>
 

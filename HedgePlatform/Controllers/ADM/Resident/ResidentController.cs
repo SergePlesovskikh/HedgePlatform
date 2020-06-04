@@ -10,35 +10,35 @@ namespace HedgePlatform.Controllers.ADM.Resident
 {
     [Route("api/resident/[controller]")]
     [ApiController]
-    public class ResidentController : ControllerBase
+    public class ResidentController : Controller
     {
-        IResidentService residentService;
-        public ResidentController(IResidentService service)
+        private IResidentService _residentService;
+        public ResidentController(IResidentService residentService)
         {
-            residentService = service;
+            _residentService = residentService;
         }
+
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<ResidentDTO, ResidentViewModel>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat));
+            cfg.CreateMap<FlatDTO, FlatViewModel>();
+            cfg.CreateMap<ResidentViewModel, ResidentDTO>();
+        }).CreateMapper();
+
         [HttpGet]
         public IEnumerable<ResidentViewModel> Index()
         {
-            IEnumerable<ResidentDTO> residentDTOs = residentService.GetResidents();
-
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<ResidentDTO, ResidentViewModel>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat));
-                cfg.CreateMap<FlatDTO, FlatViewModel>();
-            }).CreateMapper();
-
-            var residents = mapper.Map<IEnumerable<ResidentDTO>, List<ResidentViewModel>>(residentDTOs);
+            IEnumerable<ResidentDTO> residentDTOs = _residentService.GetResidents();
+            var residents = _mapper.Map<IEnumerable<ResidentDTO>, List<ResidentViewModel>>(residentDTOs);
             return residents;
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] ResidentViewModel resident)
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ResidentViewModel, ResidentDTO>()).CreateMapper();
-            var residentDTO = mapper.Map<ResidentViewModel, ResidentDTO>(resident);
+        {            
+            var residentDTO =_mapper.Map<ResidentViewModel, ResidentDTO>(resident);
             try
             {
-                residentService.CreateResident(residentDTO);
+                _residentService.CreateResident(residentDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -50,11 +50,10 @@ namespace HedgePlatform.Controllers.ADM.Resident
         [HttpPut]
         public IActionResult Edit([FromBody] ResidentViewModel resident)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ResidentViewModel, ResidentDTO>()).CreateMapper();
-            var residentDTO = mapper.Map<ResidentViewModel, ResidentDTO>(resident);
+            var residentDTO = _mapper.Map<ResidentViewModel, ResidentDTO>(resident);
             try
             {
-                residentService.EditResident(residentDTO);
+                _residentService.EditResident(residentDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -68,13 +67,19 @@ namespace HedgePlatform.Controllers.ADM.Resident
         {
             try
             {
-                residentService.DeleteResident(id);
+                _residentService.DeleteResident(id);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _residentService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

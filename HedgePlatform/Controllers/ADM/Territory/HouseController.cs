@@ -10,35 +10,35 @@ namespace HedgePlatform.Controllers.ADM
 {
     [Route("api/territory/[controller]")]
     [ApiController]
-    public class HouseController : ControllerBase
+    public class HouseController : Controller
     {
-        IHouseService houseService;
-        public HouseController(IHouseService service)
+        private IHouseService _houseService;
+        public HouseController(IHouseService houseService)
         {
-            houseService = service;
+            _houseService = houseService;
         }
+
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<HouseDTO, HouseViewModel>().ForMember(s => s.HouseManager, h => h.MapFrom(src => src.HouseManager));
+            cfg.CreateMap<HouseManagerDTO, HouseManagerViewModel>();
+            cfg.CreateMap<HouseViewModel, HouseDTO>();
+        }).CreateMapper();
+
         [HttpGet]
         public IEnumerable<HouseViewModel> Index()
         {
-            IEnumerable<HouseDTO> houseDTOs = houseService.GetHouses();
-            
-            var mapper = new MapperConfiguration(cfg => { 
-                cfg.CreateMap<HouseDTO, HouseViewModel>().ForMember(s=>s.HouseManager, h=>h.MapFrom( src=>src.HouseManager));
-                cfg.CreateMap<HouseManagerDTO, HouseManagerViewModel>();            
-            }).CreateMapper();
-            
-            var houses = mapper.Map<IEnumerable<HouseDTO>, List<HouseViewModel>>(houseDTOs);
+            IEnumerable<HouseDTO> houseDTOs = _houseService.GetHouses();            
+            var houses = _mapper.Map<IEnumerable<HouseDTO>, List<HouseViewModel>>(houseDTOs);
             return houses;
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] HouseViewModel house)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<HouseViewModel, HouseDTO>()).CreateMapper();
-            var houseDTO = mapper.Map<HouseViewModel, HouseDTO>(house);
+            var houseDTO = _mapper.Map<HouseViewModel, HouseDTO>(house);
             try
             {
-                houseService.CreateHouse(houseDTO);
+                _houseService.CreateHouse(houseDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -50,11 +50,10 @@ namespace HedgePlatform.Controllers.ADM
         [HttpPut]
         public IActionResult Edit([FromBody] HouseViewModel house)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<HouseViewModel, HouseDTO>()).CreateMapper();
-            var houseDTO = mapper.Map<HouseViewModel, HouseDTO>(house);
+            var houseDTO = _mapper.Map<HouseViewModel, HouseDTO>(house);
             try
             {
-                houseService.EditHouse(houseDTO);
+                _houseService.EditHouse(houseDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -68,13 +67,19 @@ namespace HedgePlatform.Controllers.ADM
         {
             try
             {
-                houseService.DeleteHouse(id);
+                _houseService.DeleteHouse(id);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _houseService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

@@ -10,39 +10,39 @@ namespace HedgePlatform.Controllers.ADM.Counter
 {
     [Route("api/counter/[controller]")]
     [ApiController]
-    public class CounterController : ControllerBase
+    public class CounterController : Controller
     {
-        ICounterService counterService;
-        public CounterController(ICounterService service)
+        private ICounterService _counterService;
+        public CounterController(ICounterService counterService)
         {
-            counterService = service;
+            _counterService = counterService;
         }
+
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<CounterDTO, CounterViewModel>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat))
+            .ForMember(s => s.CounterType, h => h.MapFrom(src => src.CounterType))
+            .ForMember(s => s.CounterStatus, h => h.MapFrom(src => src.CounterStatus));
+            cfg.CreateMap<FlatDTO, FlatViewModel>();
+            cfg.CreateMap<CounterTypeDTO, CounterTypeViewModel>();
+            cfg.CreateMap<CounterStatusDTO, CounterStatusViewModel>();
+            cfg.CreateMap<CounterViewModel, CounterDTO>();
+        }).CreateMapper();
+
         [HttpGet]
         public IEnumerable<CounterViewModel> Index()
         {
-            IEnumerable<CounterDTO> counterDTOs = counterService.GetCounters();
-
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<CounterDTO, CounterViewModel>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat))
-                .ForMember(s => s.CounterType, h => h.MapFrom(src => src.CounterType))
-                .ForMember(s => s.CounterStatus, h => h.MapFrom(src => src.CounterStatus));
-                cfg.CreateMap<FlatDTO, FlatViewModel>();
-                cfg.CreateMap<CounterTypeDTO, CounterTypeViewModel>();
-                cfg.CreateMap<CounterStatusDTO, CounterStatusViewModel>();
-            }).CreateMapper();
-
-            var counters = mapper.Map<IEnumerable<CounterDTO>, List<CounterViewModel>>(counterDTOs);
+            IEnumerable<CounterDTO> counterDTOs = _counterService.GetCounters();
+            var counters = _mapper.Map<IEnumerable<CounterDTO>, List<CounterViewModel>>(counterDTOs);
             return counters;
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] CounterViewModel counter)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterViewModel, CounterDTO>()).CreateMapper();
-            var counterDTO = mapper.Map<CounterViewModel, CounterDTO>(counter);
+            var counterDTO = _mapper.Map<CounterViewModel, CounterDTO>(counter);
             try
             {
-                counterService.CreateCounter(counterDTO);
+                _counterService.CreateCounter(counterDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -54,11 +54,10 @@ namespace HedgePlatform.Controllers.ADM.Counter
         [HttpPut]
         public IActionResult Edit([FromBody] CounterViewModel counter)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterViewModel, CounterDTO>()).CreateMapper();
-            var counterDTO = mapper.Map<CounterViewModel, CounterDTO>(counter);
+            var counterDTO = _mapper.Map<CounterViewModel, CounterDTO>(counter);
             try
             {
-                counterService.EditCounter(counterDTO);
+                _counterService.EditCounter(counterDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -72,13 +71,19 @@ namespace HedgePlatform.Controllers.ADM.Counter
         {
             try
             {
-                counterService.DeleteCounter(id);
+                _counterService.DeleteCounter(id);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _counterService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

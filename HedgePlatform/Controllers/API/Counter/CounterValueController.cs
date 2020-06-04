@@ -10,41 +10,46 @@ namespace HedgePlatform.Controllers.API.Counter
 {
     [Route("api/mobile/work/[controller]")]
     [ApiController]
-    public class CounterValueController : ControllerBase
+    public class CounterValueController : Controller
     {
-        ICounterValueService counterValueService;
+        private ICounterValueService _counterValueService;
         public CounterValueController(ICounterValueService service)
         {
-            counterValueService = service;
+            _counterValueService = service;
         }
+
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<CounterValueDTO, CounterValueViewModel>().ForMember(s => s.Counter, h => h.MapFrom(src => src.Counter));
+            cfg.CreateMap<CounterDTO, CounterViewModel>();
+            cfg.CreateMap<CounterValueViewModel, CounterValueDTO>();
+        }).CreateMapper();
+
         [HttpGet]
         public IEnumerable<CounterValueViewModel> Index(int CounterId)
         {
-            IEnumerable<CounterValueDTO> counterValueDTOs = counterValueService.GetCounterValuesByCounter(CounterId);
-
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<CounterValueDTO, CounterValueViewModel>().ForMember(s => s.Counter, h => h.MapFrom(src => src.Counter));
-                cfg.CreateMap<CounterDTO, CounterViewModel>();
-            }).CreateMapper();
-
-            var counterValues = mapper.Map<IEnumerable<CounterValueDTO>, List<CounterValueViewModel>>(counterValueDTOs);
+            IEnumerable<CounterValueDTO> counterValueDTOs = _counterValueService.GetCounterValuesByCounter(CounterId);
+            var counterValues = _mapper.Map<IEnumerable<CounterValueDTO>, List<CounterValueViewModel>>(counterValueDTOs);
             return counterValues;
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] CounterValueViewModel counterValue)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterValueViewModel, CounterValueDTO>()).CreateMapper();
-            var counterValueDTO = mapper.Map<CounterValueViewModel, CounterValueDTO>(counterValue);
+            var counterValueDTO = _mapper.Map<CounterValueViewModel, CounterValueDTO>(counterValue);
             try
             {
-                counterValueService.CreateCounterValue(counterValueDTO, (int)HttpContext.Items["FlatId"]);
+                _counterValueService.CreateCounterValue(counterValueDTO, (int)HttpContext.Items["FlatId"]);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _counterValueService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

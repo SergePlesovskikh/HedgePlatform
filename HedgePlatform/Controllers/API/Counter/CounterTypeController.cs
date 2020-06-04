@@ -9,24 +9,30 @@ namespace HedgePlatform.Controllers.API.Counter
 {
     [Route("api/mobile/work/[controller]")]
     [ApiController]
-    public class CounterTypeController : ControllerBase
+    public class CounterTypeController : Controller
     {
-        ICounterTypeService _counterTypeService;
+        private ICounterTypeService _counterTypeService;
         public CounterTypeController(ICounterTypeService counterTypeService)
         {
             _counterTypeService = counterTypeService;
         }
 
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<CounterTypeDTO, CounterTypeViewModel>();
+        }).CreateMapper();
+
         [HttpGet]
         public IEnumerable<CounterTypeViewModel> Index()
         {
             IEnumerable<CounterTypeDTO> counterTypeDTOs = _counterTypeService.GetCounterTypes();
-            var mapper = new MapperConfiguration(cfg => {                
-                cfg.CreateMap<CounterTypeDTO, CounterTypeViewModel>();
-            }).CreateMapper();
-
-            var countersTypes = mapper.Map<IEnumerable<CounterTypeDTO>, List<CounterTypeViewModel>>(counterTypeDTOs);
+            var countersTypes = _mapper.Map<IEnumerable<CounterTypeDTO>, List<CounterTypeViewModel>>(counterTypeDTOs);
             return countersTypes;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _counterTypeService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

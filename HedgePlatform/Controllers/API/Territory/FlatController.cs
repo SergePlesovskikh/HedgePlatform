@@ -9,7 +9,7 @@ namespace HedgePlatform.Controllers.API.Territory
 {
     [Route("api/mobile/registration/[controller]")]
     [ApiController]
-    public class FlatController : ControllerBase
+    public class FlatController : Controller
     {
         private IFlatService _flatService;
         public FlatController(IFlatService flatService)
@@ -17,17 +17,20 @@ namespace HedgePlatform.Controllers.API.Territory
             _flatService = flatService;
         }
 
+        private static IMapper _mapper = new MapperConfiguration(cfg => { cfg.CreateMap<FlatDTO, FlatViewModel>();}).CreateMapper();
+
         [HttpGet]
         public IEnumerable<FlatViewModel> Index(int? HouseId)
         {
             IEnumerable<FlatDTO> flatDTOs = _flatService.GetFlats(HouseId);
-
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<FlatDTO, FlatViewModel>();
-            }).CreateMapper();
-
-            var flats = mapper.Map<IEnumerable<FlatDTO>, List<FlatViewModel>>(flatDTOs);
+            var flats = _mapper.Map<IEnumerable<FlatDTO>, List<FlatViewModel>>(flatDTOs);
             return flats;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _flatService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

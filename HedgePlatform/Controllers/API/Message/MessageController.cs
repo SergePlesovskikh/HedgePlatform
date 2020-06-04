@@ -11,7 +11,7 @@ namespace HedgePlatform.Controllers.API.Message
     
     [ApiController]
     [Route("api/mobile/work/[controller]")]
-    public class MessageController : ControllerBase
+    public class MessageController : Controller
     {
         private IMessageService _messageService;
         public MessageController (IMessageService messageService)
@@ -19,19 +19,23 @@ namespace HedgePlatform.Controllers.API.Message
             _messageService = messageService;
         }
 
-        [HttpGet]        
-        public IEnumerable<VoteViewModel> Index()
-        {
-            IEnumerable<VoteDTO> voteDTOs = _messageService.GetMessagesAndVotes((int)HttpContext.Items["ResidentId"]);
-
-            var mapper = new MapperConfiguration(cfg => {
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
                 cfg.CreateMap<VoteDTO, VoteViewModel>()
                 .ForMember(s => s.VoteOptions, h => h.MapFrom(src => src.VoteOptions));
                 cfg.CreateMap<VoteOptionDTO, VoteOptionViewModel>();
             }).CreateMapper();
 
-            var messages = mapper.Map<IEnumerable<VoteDTO>, List<VoteViewModel>>(voteDTOs);
+        [HttpGet]        
+        public IEnumerable<VoteViewModel> Index()
+        {
+            IEnumerable<VoteDTO> voteDTOs = _messageService.GetMessagesAndVotes((int)HttpContext.Items["ResidentId"]);
+            var messages = _mapper.Map<IEnumerable<VoteDTO>, List<VoteViewModel>>(voteDTOs);
             return messages;
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _messageService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

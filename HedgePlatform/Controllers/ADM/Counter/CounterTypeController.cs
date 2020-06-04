@@ -10,31 +10,34 @@ namespace HedgePlatform.Controllers.ADM
 {
     [Route("api/counter/[controller]")]
     [ApiController]
-    public class CounterTypeController : ControllerBase
+    public class CounterTypeController : Controller
     {
-        ICounterTypeService counterTypeService;
-        public CounterTypeController(ICounterTypeService service)
+        ICounterTypeService _counterTypeService;
+        private static IMapper _mapper = new MapperConfiguration(cfg => { 
+            cfg.CreateMap<CounterTypeDTO, CounterTypeViewModel>();
+            cfg.CreateMap<CounterTypeViewModel, CounterTypeDTO>();
+        }).CreateMapper(); 
+
+        public CounterTypeController(ICounterTypeService counterTypeService)
         {
-            counterTypeService = service;
+            _counterTypeService = counterTypeService;
         }
      
         [HttpGet]
         public IEnumerable<CounterTypeViewModel> Index()
         {
-            IEnumerable<CounterTypeDTO> counterTypeDTOs = counterTypeService.GetCounterTypes();
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterTypeDTO, CounterTypeViewModel>()).CreateMapper();
-            var counterTypes = mapper.Map<IEnumerable<CounterTypeDTO>, List<CounterTypeViewModel>>(counterTypeDTOs);
+            IEnumerable<CounterTypeDTO> counterTypeDTOs = _counterTypeService.GetCounterTypes();          
+            var counterTypes = _mapper.Map<IEnumerable<CounterTypeDTO>, List<CounterTypeViewModel>>(counterTypeDTOs);
             return counterTypes;
         }
      
         [HttpPost]
         public IActionResult Create([FromBody] CounterTypeViewModel counterType)
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterTypeViewModel, CounterTypeDTO>()).CreateMapper();
-            var counterTypeDTO = mapper.Map<CounterTypeViewModel, CounterTypeDTO>(counterType);
+        {          
+            var counterTypeDTO = _mapper.Map<CounterTypeViewModel, CounterTypeDTO>(counterType);
             try
             {
-                counterTypeService.CreateCounterTypes(counterTypeDTO);
+                _counterTypeService.CreateCounterTypes(counterTypeDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -46,11 +49,10 @@ namespace HedgePlatform.Controllers.ADM
         [HttpPut]
         public IActionResult Edit([FromBody] CounterTypeViewModel counterType)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterTypeViewModel, CounterTypeDTO>()).CreateMapper();
-            var counterTypeDTO = mapper.Map<CounterTypeViewModel, CounterTypeDTO>(counterType);
+            var counterTypeDTO = _mapper.Map<CounterTypeViewModel, CounterTypeDTO>(counterType);
             try
             {
-                counterTypeService.EditCounterTypes(counterTypeDTO);
+                _counterTypeService.EditCounterTypes(counterTypeDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -64,13 +66,18 @@ namespace HedgePlatform.Controllers.ADM
         {
             try
             {
-                counterTypeService.DeleteCounterType(id);
+                _counterTypeService.DeleteCounterType(id);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _counterTypeService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

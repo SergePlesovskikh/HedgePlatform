@@ -17,14 +17,15 @@ namespace HedgePlatform.Controllers.API
             _residentService = residentService;
         }
 
+        private static IMapper _mapper = new MapperConfiguration(cfg => cfg.CreateMap<ResidentViewModel, ResidentDTO>()).CreateMapper();
+
         [Route("api/mobile/regist/[controller]")]
         [HttpPost]
         public ActionResult<string> Registration([FromBody] ResidentViewModel resident, string uid)
         {
             try
             {
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ResidentViewModel, ResidentDTO>()).CreateMapper();
-                var residentDTO = mapper.Map<ResidentViewModel, ResidentDTO>(resident);
+                var residentDTO = _mapper.Map<ResidentViewModel, ResidentDTO>(resident);
                 _residentService.RegistrationResident(uid, residentDTO);
                 return Ok();
             }

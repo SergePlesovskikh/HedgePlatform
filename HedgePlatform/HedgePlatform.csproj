@@ -33,9 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\ADM\Appeal\" />
     <Folder Include="Controllers\ADM\Admin\" />
-    <Folder Include="ViewModel\ADM\Appeal\" />
     <Folder Include="logs\" />
   </ItemGroup>
 

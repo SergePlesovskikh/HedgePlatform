@@ -6,35 +6,38 @@ using HedgePlatform.BLL.DTO;
 using HedgePlatform.BLL.Infr;
 using AutoMapper;
 
-
 namespace HedgePlatform.Controllers.ADM
 {
     [Route("api/counter/[controller]")]
     [ApiController]
-    public class CounterStatusController : ControllerBase
+    public class CounterStatusController : Controller
     {
-        ICounterStatusService counterStatusService;
-        public CounterStatusController(ICounterStatusService service)
+        private ICounterStatusService _counterStatusService;
+        public CounterStatusController(ICounterStatusService counterStatusService)
         {
-            counterStatusService = service;
+            _counterStatusService = counterStatusService;
         }
+
+        private static IMapper _mapper = new MapperConfiguration(cfg => { 
+            cfg.CreateMap<CounterStatusDTO, CounterStatusViewModel>();
+            cfg.CreateMap<CounterStatusViewModel, CounterStatusDTO>();
+        }).CreateMapper();
+
         [HttpGet]
         public IEnumerable<CounterStatusViewModel> Index()
         {
-            IEnumerable<CounterStatusDTO> counterStatusDTOs = counterStatusService.GetCounterStats();
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterStatusDTO, CounterStatusViewModel>()).CreateMapper();
-            var counterStats = mapper.Map<IEnumerable<CounterStatusDTO>, List<CounterStatusViewModel>>(counterStatusDTOs);
+            IEnumerable<CounterStatusDTO> counterStatusDTOs = _counterStatusService.GetCounterStats();           
+            var counterStats = _mapper.Map<IEnumerable<CounterStatusDTO>, List<CounterStatusViewModel>>(counterStatusDTOs);
             return counterStats;
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] CounterStatusViewModel counterStatus)
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterStatusViewModel, CounterStatusDTO>()).CreateMapper();
-            var counterStatusDTO = mapper.Map<CounterStatusViewModel, CounterStatusDTO>(counterStatus);
+        {            
+            var counterStatusDTO = _mapper.Map<CounterStatusViewModel, CounterStatusDTO>(counterStatus);
             try
             {
-                counterStatusService.CreateCounterStatus(counterStatusDTO);
+                _counterStatusService.CreateCounterStatus(counterStatusDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -45,12 +48,11 @@ namespace HedgePlatform.Controllers.ADM
 
         [HttpPut]
         public IActionResult Edit([FromBody] CounterStatusViewModel counterStatus)
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterStatusViewModel, CounterStatusDTO>()).CreateMapper();
-            var counterStatusDTO = mapper.Map<CounterStatusViewModel, CounterStatusDTO>(counterStatus);
+        {           
+            var counterStatusDTO = _mapper.Map<CounterStatusViewModel, CounterStatusDTO>(counterStatus);
             try
             {
-                counterStatusService.EditCounterStatus(counterStatusDTO);
+                _counterStatusService.EditCounterStatus(counterStatusDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -64,13 +66,18 @@ namespace HedgePlatform.Controllers.ADM
         {
             try
             {
-                counterStatusService.DeleteCounterStatus(id);
+                _counterStatusService.DeleteCounterStatus(id);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _counterStatusService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

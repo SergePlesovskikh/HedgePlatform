@@ -11,48 +11,51 @@ namespace HedgePlatform.Controllers.API
 {
     [Route("api/mobile/work/[controller]")]
     [ApiController]
-    public class CounterController : ControllerBase
+    public class CounterController : Controller
     {
-        ICounterService counterService;
-        public CounterController(ICounterService service)
+        private ICounterService _counterService;
+        public CounterController(ICounterService counterService)
         {
-            counterService = service;
+            _counterService = counterService;
         }
+
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<CounterDTO, CounterViewModel>()
+            .ForMember(s => s.CounterType, h => h.MapFrom(src => src.CounterType));
+            cfg.CreateMap<CounterTypeDTO, CounterTypeViewModel>();
+            cfg.CreateMap<CounterViewModel, CounterDTO>();
+            cfg.CreateMap<CounterValueViewModel, CounterValueDTO>();
+        }).CreateMapper();
 
         [HttpGet]
         public IEnumerable<CounterViewModel> Index()
         {
 
-            IEnumerable<CounterDTO> counterDTOs = counterService.GetCountersByFlat((int)HttpContext.Items["FlatId"]);
-
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<CounterDTO, CounterViewModel>()
-                .ForMember(s => s.CounterType, h => h.MapFrom(src => src.CounterType));
-                cfg.CreateMap<CounterTypeDTO, CounterTypeViewModel>();
-            }).CreateMapper();
-
-            var counters = mapper.Map<IEnumerable<CounterDTO>, List<CounterViewModel>>(counterDTOs);
+            IEnumerable<CounterDTO> counterDTOs = _counterService.GetCountersByFlat((int)HttpContext.Items["FlatId"]);
+            var counters = _mapper.Map<IEnumerable<CounterDTO>, List<CounterViewModel>>(counterDTOs);
             return counters;
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] CounterViewModel counter)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterViewModel, CounterDTO>()).CreateMapper();
-            var counterDTO = mapper.Map<CounterViewModel, CounterDTO>(counter);
-
-            mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterValueViewModel, CounterValueDTO>()).CreateMapper();
-            var counterValue = mapper.Map<CounterValueViewModel, CounterValueDTO>(counter.LastCounterValue);
+            var counterDTO = _mapper.Map<CounterViewModel, CounterDTO>(counter);
+            var counterValue = _mapper.Map<CounterValueViewModel, CounterValueDTO>(counter.LastCounterValue);
 
             try
             {
-                counterService.CreateCounter(counterDTO, counterValue, (int)HttpContext.Items["FlatId"]);
+                _counterService.CreateCounter(counterDTO, counterValue, (int)HttpContext.Items["FlatId"]);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _counterService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

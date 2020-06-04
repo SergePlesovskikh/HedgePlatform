@@ -8,8 +8,7 @@ using System.Collections.Generic;
 namespace HedgePlatform.BLL.Services
 {
     public class HTMLService : IHTMLService
-    {
-        
+    {        
         public string GenerateHTMLRequest(ResidentDTO resident)
         {
             var document = GetHTMLDocument("\\wwwroot\\html\\pdfrequest.html");

@@ -10,31 +10,34 @@ namespace HedgePlatform.Controllers.ADM
 {
     [Route("api/inform/[controller]")]
     [ApiController]
-    public class MessageController : ControllerBase
+    public class MessageController : Controller
     {
-        IMessageService messageService;
-        public MessageController(IMessageService service)
+        private IMessageService _messageService;
+        public MessageController(IMessageService messageService)
         {
-            messageService = service;
+            _messageService = messageService;
         }
+
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<MessageDTO, MessageViewModel>();
+            cfg.CreateMap<MessageViewModel, MessageDTO>();
+        }).CreateMapper();
 
         [HttpGet]
         public IEnumerable<MessageViewModel> Index()
         {
-            IEnumerable<MessageDTO> messageDTOs = messageService.GetMessages();
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<MessageDTO, MessageViewModel>()).CreateMapper();
-            var messages = mapper.Map<IEnumerable<MessageDTO>, List<MessageViewModel>>(messageDTOs);
+            IEnumerable<MessageDTO> messageDTOs = _messageService.GetMessages();
+            var messages = _mapper.Map<IEnumerable<MessageDTO>, List<MessageViewModel>>(messageDTOs);
             return messages;
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] MessageViewModel message)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<MessageViewModel, MessageDTO>()).CreateMapper();
-            var messageDTO = mapper.Map<MessageViewModel, MessageDTO>(message);
+            var messageDTO = _mapper.Map<MessageViewModel, MessageDTO>(message);
             try
             {
-                messageService.CreateMessage(messageDTO);
+                _messageService.CreateMessage(messageDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -46,11 +49,10 @@ namespace HedgePlatform.Controllers.ADM
         [HttpPut]
         public IActionResult Edit([FromBody] MessageViewModel message)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<MessageViewModel, MessageDTO>()).CreateMapper();
-            var messageDTO = mapper.Map<MessageViewModel, MessageDTO>(message);
+            var messageDTO = _mapper.Map<MessageViewModel, MessageDTO>(message);
             try
             {
-                messageService.EditMessage(messageDTO);
+                _messageService.EditMessage(messageDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -64,13 +66,18 @@ namespace HedgePlatform.Controllers.ADM
         {
             try
             {
-                messageService.DeleteMessage(id);
+                _messageService.DeleteMessage(id);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _messageService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

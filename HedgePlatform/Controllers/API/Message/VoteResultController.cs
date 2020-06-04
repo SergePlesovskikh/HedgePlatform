@@ -17,6 +17,8 @@ namespace HedgePlatform.Controllers.API.Message
             _voteResultService = voteResultService;
         }
 
+        private static IMapper _mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteResultViewModel, VoteResultDTO>()).CreateMapper();
+
         [HttpGet]
         public FileContentResult Get()
         {            
@@ -26,8 +28,7 @@ namespace HedgePlatform.Controllers.API.Message
         [HttpPost]
         public IActionResult Create([FromBody] VoteResultViewModel voteResult)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteResultViewModel, VoteResultDTO>()).CreateMapper();
-            var voteOptionDTO = mapper.Map<VoteResultViewModel, VoteResultDTO>(voteResult);
+            var voteOptionDTO = _mapper.Map<VoteResultViewModel, VoteResultDTO>(voteResult);
             try
             {
                 _voteResultService.CreateVoteResult(voteOptionDTO, (int)HttpContext.Items["ResidentId"]);

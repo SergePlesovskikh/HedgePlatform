@@ -10,35 +10,35 @@ namespace HedgePlatform.Controllers.ADM.Territory
 {
     [Route("api/territory/[controller]")]
     [ApiController]
-    public class FlatController : ControllerBase
+    public class FlatController : Controller
     {
-        IFlatService flatService;
-        public FlatController(IFlatService service)
+        private IFlatService _flatService;
+        public FlatController(IFlatService flatService)
         {
-            flatService = service;
+            _flatService = flatService;
         }
+
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<FlatDTO, FlatViewModel>().ForMember(s => s.House, h => h.MapFrom(src => src.House));
+            cfg.CreateMap<HouseDTO, HouseViewModel>();
+            cfg.CreateMap<FlatViewModel, FlatDTO>();
+        }).CreateMapper();
+
         [HttpGet]
         public IEnumerable<FlatViewModel> Index()
         {
-            IEnumerable<FlatDTO> flatDTOs = flatService.GetFlats();
-
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<FlatDTO, FlatViewModel>().ForMember(s => s.House, h => h.MapFrom(src => src.House));
-                cfg.CreateMap<HouseDTO, HouseViewModel>();
-            }).CreateMapper();
-
-            var flats = mapper.Map<IEnumerable<FlatDTO>, List<FlatViewModel>>(flatDTOs);
+            IEnumerable<FlatDTO> flatDTOs = _flatService.GetFlats();
+            var flats = _mapper.Map<IEnumerable<FlatDTO>, List<FlatViewModel>>(flatDTOs);
             return flats;
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] FlatViewModel flat)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<FlatViewModel, FlatDTO>()).CreateMapper();
-            var flatDTO = mapper.Map<FlatViewModel, FlatDTO>(flat);
+            var flatDTO = _mapper.Map<FlatViewModel, FlatDTO>(flat);
             try
             {
-                flatService.CreateFlat(flatDTO);
+                _flatService.CreateFlat(flatDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -50,11 +50,10 @@ namespace HedgePlatform.Controllers.ADM.Territory
         [HttpPut]
         public IActionResult Edit([FromBody] FlatViewModel flat)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<FlatViewModel, FlatDTO>()).CreateMapper();
-            var flatDTO = mapper.Map<FlatViewModel, FlatDTO>(flat);
+            var flatDTO = _mapper.Map<FlatViewModel, FlatDTO>(flat);
             try
             {
-                flatService.EditFlat(flatDTO);
+                _flatService.EditFlat(flatDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -68,13 +67,18 @@ namespace HedgePlatform.Controllers.ADM.Territory
         {
             try
             {
-                flatService.DeleteFlat(id);
+                _flatService.DeleteFlat(id);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _flatService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

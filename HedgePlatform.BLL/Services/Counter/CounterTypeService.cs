@@ -13,20 +13,23 @@ namespace HedgePlatform.BLL.Services
 {
     public class CounterTypeService : ICounterTypeService
     {
-        IUnitOfWork db { get; set; }
-
+        private IUnitOfWork _db { get; set; }
         public CounterTypeService(IUnitOfWork uow)
         {
-            db = uow;
+            _db = uow;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<CounterTypeService>();
+        private static IMapper _mapper = new MapperConfiguration(cfg => { 
+            cfg.CreateMap<CounterType, CounterTypeDTO>();
+            cfg.CreateMap<CounterTypeDTO, CounterType>();
+        }).CreateMapper();
 
         public CounterTypeDTO GetCounterType(int? id)
         {
             if (id == null)
                 throw new ValidationException("NULL", "");
-            var counterType = db.CounterTypes.Get(id.Value);
+            var counterType = _db.CounterTypes.Get(id.Value);
             if (counterType == null)
                 throw new ValidationException("NOT_FOUND", "");
 
@@ -34,18 +37,16 @@ namespace HedgePlatform.BLL.Services
         }
 
         public IEnumerable<CounterTypeDTO> GetCounterTypes()
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterType, CounterTypeDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<CounterType>, List<CounterTypeDTO>>(db.CounterTypes.GetAll());
+        {            
+            return _mapper.Map<IEnumerable<CounterType>, List<CounterTypeDTO>>(_db.CounterTypes.GetAll());
         }
 
         public void CreateCounterTypes(CounterTypeDTO counterType)
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterTypeDTO, CounterType>()).CreateMapper();
+        {          
             try
             {
-                db.CounterTypes.Create(mapper.Map<CounterTypeDTO, CounterType>(counterType));
-                db.Save();
+                _db.CounterTypes.Create(_mapper.Map<CounterTypeDTO, CounterType>(counterType));
+                _db.Save();
             }
 
             catch (DbUpdateException ex)
@@ -64,12 +65,11 @@ namespace HedgePlatform.BLL.Services
         public void EditCounterTypes(CounterTypeDTO counterType)
         {
             if (counterType == null)
-                throw new ValidationException("No counter type object", "");
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterTypeDTO, CounterType>()).CreateMapper();
+                throw new ValidationException("No counter type object", "");          
             try
             {
-                db.CounterTypes.Update(mapper.Map<CounterTypeDTO, CounterType>(counterType));
-                db.Save();
+                _db.CounterTypes.Update(_mapper.Map<CounterTypeDTO, CounterType>(counterType));
+                _db.Save();
                 _logger.LogInformation("Edit counter type: " + counterType.Id);
             }
 
@@ -89,14 +89,15 @@ namespace HedgePlatform.BLL.Services
         {
             if (id == null)
                 throw new ValidationException("NULL", "");
+            var counterType = _db.CounterTypes.Get(id.Value);
 
-            var counterType = db.CounterTypes.Get(id.Value);
             if (counterType == null)
                 throw new ValidationException("NOT_FOUND", "");
+
             try
             {
-                db.CounterTypes.Delete(id.Value);
-                db.Save();
+                _db.CounterTypes.Delete(id.Value);
+                _db.Save();
                 _logger.LogInformation("Delete counter type: " + counterType.Id);
             }
             catch (DbUpdateException ex)
@@ -114,7 +115,7 @@ namespace HedgePlatform.BLL.Services
 
         public void Dispose()
         {
-            db.Dispose();
+            _db.Dispose();
         }
     }
 }

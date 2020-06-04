@@ -10,24 +10,25 @@ namespace HedgePlatform.Controllers.ADM.Resident
 {
     [Route("api/resident/[controller]")]
     [ApiController]
-    public class CarController : ControllerBase
+    public class CarController : Controller
     {
-        ICarService carService;
-        public CarController(ICarService service)
+        private ICarService _carService;
+        public CarController(ICarService carService)
         {
-            carService = service;
+            _carService = carService;
         }
+
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<CarDTO, CarViewModel>().ForMember(s => s.Flat, h => h.MapFrom(src => src.flat));
+            cfg.CreateMap<FlatDTO, FlatViewModel>();
+            cfg.CreateMap<CarViewModel, CarDTO>();
+        }).CreateMapper();
+
         [HttpGet]
         public IEnumerable<CarViewModel> Index()
         {
-            IEnumerable<CarDTO> carDTOs = carService.GetCars();
-
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<CarDTO, CarViewModel>().ForMember(s => s.Flat, h => h.MapFrom(src => src.flat));
-                cfg.CreateMap<FlatDTO, FlatViewModel>();
-            }).CreateMapper();
-
-            var cars = mapper.Map<IEnumerable<CarDTO>, List<CarViewModel>>(carDTOs);
+            IEnumerable<CarDTO> carDTOs = _carService.GetCars();
+            var cars = _mapper.Map<IEnumerable<CarDTO>, List<CarViewModel>>(carDTOs);
             return cars;
         }
 
@@ -35,10 +36,10 @@ namespace HedgePlatform.Controllers.ADM.Resident
         public IActionResult Create([FromBody] CarViewModel car)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CarViewModel, CarDTO>()).CreateMapper();
-            var carDTO = mapper.Map<CarViewModel, CarDTO>(car);
+            var carDTO = _mapper.Map<CarViewModel, CarDTO>(car);
             try
             {
-                carService.CreateCar(carDTO);
+                _carService.CreateCar(carDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -51,10 +52,10 @@ namespace HedgePlatform.Controllers.ADM.Resident
         public IActionResult Edit([FromBody] CarViewModel car)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CarViewModel, CarDTO>()).CreateMapper();
-            var carDTO = mapper.Map<CarViewModel, CarDTO>(car);
+            var carDTO = _mapper.Map<CarViewModel, CarDTO>(car);
             try
             {
-                carService.EditCar(carDTO);
+                _carService.EditCar(carDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -68,13 +69,18 @@ namespace HedgePlatform.Controllers.ADM.Resident
         {
             try
             {
-                carService.DeleteCar(id);
+                _carService.DeleteCar(id);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _carService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

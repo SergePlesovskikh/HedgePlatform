@@ -10,37 +10,37 @@ namespace HedgePlatform.Controllers.ADM
 {
     [Route("api/inform/[controller]")]
     [ApiController]
-    public class VoteResultController : ControllerBase
+    public class VoteResultController : Controller
     {
-        IVoteResultService voteResultService;
-        public VoteResultController(IVoteResultService service)
+        private IVoteResultService _voteResultService;
+        public VoteResultController(IVoteResultService voteResultService)
         {
-            voteResultService = service;
+            _voteResultService = voteResultService;
         }
+
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<VoteResultDTO, VoteResultViewModel>().ForMember(s => s.VoteOption, h => h.MapFrom(src => src.VoteOption))
+            .ForMember(s => s.Resident, h => h.MapFrom(src => src.Resident));
+            cfg.CreateMap<ResidentDTO, ResidentViewModel>();
+            cfg.CreateMap<VoteOptionDTO, VoteOptionViewModel>();
+            cfg.CreateMap<VoteResultViewModel, VoteResultDTO>();
+        }).CreateMapper();
+
         [HttpGet]
         public IEnumerable<VoteResultViewModel> Index()
         {
-            IEnumerable<VoteResultDTO> voteResultDTOs = voteResultService.GetVoteResults();
-
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<VoteResultDTO, VoteResultViewModel>().ForMember(s => s.VoteOption, h => h.MapFrom(src => src.VoteOption))
-                .ForMember(s => s.Resident, h => h.MapFrom(src => src.Resident));
-                cfg.CreateMap<ResidentDTO, ResidentViewModel>();
-                cfg.CreateMap<VoteOptionDTO, VoteOptionViewModel>();
-            }).CreateMapper();
-
-            var voteResults = mapper.Map<IEnumerable<VoteResultDTO>, List<VoteResultViewModel>>(voteResultDTOs);
+            IEnumerable<VoteResultDTO> voteResultDTOs = _voteResultService.GetVoteResults();
+            var voteResults = _mapper.Map<IEnumerable<VoteResultDTO>, List<VoteResultViewModel>>(voteResultDTOs);
             return voteResults;
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] VoteResultViewModel voteResult)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteResultViewModel, VoteResultDTO>()).CreateMapper();
-            var voteResultDTO = mapper.Map<VoteResultViewModel, VoteResultDTO>(voteResult);
+            var voteResultDTO = _mapper.Map<VoteResultViewModel, VoteResultDTO>(voteResult);
             try
             {
-                voteResultService.CreateVoteResult(voteResultDTO);
+                _voteResultService.CreateVoteResult(voteResultDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -52,11 +52,10 @@ namespace HedgePlatform.Controllers.ADM
         [HttpPut]
         public IActionResult Edit([FromBody] VoteResultViewModel voteResult)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteResultViewModel, VoteResultDTO>()).CreateMapper();
-            var voteResultDTO = mapper.Map<VoteResultViewModel, VoteResultDTO>(voteResult);
+            var voteResultDTO = _mapper.Map<VoteResultViewModel, VoteResultDTO>(voteResult);
             try
             {
-                voteResultService.EditVoteResult(voteResultDTO);
+                _voteResultService.EditVoteResult(voteResultDTO);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
@@ -70,13 +69,18 @@ namespace HedgePlatform.Controllers.ADM
         {
             try
             {
-                voteResultService.DeleteVoteResult(id);
+                _voteResultService.DeleteVoteResult(id);
                 return Ok("Ok");
             }
             catch (ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _voteResultService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
