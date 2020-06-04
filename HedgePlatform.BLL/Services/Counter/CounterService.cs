@@ -110,12 +110,6 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-        public bool CheckCounterToFlat(int FlatId, int CounterId)
-        {
-            CounterDTO counter = GetCounter(CounterId);
-            return counter.FlatId == FlatId;
-        }
-
 
         public void CreateCounter(CounterDTO counter, CounterValueDTO counterValue, int? FlatId)
         {

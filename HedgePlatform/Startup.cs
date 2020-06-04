@@ -13,6 +13,11 @@ using HedgePlatform.BLL.Services;
 using HedgePlatform.DAL;
 using HedgePlatform.Middleware;
 using Microsoft.AspNetCore.Routing;
+using DinkToPdf.Contracts;
+using DinkToPdf;
+using System.Runtime.Loader;
+using System;
+using System.Reflection;
 
 namespace HedgePlatform
 {
@@ -28,10 +33,12 @@ namespace HedgePlatform
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson(options =>
-   options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddDbContext<HedgeDBContext>(options =>
-             options.UseNpgsql("HedgeDBContext"));
+            options.UseNpgsql("HedgeDBContext"));
+
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
             //DAL-services
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();

@@ -11,6 +11,11 @@ namespace HedgePlatform.BLL.Services
     {
         private IConverter _converter;
         private readonly ILogger _logger = Log.CreateLogger<PDFService>();
+        
+        public PDFService (IConverter converter)
+        {
+            _converter = converter;
+        }
 
         public byte[] PdfConvert(string html)
         {
@@ -22,6 +27,7 @@ namespace HedgePlatform.BLL.Services
             }
             catch (Exception ex)
             {
+                _logger.LogError("PDF convertation error");
                 throw new ValidationException("PDF convertation error", ex.Message);
             }
         }

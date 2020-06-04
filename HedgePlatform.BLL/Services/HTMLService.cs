@@ -12,13 +12,13 @@ namespace HedgePlatform.BLL.Services
         
         public string GenerateHTMLRequest(ResidentDTO resident)
         {
-            var document = GetHTMLDocument("pdfrequest.html");
+            var document = GetHTMLDocument("\\wwwroot\\html\\pdfrequest.html");
             return HTMLResidentRequestBuilder(resident,document).DocumentNode.OuterHtml;
         }
 
         public string GenerateVoteStat(IEnumerable<VoteResultDTO> voteResults)
         {
-            var document = GetHTMLDocument("pdfvotestat.html");
+            var document = GetHTMLDocument("\\wwwroot\\html\\pdfvotestat.html");
             HtmlNode table = document.GetElementbyId("inserttable");
             table.InnerHtml = HTMLVoteStatBuilder(voteResults);
 

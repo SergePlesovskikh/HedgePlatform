@@ -44,7 +44,11 @@
     <ProjectReference Include="..\HedgePlatform.DAL\HedgePlatform.DAL.csproj" />
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" config_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties appsettings_1json__JsonSchema="" config_1json__JsonSchema="" />
+    </VisualStudio>
+  </ProjectExtensions>
 
 
 </Project>

@@ -71,11 +71,10 @@ namespace HedgePlatform.BLL.Services
 
             var mapper = new MapperConfiguration(cfg => {
                 cfg.CreateMap<Resident, ResidentDTO>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat))
-                 .ForMember(s => s.Phone, h => h.MapFrom(src => src.Phone))
-                 .ForMember(s => s.Flat.House, h => h.MapFrom(src => src.Flat.House));
+                 .ForMember(s => s.Phone, h => h.MapFrom(src => src.Phone));
                 cfg.CreateMap<Flat, FlatDTO>();
                 cfg.CreateMap<Phone, PhoneDTO>();
-                cfg.CreateMap<House, House>();
+                cfg.CreateMap<House, HouseDTO>();
             }).CreateMapper();
 
             string html = _HTMLService.GenerateHTMLRequest(mapper.Map<Resident, ResidentDTO>(residents.FirstOrDefault()));
@@ -115,7 +114,6 @@ namespace HedgePlatform.BLL.Services
 
         private void CheckNullResidentData (PhoneDTO phone, ResidentDTO resident, string uid)
         {
-
             if (phone == null)
             {
                 _logger.LogError("Not found phone for uid. Uid=" + uid);

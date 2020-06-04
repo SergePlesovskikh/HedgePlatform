@@ -15,14 +15,12 @@ namespace HedgePlatform.BLL.Services
     public class CounterValueService : ICounterValueService
     {
         IUnitOfWork db { get; set; }
-        private IConfiguration _configuration;
-        private ICounterService _counterService;
+        private IConfiguration _configuration;      
 
-        public CounterValueService(IUnitOfWork uow, IConfiguration configuration, ICounterService counterService)
+        public CounterValueService(IUnitOfWork uow, IConfiguration configuration)
         {
             db = uow;
             _configuration = configuration;
-            _counterService = counterService;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<CounterValueService>();
@@ -93,7 +91,6 @@ namespace HedgePlatform.BLL.Services
                 _logger.LogError("counterValue creating error: " + ex.Message);
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
-
         }
 
         public void CreateCounterValue(CounterValueDTO counterValue, int? FlatId)
@@ -101,7 +98,7 @@ namespace HedgePlatform.BLL.Services
             if (FlatId == null)
                 throw new ValidationException("REQ_ERROR", "");
 
-            if (_counterService.CheckCounterToFlat(FlatId.Value, counterValue.CounterId))
+            if (CheckCounterToFlat(FlatId.Value, counterValue.CounterId))
                 throw new ValidationException("WRONG_COUNTER", "");
 
             if (!CheckCounterValueAdd(FlatId.Value))
@@ -180,6 +177,12 @@ namespace HedgePlatform.BLL.Services
         public void Dispose()
         {
             db.Dispose();
+        }
+
+        public bool CheckCounterToFlat(int FlatId, int CounterId)
+        {
+            Counter counter = db.Counters.Get(CounterId);
+            return counter.FlatId == FlatId;
         }
 
         public bool CheckCounterValueAdd(int CounterId)

@@ -9,7 +9,7 @@ namespace HedgePlatform.Controllers.API
 {
     
     [ApiController]
-    public class RegistrationController : ControllerBase
+    public class RegistrationController : Controller
     {
         private IResidentService _residentService;
         public RegistrationController(IResidentService residentService)
@@ -39,6 +39,12 @@ namespace HedgePlatform.Controllers.API
         public FileContentResult RequestForm()
         {
             return File(_residentService.GetRequest((int)HttpContext.Items["ResidentId"]), "application/pdf");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _residentService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

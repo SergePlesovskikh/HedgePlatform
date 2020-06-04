@@ -87,7 +87,7 @@ namespace HedgePlatform.BLL.Services
         {
             ResidentDTO resident = _residentService.GetResident(ResidentId);
 
-            IEnumerable <VoteResult> voteResults = db.VoteResults.GetWithInclude(x => x.VoteOption, p => p.ResidentId == ResidentId);
+            IEnumerable <VoteResult> voteResults = db.VoteResults.GetWithInclude(p => p.ResidentId == ResidentId, x => x.VoteOption);
             var mapper = new MapperConfiguration(cfg => {
                 cfg.CreateMap<VoteResult, VoteResultDTO>().ForMember(s => s.Resident, h => h.MapFrom(src => src.Resident))
                 .ForMember(s => s.VoteOption, h => h.MapFrom(src => src.VoteOption));
