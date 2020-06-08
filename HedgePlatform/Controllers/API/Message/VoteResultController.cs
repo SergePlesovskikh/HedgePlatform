@@ -9,7 +9,7 @@ namespace HedgePlatform.Controllers.API.Message
 {
     [Route("api/mobile/work/[controller]")]
     [ApiController]
-    public class VoteResultController : ControllerBase
+    public class VoteResultController : Controller
     {
         private IVoteResultService _voteResultService;
         public VoteResultController (IVoteResultService voteResultService)
@@ -38,6 +38,12 @@ namespace HedgePlatform.Controllers.API.Message
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _voteResultService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

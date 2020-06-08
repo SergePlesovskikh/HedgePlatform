@@ -9,7 +9,7 @@ namespace HedgePlatform.Controllers.API
 {
     [Route("api/mobile/auth/[controller]")]
     [ApiController]
-    public class ConfirmationController : ControllerBase
+    public class ConfirmationController : Controller
     {
         private ICheckService _checkService;
         public ConfirmationController (ICheckService checkService)
@@ -34,6 +34,11 @@ namespace HedgePlatform.Controllers.API
             {
                 return BadRequest(ex.Message);
             }
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _checkService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
