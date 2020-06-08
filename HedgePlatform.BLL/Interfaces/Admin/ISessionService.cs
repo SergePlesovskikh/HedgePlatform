@@ -7,7 +7,6 @@ namespace HedgePlatform.BLL.Interfaces
 {
     public interface ISessionService
     {
-        SessionDTO GetSession(int? id);
         SessionDTO GetSession(string uid);
         SessionDTO CreateSession(SessionDTO session);
         void DeleteSession(int? id);

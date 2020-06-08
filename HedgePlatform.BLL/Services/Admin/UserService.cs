@@ -13,39 +13,42 @@ namespace HedgePlatform.BLL.Services
 {
     public class UserService : IUserService
     {
-        IUnitOfWork db { get; set; }
+        private IUnitOfWork _db { get; set; }
 
         public UserService(IUnitOfWork uow)
         {
-            db = uow;
+            _db = uow;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<UserService>();
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<UserDTO, User>();
+            cfg.CreateMap<User, UserDTO>();
+        }).CreateMapper();
 
         public UserDTO GetUser(int? id)
         {
             if (id == null)
                 throw new ValidationException("NULL", "");
-            var user = db.Users.Get(id.Value);
+
+            var user = _db.Users.Get(id.Value);
             if (user == null)
                 throw new ValidationException("NOT_FOUND", "");
 
-            return new UserDTO { Id = user.Id, Login = user.Login, Psw = user.Psw };
+            return _mapper.Map<User, UserDTO>(user);
         }
 
         public IEnumerable<UserDTO> GetUsers()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<User>, List<UserDTO>>(db.Users.GetAll());
+            return _mapper.Map<IEnumerable<User>, List<UserDTO>>(_db.Users.GetAll());
         }
 
         public void CreateUser(UserDTO user)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, User>()).CreateMapper();
             try
             {
-                db.Users.Create(mapper.Map<UserDTO, User>(user));
-                db.Save();
+                _db.Users.Create(_mapper.Map<UserDTO, User>(user));
+                _db.Save();
             }
 
             catch (DbUpdateException ex)
@@ -65,11 +68,11 @@ namespace HedgePlatform.BLL.Services
         {
             if (user == null)
                 throw new ValidationException("No user object", "");
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, User>()).CreateMapper();
+
             try
             {
-                db.Users.Update(mapper.Map<UserDTO, User>(user));
-                db.Save();
+                _db.Users.Update(_mapper.Map<UserDTO, User>(user));
+                _db.Save();
             }
 
             catch (DbUpdateException ex)
@@ -89,13 +92,15 @@ namespace HedgePlatform.BLL.Services
         {
             if (id == null)
                 throw new ValidationException("NULL", "");
-            var counterType = db.CounterStats.Get(id.Value);
+
+            var counterType = _db.CounterStats.Get(id.Value);
             if (counterType == null)
                 throw new ValidationException("NOT_FOUND", "");
+
             try
             {
-                db.CounterStats.Delete(id.Value);
-                db.Save();
+                _db.CounterStats.Delete(id.Value);
+                _db.Save();
             }
             catch
             {
@@ -105,7 +110,7 @@ namespace HedgePlatform.BLL.Services
 
         public void Dispose()
         {
-            db.Dispose();
+            _db.Dispose();
         }
     }
 }

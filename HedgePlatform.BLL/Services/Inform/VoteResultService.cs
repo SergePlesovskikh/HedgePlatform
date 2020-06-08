@@ -13,15 +13,16 @@ namespace HedgePlatform.BLL.Services
 {
     public class VoteResultService : IVoteResultService
     {
-        IUnitOfWork db { get; set; }
+        private IUnitOfWork _db { get; set; }
         private IResidentService _residentService;
         private IHTMLService _HTMLService;
         private IPDFService _PDFService;
         private IVoteService _voteService;
 
-        public VoteResultService(IUnitOfWork uow, IResidentService residentService, IVoteService voteService, IPDFService PDFService, IHTMLService HTMLService)
+        public VoteResultService(IUnitOfWork uow, IResidentService residentService, 
+            IVoteService voteService, IPDFService PDFService, IHTMLService HTMLService)
         {
-            db = uow;
+            _db = uow;
             _residentService = residentService;
             _voteService = voteService;
             _HTMLService = HTMLService;
@@ -29,73 +30,31 @@ namespace HedgePlatform.BLL.Services
         }
 
         private readonly ILogger _logger = Log.CreateLogger<VoteResultService>();
-
-        public VoteResultDTO GetVoteResult(int? id)
-        {
-            if (id == null)
-                throw new ValidationException("NULL", "");
-            var voteResult = db.VoteResults.Get(id.Value);
-            if (voteResult == null)
-                throw new ValidationException("NOT_FOUND", "");
-
-            Resident resident = db.Residents.Get(voteResult.ResidentId);
-            VoteOption voteOption = db.VoteOptions.Get(voteResult.VoteOptionId);
-            var mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Resident, ResidentDTO>();
-                cfg.CreateMap<VoteOption, VoteOptionDTO>();
-            }
-               ).CreateMapper();
-
-            return new VoteResultDTO
-            {
-                Id = voteResult.Id,
-                ResidentId = voteResult.ResidentId,
-                Resident = mapper.Map<Resident, ResidentDTO>(resident),
-                DateVote = voteResult.DateVote,
-                VoteOptionId = voteResult.VoteOptionId,
-                VoteOption = mapper.Map<VoteOption, VoteOptionDTO>(voteOption)
-            };
-        }
-
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<VoteResult, VoteResultDTO>().ForMember(s => s.Resident, h => h.MapFrom(src => src.Resident))
+            .ForMember(s => s.VoteOption, h => h.MapFrom(src => src.VoteOption));
+            cfg.CreateMap<Resident, ResidentDTO>();
+            cfg.CreateMap<VoteOption, VoteOptionDTO>();
+            cfg.CreateMap<VoteResultDTO, VoteResult>();
+        }).CreateMapper();
+               
         public IEnumerable<VoteResultDTO> GetVoteResults()
         {
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<VoteResult, VoteResultDTO>().ForMember(s => s.Resident, h => h.MapFrom(src => src.Resident))
-                .ForMember(s => s.VoteOption, h => h.MapFrom(src => src.VoteOption));
-                cfg.CreateMap<Resident, ResidentDTO>();
-                cfg.CreateMap<VoteOption, VoteOptionDTO>();
-            }).CreateMapper();
-            var voteResults = db.VoteResults.GetWithInclude(x => x.Resident);
-            return mapper.Map<IEnumerable<VoteResult>, List<VoteResultDTO>>(voteResults);
+            var voteResults = _db.VoteResults.GetWithInclude(x => x.Resident);
+            return _mapper.Map<IEnumerable<VoteResult>, List<VoteResultDTO>>(voteResults);
         }
 
         public IEnumerable<VoteResultDTO> GetVoteResultsByResident(int? ResidentId)
         {
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<VoteResult, VoteResultDTO>().ForMember(s => s.Resident, h => h.MapFrom(src => src.Resident))
-                .ForMember(s => s.VoteOption, h => h.MapFrom(src => src.VoteOption));
-                cfg.CreateMap<Resident, ResidentDTO>();
-                cfg.CreateMap<VoteOption, VoteOptionDTO>();
-            }).CreateMapper();
-            var voteResults = db.VoteResults.GetWithInclude(x=>x.ResidentId==ResidentId, x=>x.VoteOption);
-            return mapper.Map<IEnumerable<VoteResult>, List<VoteResultDTO>>(voteResults);
+            var voteResults = _db.VoteResults.GetWithInclude(x=>x.ResidentId==ResidentId, x=>x.VoteOption);
+            return _mapper.Map<IEnumerable<VoteResult>, List<VoteResultDTO>>(voteResults);
         }
-
 
         public byte[] GetVoteStat(int? ResidentId)
         {
             ResidentDTO resident = _residentService.GetResident(ResidentId);
-
-            IEnumerable <VoteResult> voteResults = db.VoteResults.GetWithInclude(p => p.ResidentId == ResidentId, x => x.VoteOption);
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<VoteResult, VoteResultDTO>().ForMember(s => s.Resident, h => h.MapFrom(src => src.Resident))
-                .ForMember(s => s.VoteOption, h => h.MapFrom(src => src.VoteOption));
-                cfg.CreateMap<Resident, ResidentDTO>();
-                cfg.CreateMap<VoteOption, VoteOptionDTO>();
-            }).CreateMapper();
-
-            IEnumerable<VoteResultDTO> voteDTOs = mapper.Map<IEnumerable<VoteResult>, List<VoteResultDTO>>(voteResults);
+            IEnumerable <VoteResult> voteResults = _db.VoteResults.GetWithInclude(p => p.ResidentId == ResidentId, x => x.VoteOption);
+            IEnumerable<VoteResultDTO> voteDTOs = _mapper.Map<IEnumerable<VoteResult>, List<VoteResultDTO>>(voteResults);
 
             foreach (var voteResult in voteDTOs)
             {
@@ -108,12 +67,10 @@ namespace HedgePlatform.BLL.Services
 
         public void CreateVoteResult(VoteResultDTO voteResult)
         {
-
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteResultDTO, VoteResult>()).CreateMapper();
             try
             {
-                db.VoteResults.Create(mapper.Map<VoteResultDTO, VoteResult>(voteResult));
-                db.Save();
+                _db.VoteResults.Create(_mapper.Map<VoteResultDTO, VoteResult>(voteResult));
+                _db.Save();
             }
 
             catch (DbUpdateException ex)
@@ -139,15 +96,14 @@ namespace HedgePlatform.BLL.Services
 
             if (!CheckVoteResult(voteResult, ResidentId.Value))
                 throw new ValidationException("Already vote", "");
-
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteResultDTO, VoteResult>()).CreateMapper();
+           
             try
             {
-                VoteResult new_voteResult = mapper.Map<VoteResultDTO, VoteResult>(voteResult);
+                VoteResult new_voteResult = _mapper.Map<VoteResultDTO, VoteResult>(voteResult);
                 new_voteResult.ResidentId = ResidentId.Value;
                 new_voteResult.DateVote = DateTime.Now;
-                db.VoteResults.Create(new_voteResult);
-                db.Save();
+                _db.VoteResults.Create(new_voteResult);
+                _db.Save();
             }
 
             catch (DbUpdateException ex)
@@ -167,11 +123,11 @@ namespace HedgePlatform.BLL.Services
         {
             if (voteResult == null)
                 throw new ValidationException("No voteResult object", "");
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteResultDTO, VoteResult>()).CreateMapper();
+           
             try
             {
-                db.VoteResults.Update(mapper.Map<VoteResultDTO, VoteResult>(voteResult));
-                db.Save();
+                _db.VoteResults.Update(_mapper.Map<VoteResultDTO, VoteResult>(voteResult));
+                _db.Save();
                 _logger.LogInformation("Edit voteResult: " + voteResult.Id);
             }
 
@@ -192,13 +148,13 @@ namespace HedgePlatform.BLL.Services
             if (id == null)
                 throw new ValidationException("NULL", "");
 
-            var voteResult = db.VoteResults.Get(id.Value);
+            var voteResult = _db.VoteResults.Get(id.Value);
             if (voteResult == null)
                 throw new ValidationException("NOT_FOUND", "");
             try
             {
-                db.VoteResults.Delete(id.Value);
-                db.Save();
+                _db.VoteResults.Delete(id.Value);
+                _db.Save();
                 _logger.LogInformation("Delete voteResult: " + voteResult.Id);
             }
             catch (DbUpdateException ex)
@@ -215,15 +171,12 @@ namespace HedgePlatform.BLL.Services
         }
         public void Dispose()
         {
-            db.Dispose();
+            _db.Dispose();
         }
 
         private bool CheckVoteResult(VoteResultDTO voteResult, int ResidentId)
         {
-            if (db.VoteResults.FindFirst(x => x.ResidentId == ResidentId && x.VoteOptionId == voteResult.VoteOptionId) == null)
-                return true;
-            else
-                return false;
+            return _db.VoteResults.FindFirst(x => x.ResidentId == ResidentId && x.VoteOptionId == voteResult.VoteOptionId) == null;             
         }
     }
 }

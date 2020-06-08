@@ -13,53 +13,32 @@ namespace HedgePlatform.BLL.Services
 {
     public class CarService : ICarService
     {
-        IUnitOfWork db { get; set; }
+        private IUnitOfWork _db { get; set; }
 
         public CarService(IUnitOfWork uow)
         {
-            db = uow;
+            _db = uow;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<CarService>();
-
-        public CarDTO GetCar(int? id)
-        {
-            if (id == null)
-                throw new ValidationException("NULL", "");
-            var car = db.Cars.Get(id.Value);
-            if (car == null)
-                throw new ValidationException("NOT_FOUND", "");
-
-            Flat flat = db.Flats.Get(car.FlatId);
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Flat, FlatDTO>()).CreateMapper();
-
-            return new CarDTO
-            {
-                Id = car.Id,
-                FlatId = car.FlatId,
-                flat = mapper.Map<Flat, FlatDTO>(flat),
-                GosNumber = car.GosNumber
-            };
-        }
-
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<Car, CarDTO>().ForMember(s => s.flat, h => h.MapFrom(src => src.Flat));
+            cfg.CreateMap<Flat, FlatDTO>();
+            cfg.CreateMap<FlatDTO, Flat>();
+        }).CreateMapper();
+    
         public IEnumerable<CarDTO> GetCars()
         {
-
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<Car, CarDTO>().ForMember(s => s.flat, h => h.MapFrom(src => src.Flat));
-                cfg.CreateMap<Flat, FlatDTO>();
-            }).CreateMapper();
-            var cars = db.Cars.GetWithInclude(x => x.Flat);
-            return mapper.Map<IEnumerable<Car>, List<CarDTO>>(cars);
+            var cars = _db.Cars.GetWithInclude(x => x.Flat);
+            return _mapper.Map<IEnumerable<Car>, List<CarDTO>>(cars);
         }
 
         public void CreateCar(CarDTO car)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CarDTO, Car>()).CreateMapper();
             try
             {
-                db.Cars.Create(mapper.Map<CarDTO, Car>(car));
-                db.Save();
+                _db.Cars.Create(_mapper.Map<CarDTO, Car>(car));
+                _db.Save();
             }
 
             catch (DbUpdateException ex)
@@ -79,11 +58,10 @@ namespace HedgePlatform.BLL.Services
         {
             if (car == null)
                 throw new ValidationException("No car object", "");
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CarDTO, Car>()).CreateMapper();
             try
             {
-                db.Cars.Update(mapper.Map<CarDTO, Car>(car));
-                db.Save();
+                _db.Cars.Update(_mapper.Map<CarDTO, Car>(car));
+                _db.Save();
                 _logger.LogInformation("Edit car: " + car.Id);
             }
 
@@ -104,13 +82,13 @@ namespace HedgePlatform.BLL.Services
             if (id == null)
                 throw new ValidationException("NULL", "");
 
-            var car = db.Cars.Get(id.Value);
+            var car = _db.Cars.Get(id.Value);
             if (car == null)
                 throw new ValidationException("NOT_FOUND", "");
             try
             {
-                db.Cars.Delete(id.Value);
-                db.Save();
+                _db.Cars.Delete(id.Value);
+                _db.Save();
                 _logger.LogInformation("Delete car: " + car.Id);
             }
             catch (DbUpdateException ex)
@@ -125,10 +103,9 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-
         public void Dispose()
         {
-            db.Dispose();
+            _db.Dispose();
         }
     }
 }

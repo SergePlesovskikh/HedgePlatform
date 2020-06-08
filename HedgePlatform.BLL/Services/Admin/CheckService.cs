@@ -12,37 +12,27 @@ namespace HedgePlatform.BLL.Services
 {
     public class CheckService : ICheckService
     {
-        IUnitOfWork db { get; set; }
+        private IUnitOfWork _db { get; set; }
         private ISessionService _sessionService;
         private IPhoneService _phoneService;
         private ITokenService _tokenService;
 
         public CheckService(IUnitOfWork uow, ISessionService sessionService, IPhoneService phoneService, ITokenService tokenService)
         {
-            db = uow;
+            _db = uow;
             _sessionService = sessionService;
             _phoneService = phoneService;
             _tokenService = tokenService;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<CheckService>();
-
-        public CheckDTO GetCheck(int? id)
-        {
-            if (id == null)
-                throw new ValidationException("NULL", "");
-            var check = db.Checks.Get(id.Value);
-            if (check == null)
-                throw new ValidationException("NOT_FOUND", "");
-
-            return new CheckDTO { Id = check.Id, CheckCode = check.CheckCode, Phone = check.Phone, SendTime = check.SendTime, token = check.token };
-        }
+        private static IMapper _mapper = new MapperConfiguration(cfg => cfg.CreateMap<CheckDTO, Check>()).CreateMapper();
 
         public string Confirmation(string token, int checkcode, string phone_number)
         {
             string conf_stat = "INVALID_TOKEN";
            
-            Check check = db.Checks.FindFirst(x => x.token == token);
+            Check check = _db.Checks.FindFirst(x => x.token == token);
             if (check!=null)
             {
                 if (check.CheckCode==checkcode)
@@ -62,12 +52,11 @@ namespace HedgePlatform.BLL.Services
         }
 
         public void CreateCheck(CheckDTO check)
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CheckDTO, Check>()).CreateMapper();
+        {           
             try
             {
-                db.Checks.Create(mapper.Map<CheckDTO, Check>(check));
-                db.Save();
+                _db.Checks.Create(_mapper.Map<CheckDTO, Check>(check));
+                _db.Save();
             }
             catch (DbUpdateException ex)
             {
@@ -85,13 +74,13 @@ namespace HedgePlatform.BLL.Services
         {
             if (id == null)
                 throw new ValidationException("NULL", "");
-            var check = db.Checks.Get(id.Value);
+            var check = _db.Checks.Get(id.Value);
             if (check == null)
                 throw new ValidationException("NOT_FOUND", "");
             try
             {
-                db.Checks.Delete(id.Value);
-                db.Save();
+                _db.Checks.Delete(id.Value);
+                _db.Save();
             }
             catch
             {
@@ -101,7 +90,7 @@ namespace HedgePlatform.BLL.Services
 
         public void Dispose()
         {
-            db.Dispose();
+            _db.Dispose();
         }
     }
 }

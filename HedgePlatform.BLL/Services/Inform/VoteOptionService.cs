@@ -13,53 +13,32 @@ namespace HedgePlatform.BLL.Services
 {
     public class VoteOptionService : IVoteOptionService
     {
-        IUnitOfWork db { get; set; }
+        private IUnitOfWork _db { get; set; }
 
         public VoteOptionService(IUnitOfWork uow)
         {
-            db = uow;
+            _db = uow;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<VoteOptionService>();
-
-        public VoteOptionDTO GetVoteOption(int? id)
-        {
-            if (id == null)
-                throw new ValidationException("NULL", "");
-            var voteOption = db.VoteOptions.Get(id.Value);
-            if (voteOption == null)
-                throw new ValidationException("NOT_FOUND", "");
-
-            Vote flat = db.Votes.Get(voteOption.VoteId);
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Vote, VoteDTO>()).CreateMapper();
-
-            return new VoteOptionDTO
-            {
-                Id = voteOption.Id,
-                VoteId = voteOption.VoteId,
-                Vote = mapper.Map<Vote, VoteDTO>(flat),
-                Description = voteOption.Description
-            };
-        }
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<VoteOption, VoteOptionDTO>().ForMember(s => s.Vote, h => h.MapFrom(src => src.Vote));
+            cfg.CreateMap<Vote, VoteDTO>();
+            cfg.CreateMap<VoteOptionDTO, VoteOption>();
+        }).CreateMapper();
 
         public IEnumerable<VoteOptionDTO> GetVoteOptions()
         {
-
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<VoteOption, VoteOptionDTO>().ForMember(s => s.Vote, h => h.MapFrom(src => src.Vote));
-                cfg.CreateMap<Vote, VoteDTO>();
-            }).CreateMapper();
-            var voteOptions = db.VoteOptions.GetWithInclude(x => x.Vote);
-            return mapper.Map<IEnumerable<VoteOption>, List<VoteOptionDTO>>(voteOptions);
+            var voteOptions = _db.VoteOptions.GetWithInclude(x => x.Vote);
+            return _mapper.Map<IEnumerable<VoteOption>, List<VoteOptionDTO>>(voteOptions);
         }
 
         public void CreateVoteOption(VoteOptionDTO voteOption)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteOptionDTO, VoteOption>()).CreateMapper();
             try
             {
-                db.VoteOptions.Create(mapper.Map<VoteOptionDTO, VoteOption>(voteOption));
-                db.Save();
+                _db.VoteOptions.Create(_mapper.Map<VoteOptionDTO, VoteOption>(voteOption));
+                _db.Save();
             }
 
             catch (DbUpdateException ex)
@@ -79,11 +58,11 @@ namespace HedgePlatform.BLL.Services
         {
             if (voteOption == null)
                 throw new ValidationException("No voteOption object", "");
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<VoteOptionDTO, VoteOption>()).CreateMapper();
+          
             try
             {
-                db.VoteOptions.Update(mapper.Map<VoteOptionDTO, VoteOption>(voteOption));
-                db.Save();
+                _db.VoteOptions.Update(_mapper.Map<VoteOptionDTO, VoteOption>(voteOption));
+                _db.Save();
                 _logger.LogInformation("Edit voteOption: " + voteOption.Id);
             }
 
@@ -104,13 +83,13 @@ namespace HedgePlatform.BLL.Services
             if (id == null)
                 throw new ValidationException("NULL", "");
 
-            var voteOption = db.VoteOptions.Get(id.Value);
+            var voteOption = _db.VoteOptions.Get(id.Value);
             if (voteOption == null)
                 throw new ValidationException("NOT_FOUND", "");
             try
             {
-                db.VoteOptions.Delete(id.Value);
-                db.Save();
+                _db.VoteOptions.Delete(id.Value);
+                _db.Save();
                 _logger.LogInformation("Delete voteOption: " + voteOption.Id);
             }
             catch (DbUpdateException ex)
@@ -125,11 +104,9 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-
         public void Dispose()
         {
-            db.Dispose();
+            _db.Dispose();
         }
-
     }
 }

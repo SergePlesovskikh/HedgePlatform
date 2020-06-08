@@ -10,6 +10,7 @@ namespace HedgePlatform.DAL.Interfaces
     {
         IEnumerable<T> GetAll();
         T Get(int id);
+        T GetOneWithInclude(Func<T, bool> predicate, params Expression<Func<T, object>>[] includeProperties);
         public IEnumerable<T> GetWithInclude(params Expression<Func<T, object>>[] includeProperties);
         public IEnumerable<T> GetWithInclude(Func<T, bool> predicate,
            params Expression<Func<T, object>>[] includeProperties);

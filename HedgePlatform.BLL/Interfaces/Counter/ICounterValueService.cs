@@ -7,7 +7,7 @@ namespace HedgePlatform.BLL.Interfaces
 {
     public interface ICounterValueService
     {
-        CounterValueDTO GetCounterValue(int? id);
+      
         bool CheckCounterToFlat(int FlatId, int CounterId);
         IEnumerable<CounterValueDTO> GetCounterValues();
         IEnumerable<CounterValueDTO> GetCounterValuesByCounter(int? CounterId);

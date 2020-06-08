@@ -14,7 +14,7 @@ namespace HedgePlatform.BLL.Services
 {
     public class ResidentService : IResidentService
     {
-        IUnitOfWork db { get; set; }
+        private IUnitOfWork _db { get; set; }
         private ISessionService _sessionService;
         private IPhoneService _phoneService;
         private IFlatService _flatService;
@@ -24,7 +24,7 @@ namespace HedgePlatform.BLL.Services
         public ResidentService(IUnitOfWork uow, ISessionService sessionService, IPhoneService phoneService, IFlatService flatService, 
             IHTMLService HTMLService, IPDFService PDFService)
         {
-            db = uow;
+            _db = uow;
             _sessionService = sessionService;
             _phoneService = phoneService;          
             _flatService = flatService;
@@ -32,28 +32,23 @@ namespace HedgePlatform.BLL.Services
             _PDFService = PDFService;
         }
 
-        private readonly ILogger _logger = Log.CreateLogger<ResidentService>();        
+        private readonly ILogger _logger = Log.CreateLogger<ResidentService>();
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<Resident, ResidentDTO>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat))
+             .ForMember(s => s.Phone, h => h.MapFrom(src => src.Phone));
+            cfg.CreateMap<Flat, FlatDTO>();
+            cfg.CreateMap<Phone, PhoneDTO>();
+            cfg.CreateMap<House, HouseDTO>();
+        }).CreateMapper();
+
         public ResidentDTO GetResident(int? id)
         {
             if (id == null)
                 throw new ValidationException("NULL", "");
-            var resident = db.Residents.Get(id.Value);
+            var resident = _db.Residents.Get(id.Value);
             if (resident == null)
                 throw new ValidationException("NOT_FOUND", "");
-
-            return new ResidentDTO
-            {
-                Id = resident.Id,
-                FlatId = resident.FlatId,            
-                FIO = resident.FIO,
-                BirthDate = resident.BirthDate,
-                DateChange = resident.DateChange,
-                DateRegistration = resident.DateRegistration,
-                PhoneId = resident.PhoneId,
-                ResidentStatus = resident.ResidentStatus,
-                Chairman = resident.Chairman,
-                Owner = resident.Owner
-            };
+            return _mapper.Map<Resident, ResidentDTO>(resident);
         }
 
         public string GetResidentStatus (int? id)
@@ -61,35 +56,24 @@ namespace HedgePlatform.BLL.Services
             return GetResident(id).ResidentStatus;
         }
 
-       public byte[] GetRequest(int? ResidentId)
+        public byte[] GetRequest(int? ResidentId)
         {
             if (ResidentId == null)
                 throw new ValidationException("NULL", "");
-            var residents = db.Residents.GetWithInclude(x => x.Phone, x => x.Flat, x=>x.Flat.House);
+            var residents = _db.Residents.GetWithInclude(x => x.Phone, x => x.Flat, x=>x.Flat.House);
             if (residents == null)
                 throw new ValidationException("NOT_FOUND", "");
 
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<Resident, ResidentDTO>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat))
-                 .ForMember(s => s.Phone, h => h.MapFrom(src => src.Phone));
-                cfg.CreateMap<Flat, FlatDTO>();
-                cfg.CreateMap<Phone, PhoneDTO>();
-                cfg.CreateMap<House, HouseDTO>();
-            }).CreateMapper();
-
-            string html = _HTMLService.GenerateHTMLRequest(mapper.Map<Resident, ResidentDTO>(residents.FirstOrDefault()));
+            string html = _HTMLService.GenerateHTMLRequest(_mapper.Map<Resident, ResidentDTO>(residents.FirstOrDefault()));
             return _PDFService.PdfConvert(html);
         }
 
         public IEnumerable<ResidentDTO> GetResidents()
         {
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<Resident, ResidentDTO>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat));
-                cfg.CreateMap<Flat, FlatDTO>();
-            }).CreateMapper();
-            var residents = db.Residents.GetWithInclude(x => x.Flat);
-            return mapper.Map<IEnumerable<Resident>, List<ResidentDTO>>(residents);
+            var residents = _db.Residents.GetWithInclude(x => x.Flat);
+            return _mapper.Map<IEnumerable<Resident>, List<ResidentDTO>>(residents);
         }
+
         public bool CheckChairman(int ResidentId)
         {
             return GetResident(ResidentId).Chairman.Value;
@@ -112,39 +96,14 @@ namespace HedgePlatform.BLL.Services
             phone.resident = new_resident;
         }
 
-        private void CheckNullResidentData (PhoneDTO phone, ResidentDTO resident, string uid)
-        {
-            if (phone == null)
-            {
-                _logger.LogError("Not found phone for uid. Uid=" + uid);
-                throw new ValidationException("SERVER_ERROR", "");
-            }
-
-            if (resident.FlatId == null)
-            {
-                _logger.LogError("Not found flat object" + uid);
-                throw new ValidationException("REQUEST_ERROR", "");
-            }
-        }
-
-        private ResidentDTO ResidentBuilder (ResidentDTO resident, PhoneDTO phone)
-        {
-            resident.PhoneId = phone.Id; 
-            resident.DateRegistration = DateTime.Now;
-            resident.DateChange = DateTime.Now;
-            resident.ResidentStatus = "На рассмотрении";
-            return resident;
-        }       
-
         public ResidentDTO CreateResident(ResidentDTO resident)
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ResidentDTO, Resident>()).CreateMapper();
+        {          
             try
             {
-                Resident new_resident =  db.Residents.Create(mapper.Map<ResidentDTO, Resident>(resident));
-                db.Save();
-                mapper = new MapperConfiguration(cfg => cfg.CreateMap<Resident, ResidentDTO>()).CreateMapper();
-                return mapper.Map<Resident, ResidentDTO>(new_resident);
+                Resident new_resident =  _db.Residents.Create(_mapper.Map<ResidentDTO, Resident>(resident));
+                _db.Save();
+                _mapper = new MapperConfiguration(cfg => cfg.CreateMap<Resident, ResidentDTO>()).CreateMapper();
+                return _mapper.Map<Resident, ResidentDTO>(new_resident);
             }
             catch (DbUpdateException ex)
             {
@@ -163,17 +122,17 @@ namespace HedgePlatform.BLL.Services
         {
             if (resident == null)
                 throw new ValidationException("No resident object", "");
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ResidentDTO, Resident>()).CreateMapper();
+          
             try
             {
-                db.Residents.Update(mapper.Map<ResidentDTO, Resident>(resident));
-                db.Save();
+                _db.Residents.Update(_mapper.Map<ResidentDTO, Resident>(resident));
+                _db.Save();
                 _logger.LogInformation("Edit resident: " + resident.Id);
             }
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("resident edit db error: " + ex.InnerException.Message);
+                _logger.LogError("resident edit _db error: " + ex.InnerException.Message);
                 throw new ValidationException("DB_ERROR", "");
             }
 
@@ -188,18 +147,18 @@ namespace HedgePlatform.BLL.Services
             if (id == null)
                 throw new ValidationException("NULL", "");
 
-            var resident = db.Residents.Get(id.Value);
+            var resident = _db.Residents.Get(id.Value);
             if (resident == null)
                 throw new ValidationException("NOT_FOUND", "");
             try
             {
-                db.Residents.Delete(id.Value);
-                db.Save();
+                _db.Residents.Delete(id.Value);
+                _db.Save();
                 _logger.LogInformation("Delete resident: " + resident.Id);
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("resident delete db error: " + ex.InnerException.Message);
+                _logger.LogError("resident delete _db error: " + ex.InnerException.Message);
                 throw new ValidationException("DB_ERROR", "");
             }
 
@@ -211,7 +170,31 @@ namespace HedgePlatform.BLL.Services
         }
         public void Dispose()
         {
-            db.Dispose();
+            _db.Dispose();
+        }
+
+        private void CheckNullResidentData(PhoneDTO phone, ResidentDTO resident, string uid)
+        {
+            if (phone == null)
+            {
+                _logger.LogError("Not found phone for uid. Uid=" + uid);
+                throw new ValidationException("SERVER_ERROR", "");
+            }
+
+            if (resident.FlatId == null)
+            {
+                _logger.LogError("Not found flat object" + uid);
+                throw new ValidationException("REQUEST_ERROR", "");
+            }
+        }
+
+        private ResidentDTO ResidentBuilder(ResidentDTO resident, PhoneDTO phone)
+        {
+            resident.PhoneId = phone.Id;
+            resident.DateRegistration = DateTime.Now;
+            resident.DateChange = DateTime.Now;
+            resident.ResidentStatus = "На рассмотрении";
+            return resident;
         }
     }
 }

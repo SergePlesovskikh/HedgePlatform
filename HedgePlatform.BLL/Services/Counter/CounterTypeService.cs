@@ -25,17 +25,6 @@ namespace HedgePlatform.BLL.Services
             cfg.CreateMap<CounterTypeDTO, CounterType>();
         }).CreateMapper();
 
-        public CounterTypeDTO GetCounterType(int? id)
-        {
-            if (id == null)
-                throw new ValidationException("NULL", "");
-            var counterType = _db.CounterTypes.Get(id.Value);
-            if (counterType == null)
-                throw new ValidationException("NOT_FOUND", "");
-
-            return new CounterTypeDTO {Id = counterType.Id, Type = counterType.Type };
-        }
-
         public IEnumerable<CounterTypeDTO> GetCounterTypes()
         {            
             return _mapper.Map<IEnumerable<CounterType>, List<CounterTypeDTO>>(_db.CounterTypes.GetAll());

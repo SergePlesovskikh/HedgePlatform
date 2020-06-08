@@ -13,49 +13,32 @@ namespace HedgePlatform.BLL.Services
 {
     public class HouseService : IHouseService
     {
-        IUnitOfWork db { get; set; }
+        private IUnitOfWork _db { get; set; }
 
         public HouseService(IUnitOfWork uow)
         {
-            db = uow;
+            _db = uow;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<HouseService>();
-
-        public HouseDTO GetHouse(int? id)
-        {
-            if (id == null)
-                throw new ValidationException("NULL", "");
-            var house = db.Houses.Get(id.Value);
-            if (house == null)
-                throw new ValidationException("NOT_FOUND", "");
-
-            HouseManager houseManager = db.HouseManagers.Get(house.HouseManagerId);
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<HouseManager, HouseManagerDTO>()).CreateMapper();
-
-            return new HouseDTO { Id = house.Id, City = house.City, Corpus = house.Corpus, Home = house.Home,
-                HouseManagerId = house.HouseManagerId, Street = house.Street, HouseManager = mapper.Map<HouseManager,HouseManagerDTO> (houseManager)
-            };
-        }
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<House, HouseDTO>().ForMember(s => s.HouseManager, h => h.MapFrom(src => src.HouseManager));
+            cfg.CreateMap<HouseManager, HouseManagerDTO>();
+            cfg.CreateMap<HouseManagerDTO, HouseManager>();
+        }).CreateMapper();
 
         public IEnumerable<HouseDTO> GetHouses()
         {
-
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<House, HouseDTO>().ForMember(s => s.HouseManager, h => h.MapFrom(src => src.HouseManager));
-                cfg.CreateMap<HouseManager, HouseManagerDTO>();
-            }).CreateMapper();
-            var houses = db.Houses.GetWithInclude(x => x.HouseManager);
-            return mapper.Map<IEnumerable<House>, List<HouseDTO>>(houses);
+            var houses = _db.Houses.GetWithInclude(x => x.HouseManager);
+            return _mapper.Map<IEnumerable<House>, List<HouseDTO>>(houses);
         }
 
         public void CreateHouse(HouseDTO house)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<HouseDTO, House>()).CreateMapper();
             try
             {
-                db.Houses.Create(mapper.Map<HouseDTO, House>(house));
-                db.Save();
+                _db.Houses.Create(_mapper.Map<HouseDTO, House>(house));
+                _db.Save();
             }
 
             catch (DbUpdateException ex)
@@ -75,17 +58,16 @@ namespace HedgePlatform.BLL.Services
         {
             if (house == null)
                 throw new ValidationException("No house object", "");
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<HouseDTO, House>()).CreateMapper();
             try
             {
-                db.Houses.Update(mapper.Map<HouseDTO, House>(house));
-                db.Save();
+                _db.Houses.Update(_mapper.Map<HouseDTO, House>(house));
+                _db.Save();
                 _logger.LogInformation("Edit house: " + house.Id);
             }
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("house edit db error: " + ex.InnerException.Message);
+                _logger.LogError("house edit _db error: " + ex.InnerException.Message);
                 throw new ValidationException("DB_ERROR", "");
             }
 
@@ -100,18 +82,18 @@ namespace HedgePlatform.BLL.Services
             if (id == null)
                 throw new ValidationException("NULL", "");
 
-            var house = db.Houses.Get(id.Value);
+            var house = _db.Houses.Get(id.Value);
             if (house == null)
                 throw new ValidationException("NOT_FOUND", "");
             try
             {
-                db.Houses.Delete(id.Value);
-                db.Save();
+                _db.Houses.Delete(id.Value);
+                _db.Save();
                 _logger.LogInformation("Delete house: " + house.Id);
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("house delete db error: " + ex.InnerException.Message);
+                _logger.LogError("house delete _db error: " + ex.InnerException.Message);
                 throw new ValidationException("DB_ERROR", "");
             }
 
@@ -121,10 +103,9 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-
         public void Dispose()
         {
-            db.Dispose();
+            _db.Dispose();
         }
     }
 }

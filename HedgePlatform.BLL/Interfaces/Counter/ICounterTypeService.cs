@@ -6,7 +6,6 @@ namespace HedgePlatform.BLL.Interfaces
 {
     public interface ICounterTypeService
     {
-        CounterTypeDTO GetCounterType(int? id);
         IEnumerable<CounterTypeDTO> GetCounterTypes();
         void CreateCounterTypes(CounterTypeDTO counterType);
         void EditCounterTypes(CounterTypeDTO counterType);

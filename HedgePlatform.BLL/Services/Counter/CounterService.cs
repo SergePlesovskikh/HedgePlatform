@@ -9,60 +9,38 @@ using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using Microsoft.Extensions.Configuration;
 
 namespace HedgePlatform.BLL.Services
 {
     public class CounterService : ICounterService
     {
-        IUnitOfWork db { get; set; }
+        private IUnitOfWork _db { get; set; }
         private ICounterValueService _counterValueService;
         private IFlatService _flatService;
         
         public CounterService(IUnitOfWork uow, ICounterValueService counterValueService, IFlatService flatService)
         {
-            db = uow;
+            _db = uow;
             _counterValueService = counterValueService;
             _flatService = flatService;          
         }
         
         private readonly ILogger _logger = Log.CreateLogger<CounterService>();
-        
-        public CounterDTO GetCounter(int? id)
-        {
-            if (id == null)
-                throw new ValidationException("NULL", "");
 
-            //ToDo исправить метод, добавить в DAL
-            var counter = db.Counters.GetWithInclude(x => x.Flat, y => y.CounterStatus, d => d.CounterType).First();
-            if (counter == null)
-                    throw new ValidationException("NOT_FOUND", "");
-
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<Counter, CounterDTO>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat))
-                .ForMember(s => s.CounterType, h => h.MapFrom(src => src.CounterType))
-                .ForMember(s => s.CounterStatus, h => h.MapFrom(src => src.CounterStatus));
-                cfg.CreateMap<Flat, FlatDTO>();
-                cfg.CreateMap<CounterType, CounterTypeDTO>();
-                cfg.CreateMap<CounterStatus, CounterStatusDTO>();
-            }).CreateMapper();
-
-            return mapper.Map<Counter, CounterDTO>(counter); 
-        }
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<Counter, CounterDTO>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat))
+            .ForMember(s => s.CounterType, h => h.MapFrom(src => src.CounterType))
+            .ForMember(s => s.CounterStatus, h => h.MapFrom(src => src.CounterStatus));
+            cfg.CreateMap<Flat, FlatDTO>();
+            cfg.CreateMap<CounterType, CounterTypeDTO>();
+            cfg.CreateMap<CounterStatus, CounterStatusDTO>();
+            cfg.CreateMap<CounterDTO, Counter>();
+        }).CreateMapper();
         
         public IEnumerable<CounterDTO> GetCounters()
-        {            
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<Counter, CounterDTO>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat))
-                .ForMember(s => s.CounterType, h => h.MapFrom(src => src.CounterType))
-                .ForMember(s => s.CounterStatus, h => h.MapFrom(src => src.CounterStatus));
-                cfg.CreateMap<Flat, FlatDTO>();
-                cfg.CreateMap<CounterType, CounterTypeDTO>();
-                cfg.CreateMap<CounterStatus, CounterStatusDTO>();
-            }).CreateMapper();
-            
-            var counters = db.Counters.GetWithInclude(x => x.Flat, y=>y.CounterStatus,d =>d.CounterType);
-            return mapper.Map<IEnumerable<Counter>, List<CounterDTO>>(counters);
+        {     
+            var counters = _db.Counters.GetWithInclude(x => x.Flat, y=>y.CounterStatus,d =>d.CounterType);
+            return _mapper.Map<IEnumerable<Counter>, List<CounterDTO>>(counters);
         }
         
         public IEnumerable<CounterDTO> GetCountersByFlat(int? FlatId)
@@ -70,22 +48,12 @@ namespace HedgePlatform.BLL.Services
             if (FlatId == null)
                 throw new ValidationException("FlatId is NULL", "");
 
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<Counter, CounterDTO>().ForMember(s => s.Flat, h => h.MapFrom(src => src.Flat))
-                .ForMember(s => s.CounterType, h => h.MapFrom(src => src.CounterType))
-                .ForMember(s => s.CounterStatus, h => h.MapFrom(src => src.CounterStatus));
-                cfg.CreateMap<Flat, FlatDTO>();
-                cfg.CreateMap<CounterType, CounterTypeDTO>();
-                cfg.CreateMap<CounterStatus, CounterStatusDTO>();
-            }).CreateMapper();
-
-            var counters = db.Counters.GetWithInclude(p=>p.FlatId==FlatId, x => x.Flat, y => y.CounterStatus, d => d.CounterType);
-            IEnumerable<CounterDTO> counterDTOs = mapper.Map<IEnumerable<Counter>, List<CounterDTO>>(counters);
+            var counters = _db.Counters.GetWithInclude(p=>p.FlatId==FlatId, x => x.Flat, y => y.CounterStatus, d => d.CounterType);
+            IEnumerable<CounterDTO> counterDTOs = _mapper.Map<IEnumerable<Counter>, List<CounterDTO>>(counters);
             foreach (var counter in counterDTOs)
             {
                 counter.CounterValues = _counterValueService.GetCounterValuesByCounter(counter.Id).ToList();
             }
-
             return counterDTOs;
         }
 
@@ -94,8 +62,8 @@ namespace HedgePlatform.BLL.Services
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterDTO, Counter>()).CreateMapper();
             try
             {
-                db.Counters.Create(mapper.Map<CounterDTO, Counter>(counter));
-                db.Save();
+                _db.Counters.Create(mapper.Map<CounterDTO, Counter>(counter));
+                _db.Save();
             }
             
             catch (DbUpdateException ex)
@@ -118,14 +86,13 @@ namespace HedgePlatform.BLL.Services
 
             if (!CheckCounterAdd(FlatId.Value))
                 throw new ValidationException("Counters count is max", "");
-
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterDTO, Counter>()).CreateMapper();
+          
             try
             {
                 counter.CounterStatusId = 1;
                 counter.FlatId = FlatId.Value;
-                Counter new_counter = db.Counters.Create(mapper.Map<CounterDTO, Counter>(counter));
-                db.Save();
+                Counter new_counter = _db.Counters.Create(_mapper.Map<CounterDTO, Counter>(counter));
+                _db.Save();
                 counterValue.CounterId = new_counter.Id;
                 _counterValueService.CreateCounterValue(counterValue);                
             }
@@ -147,11 +114,10 @@ namespace HedgePlatform.BLL.Services
         {
             if (counter == null)
                 throw new ValidationException("No counter object", "");
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterDTO, Counter>()).CreateMapper();
             try
             {
-                db.Counters.Update(mapper.Map<CounterDTO, Counter>(counter));
-                db.Save();
+                _db.Counters.Update(_mapper.Map<CounterDTO, Counter>(counter));
+                _db.Save();
                 _logger.LogInformation("Edit counter: " + counter.Id);
             }
             
@@ -173,13 +139,13 @@ namespace HedgePlatform.BLL.Services
             if (id == null)
                 throw new ValidationException("NULL", "");
 
-            var counter = db.Counters.Get(id.Value);
+            var counter = _db.Counters.Get(id.Value);
             if (counter == null)
                 throw new ValidationException("NOT_FOUND", "");
             try
             {
-                db.Counters.Delete(id.Value);
-                db.Save();
+                _db.Counters.Delete(id.Value);
+                _db.Save();
                 _logger.LogInformation("Delete counter: " + counter.Id);
             }
             catch (DbUpdateException ex)
@@ -197,7 +163,7 @@ namespace HedgePlatform.BLL.Services
         
         public void Dispose()
         {
-            db.Dispose();
+            _db.Dispose();
         }
 
         private bool CheckCounterAdd (int FlatId)

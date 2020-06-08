@@ -70,6 +70,5 @@ namespace HedgePlatform.BLL.Services
 
             return document;
         }
-
     }
 }

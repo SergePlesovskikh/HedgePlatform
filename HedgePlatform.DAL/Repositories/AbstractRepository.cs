@@ -26,6 +26,11 @@ namespace HedgePlatform.DAL.Repositories
         {
             return _db.Find(id);
         }
+        public T GetOneWithInclude(Func<T, bool> predicate, params Expression<Func<T, object>>[] includeProperties)
+        {
+            var query = Include(includeProperties);
+            return query.Where(predicate).FirstOrDefault();
+        }
 
         public T Create(T item)
         {

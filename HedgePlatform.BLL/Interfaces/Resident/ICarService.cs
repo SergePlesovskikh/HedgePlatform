@@ -7,7 +7,6 @@ namespace HedgePlatform.BLL.Interfaces
 {
     public interface ICarService
     {
-        CarDTO GetCar(int? id);
         IEnumerable<CarDTO> GetCars();
         void CreateCar(CarDTO car);
         void EditCar(CarDTO car);

@@ -6,8 +6,7 @@ using System.Text;
 namespace HedgePlatform.BLL.Interfaces
 {
     public interface IHouseService
-    {
-        HouseDTO GetHouse(int? id);
+    {      
         IEnumerable<HouseDTO> GetHouses();
         void CreateHouse(HouseDTO house);
         void EditHouse(HouseDTO house);

@@ -14,43 +14,35 @@ namespace HedgePlatform.BLL.Services
 {
     public class MessageService : IMessageService
     {
-        IUnitOfWork db { get; set; }
+        private IUnitOfWork _db { get; set; }
         private IVoteService _voteService;
         private IResidentService _residentService;
         private IVoteResultService _voteResultService;
 
         public MessageService(IUnitOfWork uow, IVoteService  voteService, IResidentService residentService, IVoteResultService voteResultService)
         {
-            db = uow;
+            _db = uow;
             _voteService = voteService;
             _residentService = residentService;
             _voteResultService = voteResultService;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<MessageService>();
-
-        public MessageDTO GetMessage(int? id)
-        {
-            if (id == null)
-                throw new ValidationException("NULL", "");
-            var message = db.Messages.Get(id.Value);
-            if (message == null)
-                throw new ValidationException("NOT_FOUND", "");
-
-            return new MessageDTO { Id = message.Id, Content = message.Content, DateMessage = message.DateMessage, Header = message.Header };
-        }
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<Message, MessageDTO>();
+            cfg.CreateMap<MessageDTO, VoteDTO>();
+        }).CreateMapper();
 
         public IEnumerable<MessageDTO> GetMessages()
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Message, MessageDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Message>, List<MessageDTO>>(db.Messages.Find(x=>x.Discriminator=="Message"));
+        {          
+            return _mapper.Map<IEnumerable<Message>, List<MessageDTO>>(_db.Messages.Find(x=>x.Discriminator=="Message"));
         }
         //ToDo переделать выборку на sql
         public IEnumerable<VoteDTO> GetMessagesAndVotes(int? ResidentId)
         {
             if (ResidentId == null)
                 throw new ValidationException("No Resident Id", "");
-            ResidentDTO residentDTO = _residentService.GetResident(ResidentId);
+
             List<VoteDTO> voteDTOs = new List<VoteDTO> { };
             if (_residentService.CheckChairman(ResidentId.Value))
             {
@@ -64,18 +56,17 @@ namespace HedgePlatform.BLL.Services
                 }
                 voteDTOs = actual_voteDTOs;
             }               
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<MessageDTO, VoteDTO>()).CreateMapper();
-            IEnumerable<VoteDTO> messages = mapper.Map<IEnumerable<MessageDTO>, IEnumerable<VoteDTO>>(GetMessages());
+           
+            IEnumerable<VoteDTO> messages = _mapper.Map<IEnumerable<MessageDTO>, IEnumerable<VoteDTO>>(GetMessages());
             return voteDTOs.Union(messages);
         }
 
         public void CreateMessage(MessageDTO message)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<MessageDTO, Message>()).CreateMapper();
             try
             {
-                db.Messages.Create(mapper.Map<MessageDTO, Message>(message));
-                db.Save();
+                _db.Messages.Create(_mapper.Map<MessageDTO, Message>(message));
+                _db.Save();
             }
 
             catch (DbUpdateException ex)
@@ -94,11 +85,11 @@ namespace HedgePlatform.BLL.Services
         {
             if (message == null)
                 throw new ValidationException("No Message object", "");
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<MessageDTO, Message>()).CreateMapper();
+
             try
             {
-                db.Messages.Update(mapper.Map<MessageDTO, Message>(message));
-                db.Save();
+                _db.Messages.Update(_mapper.Map<MessageDTO, Message>(message));
+                _db.Save();
                 _logger.LogInformation("Edit Message: " + message.Id);
             }
 
@@ -118,13 +109,13 @@ namespace HedgePlatform.BLL.Services
         {
             if (id == null)
                 throw new ValidationException("NULL", "");
-            var message = db.Messages.Get(id.Value);
+            var message = _db.Messages.Get(id.Value);
             if (message == null)
                 throw new ValidationException("NOT_FOUND", "");
             try
             {
-                db.Messages.Delete(id.Value);
-                db.Save();
+                _db.Messages.Delete(id.Value);
+                _db.Save();
                 _logger.LogInformation("Delete Message: " + message.Id);
             }
             catch (DbUpdateException ex)
@@ -138,10 +129,9 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-
         public void Dispose()
         {
-            db.Dispose();
+            _db.Dispose();
         }
     }
 }

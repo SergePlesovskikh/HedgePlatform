@@ -7,7 +7,6 @@ namespace HedgePlatform.BLL.Interfaces
 {
     public interface ICounterStatusService
     {
-        CounterStatusDTO GetCounterStatus(int? id);
         IEnumerable<CounterStatusDTO> GetCounterStats();
         void CreateCounterStatus(CounterStatusDTO counterStatus);
         void EditCounterStatus(CounterStatusDTO counterStatus);

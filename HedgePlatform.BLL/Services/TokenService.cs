@@ -18,7 +18,7 @@ namespace HedgePlatform.BLL.Services
             return GenerateSeqString(16);
         }
 
-        private string GenerateSeqString(int len)
+        private static string GenerateSeqString(int len)
         {
             using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
             {

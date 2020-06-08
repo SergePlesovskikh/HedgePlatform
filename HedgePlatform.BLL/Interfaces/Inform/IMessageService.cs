@@ -7,7 +7,6 @@ namespace HedgePlatform.BLL.Interfaces
 {
     public interface IMessageService
     {
-        MessageDTO GetMessage(int? id);
         IEnumerable<MessageDTO> GetMessages();
         IEnumerable<VoteDTO> GetMessagesAndVotes(int? ResidentId);
         void CreateMessage(MessageDTO message);

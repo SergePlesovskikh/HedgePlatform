@@ -13,57 +13,47 @@ namespace HedgePlatform.BLL.Services
     {
     public class FlatService : IFlatService
     {
-        IUnitOfWork db { get; set; }
-        private readonly ILogger _logger = Log.CreateLogger<FlatService>();
+        private IUnitOfWork _db { get; set; }  
         public FlatService(IUnitOfWork uow)
         {
-            db = uow;
+            _db = uow;
         }
-        
+
+        private readonly ILogger _logger = Log.CreateLogger<FlatService>();
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<Flat, FlatDTO>().ForMember(s => s.House, h => h.MapFrom(src => src.House));
+            cfg.CreateMap<House, HouseDTO>();
+            cfg.CreateMap<FlatDTO, Flat>();
+        }).CreateMapper();
+
         public FlatDTO GetFlat(int? id)
         {
             if (id == null)
                 throw new ValidationException("NULL", "");
-            var flat = db.Flats.Get(id.Value);
+            var flat = _db.Flats.Get(id.Value);
             if (flat == null)
                 throw new ValidationException("NOT_FOUND", "");
-
-            return new FlatDTO
-            {
-                Id = flat.Id,
-                HouseId = flat.HouseId,                
-                MaxCounters = flat.MaxCounters,
-                Number = flat.Number
-            };
+            return _mapper.Map<Flat, FlatDTO>(flat);
         }      
 
         public IEnumerable<FlatDTO> GetFlats()
-        {
-           var mapper = new MapperConfiguration(cfg => {
-                    cfg.CreateMap<Flat, FlatDTO>().ForMember(s => s.House, h => h.MapFrom(src => src.House));
-                    cfg.CreateMap<House, HouseDTO>();
-                }).CreateMapper();
-                var flats = db.Flats.GetWithInclude(x => x.House);
-                return mapper.Map<IEnumerable<Flat>, List<FlatDTO>>(flats);
+        {         
+            var flats = _db.Flats.GetWithInclude(x => x.House);
+            return _mapper.Map<IEnumerable<Flat>, List<FlatDTO>>(flats);
         }
 
         public IEnumerable<FlatDTO> GetFlats(int? HouseId)
-        {
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<Flat, FlatDTO>().ForMember(s => s.House, h => h.MapFrom(src => src.House));
-                cfg.CreateMap<House, HouseDTO>();
-            }).CreateMapper();
-            var flats = db.Flats.Find(x => x.HouseId == HouseId);
-            return mapper.Map<IEnumerable<Flat>, List<FlatDTO>>(flats);
+        {            
+            var flats = _db.Flats.Find(x => x.HouseId == HouseId);
+            return _mapper.Map<IEnumerable<Flat>, List<FlatDTO>>(flats);
         }
 
         public void CreateFlat(FlatDTO flat)
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<FlatDTO, Flat>()).CreateMapper();
+        {            
             try
             {
-                db.Flats.Create(mapper.Map<FlatDTO, Flat>(flat));
-                db.Save();
+                _db.Flats.Create(_mapper.Map<FlatDTO, Flat>(flat));
+                _db.Save();
             }
             catch (DbUpdateException ex)
             {
@@ -76,20 +66,20 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
+
         public void EditFlat(FlatDTO flat)
         {
             if (flat == null)
-                throw new ValidationException("No flat object", "");
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<FlatDTO, Flat>()).CreateMapper();
+                throw new ValidationException("No flat object", "");           
             try
             {
-                db.Flats.Update(mapper.Map<FlatDTO, Flat>(flat));
-                db.Save();
+                _db.Flats.Update(_mapper.Map<FlatDTO, Flat>(flat));
+                _db.Save();
                 _logger.LogInformation("Edit flat: " + flat.Id);
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("flat edit db error: " + ex.InnerException.Message);
+                _logger.LogError("flat edit _db error: " + ex.InnerException.Message);
                 throw new ValidationException("DB_ERROR", "");
             }
             catch (Exception ex)
@@ -103,18 +93,18 @@ namespace HedgePlatform.BLL.Services
         {
             if (id == null)
                 throw new ValidationException("NULL", "");
-            var flat = db.Flats.Get(id.Value);
+            var flat = _db.Flats.Get(id.Value);
             if (flat == null)
                     throw new ValidationException("NOT_FOUND", "");
             try
             {
-                db.Flats.Delete(id.Value);
-                db.Save();
+                _db.Flats.Delete(id.Value);
+                _db.Save();
                 _logger.LogInformation("Delete flat: " + flat.Id);
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("flat delete db error: " + ex.InnerException.Message);
+                _logger.LogError("flat delete _db error: " + ex.InnerException.Message);
                 throw new ValidationException("DB_ERROR", "");
             }
             catch (Exception ex)
@@ -123,9 +113,10 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
+
         public void Dispose()
         {
-            db.Dispose();
+            _db.Dispose();
         }
     }
 }

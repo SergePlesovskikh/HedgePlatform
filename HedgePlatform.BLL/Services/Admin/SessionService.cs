@@ -12,43 +12,31 @@ namespace HedgePlatform.BLL.Services
 {
     public class SessionService : ISessionService
     {
-        IUnitOfWork db { get; set; }
+        private IUnitOfWork _db { get; set; }
 
         public SessionService(IUnitOfWork uow)
         {
-            db = uow;
+            _db = uow;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<SessionService>();
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<Session, SessionDTO>();
+            cfg.CreateMap<SessionDTO, Session>();}).CreateMapper();
 
-        public SessionDTO GetSession(int? id)
-        {
-            if (id == null)
-                throw new ValidationException("NULL", "");
-            var session = db.Sessions.Get(id.Value);
-            if (session == null)
-                throw new ValidationException("NOT_FOUND", "");
-
-            return new SessionDTO { Id = session.Id, Uid = session.Uid, PhoneId = session.PhoneId };
-        }
-        //ToDo добавить include для 1 объекта
         public SessionDTO GetSession(string uid)
         {           
-            var session = db.Sessions.FindFirst(x => x.Uid == uid);
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Session, SessionDTO> ()).CreateMapper();
-            return mapper.Map<Session, SessionDTO>(session);
+            var session = _db.Sessions.FindFirst(x => x.Uid == uid);
+            return _mapper.Map<Session, SessionDTO>(session);
         }
 
         public SessionDTO CreateSession(SessionDTO session)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<SessionDTO, Session>()).CreateMapper();
             try
             {
-                Session new_session = db.Sessions.Create(mapper.Map<SessionDTO, Session>(session));
-                db.Save();
-                mapper = new MapperConfiguration(cfg => cfg.CreateMap<Session, SessionDTO>()).CreateMapper();
-
-                return mapper.Map<Session, SessionDTO>(new_session);
+                Session new_session = _db.Sessions.Create(_mapper.Map<SessionDTO, Session>(session));
+                _db.Save();
+                return _mapper.Map<Session, SessionDTO>(new_session);
             }
 
             catch (DbUpdateException ex)
@@ -62,20 +50,20 @@ namespace HedgePlatform.BLL.Services
                 _logger.LogError("Session creating error: " + ex.Message);
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
-
         }
-
         public void DeleteSession(int? id)
         {
             if (id == null)
                 throw new ValidationException("NULL", "");
-            var counterType = db.CounterStats.Get(id.Value);
+
+            var counterType = _db.CounterStats.Get(id.Value);
             if (counterType == null)
                 throw new ValidationException("NOT_FOUND", "");
+
             try
             {
-                db.CounterStats.Delete(id.Value);
-                db.Save();
+                _db.CounterStats.Delete(id.Value);
+                _db.Save();
             }
             catch
             {
@@ -84,7 +72,7 @@ namespace HedgePlatform.BLL.Services
         }
         public void Dispose()
         {
-            db.Dispose();
+            _db.Dispose();
         }
     }
 }

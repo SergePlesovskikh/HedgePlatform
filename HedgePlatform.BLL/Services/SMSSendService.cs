@@ -50,8 +50,7 @@ namespace HedgePlatform.BLL.Services
         private string RequestPathBuilder()
         {
             string request_path = "https://";
-            request_path += _configuration["SMSSender:smsserver"];
-          
+            request_path += _configuration["SMSSender:smsserver"];          
             return request_path;
         }
 
@@ -62,7 +61,6 @@ namespace HedgePlatform.BLL.Services
                 { "from", _configuration["SMSSender:sms_name"] },
                 { "to", long.Parse(phone)}
             };
-
             return data.ToString();
         }
 
@@ -78,21 +76,17 @@ namespace HedgePlatform.BLL.Services
             using (var client = new HttpClient())
             {
                 _logger.LogInformation("Send to sms server: " + request_path);
-
                 client.DefaultRequestHeaders.Authorization =
                                       new AuthenticationHeaderValue(
                                        "Basic", Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(_configuration["SMSSender:sms_id"])));
              
                 _logger.LogInformation("output string: " + data);
-
                 HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync(request_path, content);
 
+                HttpResponseMessage response = await client.PostAsync(request_path, content);
                 _logger.LogInformation("Response " + response.StatusCode.ToString());
                 _logger.LogInformation("Response from SMS server: " + await response.Content.ReadAsStringAsync());
-
                 return response;
-
             }
         }
     } 

@@ -14,48 +14,26 @@ namespace HedgePlatform.BLL.Services
 {
     public class CounterValueService : ICounterValueService
     {
-        IUnitOfWork db { get; set; }
+        private IUnitOfWork _db { get; set; }
         private IConfiguration _configuration;      
 
         public CounterValueService(IUnitOfWork uow, IConfiguration configuration)
         {
-            db = uow;
+            _db = uow;
             _configuration = configuration;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<CounterValueService>();
-
-        public CounterValueDTO GetCounterValue(int? id)
-        {
-            if (id == null)
-                throw new ValidationException("NULL", "");
-            var counterValue = db.CounterValues.Get(id.Value);
-            if (counterValue == null)
-                throw new ValidationException("NOT_FOUND", "");
-
-            Counter counter = db.Counters.Get(counterValue.CounterId);
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Counter, CounterDTO>()).CreateMapper();
-
-            return new CounterValueDTO
-            {
-                Id = counterValue.Id,
-                CounterId = counterValue.CounterId,
-                Counter = mapper.Map<Counter, CounterDTO>(counter),
-                DateValue = counterValue.DateValue,
-                Image = counterValue.Image,
-                Value = counterValue.Value
-            };
-        }
+        private static IMapper _mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<CounterValue, CounterValueDTO>().ForMember(s => s.Counter, h => h.MapFrom(src => src.Counter));
+            cfg.CreateMap<Counter, CounterDTO>();
+            cfg.CreateMap<CounterValueDTO, CounterValue>();
+        }).CreateMapper();
 
         public IEnumerable<CounterValueDTO> GetCounterValues()
         {
-
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<CounterValue, CounterValueDTO>().ForMember(s => s.Counter, h => h.MapFrom(src => src.Counter));
-                cfg.CreateMap<Counter, CounterDTO>();
-            }).CreateMapper();
-            var counterValues = db.CounterValues.GetWithInclude(x => x.Counter);
-            return mapper.Map<IEnumerable<CounterValue>, List<CounterValueDTO>>(counterValues);
+            var counterValues = _db.CounterValues.GetWithInclude(x => x.Counter);
+            return _mapper.Map<IEnumerable<CounterValue>, List<CounterValueDTO>>(counterValues);
         }
 
         public IEnumerable<CounterValueDTO> GetCounterValuesByCounter(int? CounterId)
@@ -63,21 +41,16 @@ namespace HedgePlatform.BLL.Services
             if (CounterId == null)
                 throw new ValidationException("NULL", "");
 
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<CounterValue, CounterValueDTO>().ForMember(s => s.Counter, h => h.MapFrom(src => src.Counter));
-                cfg.CreateMap<Counter, CounterDTO>();
-            }).CreateMapper();
-            var counterValues = db.CounterValues.GetWithInclude(p=>p.CounterId == CounterId,x => x.Counter);
-            return mapper.Map<IEnumerable<CounterValue>, List<CounterValueDTO>>(counterValues);
+            var counterValues = _db.CounterValues.GetWithInclude(p=>p.CounterId == CounterId,x => x.Counter);
+            return _mapper.Map<IEnumerable<CounterValue>, List<CounterValueDTO>>(counterValues);
         }
 
         public void CreateCounterValue(CounterValueDTO counterValue)
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterValueDTO, CounterValue>()).CreateMapper();
+        {           
             try
             {
-                db.CounterValues.Create(mapper.Map<CounterValueDTO, CounterValue>(counterValue));
-                db.Save();
+                _db.CounterValues.Create(_mapper.Map<CounterValueDTO, CounterValue>(counterValue));
+                _db.Save();
             }
 
             catch (DbUpdateException ex)
@@ -103,12 +76,11 @@ namespace HedgePlatform.BLL.Services
 
             if (!CheckCounterValueAdd(FlatId.Value))
                 throw new ValidationException("NO_PERMISSION", "");
-
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterValueDTO, CounterValue>()).CreateMapper();
+          
             try
             {
-                db.CounterValues.Create(mapper.Map<CounterValueDTO, CounterValue>(counterValue));
-                db.Save();
+                _db.CounterValues.Create(_mapper.Map<CounterValueDTO, CounterValue>(counterValue));
+                _db.Save();
             }
 
             catch (DbUpdateException ex)
@@ -128,11 +100,10 @@ namespace HedgePlatform.BLL.Services
         {
             if (counterValue == null)
                 throw new ValidationException("No counterValue object", "");
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterValueDTO, CounterValue>()).CreateMapper();
             try
             {
-                db.CounterValues.Update(mapper.Map<CounterValueDTO, CounterValue>(counterValue));
-                db.Save();
+                _db.CounterValues.Update(_mapper.Map<CounterValueDTO, CounterValue>(counterValue));
+                _db.Save();
                 _logger.LogInformation("Edit counterValue: " + counterValue.Id);
             }
 
@@ -153,13 +124,13 @@ namespace HedgePlatform.BLL.Services
             if (id == null)
                 throw new ValidationException("NULL", "");
 
-            var counterValue = db.CounterValues.Get(id.Value);
+            var counterValue = _db.CounterValues.Get(id.Value);
             if (counterValue == null)
                 throw new ValidationException("NOT_FOUND", "");
             try
             {
-                db.CounterValues.Delete(id.Value);
-                db.Save();
+                _db.CounterValues.Delete(id.Value);
+                _db.Save();
                 _logger.LogInformation("Delete counterValue: " + counterValue.Id);
             }
             catch (DbUpdateException ex)
@@ -176,12 +147,12 @@ namespace HedgePlatform.BLL.Services
         }
         public void Dispose()
         {
-            db.Dispose();
+            _db.Dispose();
         }
 
         public bool CheckCounterToFlat(int FlatId, int CounterId)
         {
-            Counter counter = db.Counters.Get(CounterId);
+            Counter counter = _db.Counters.Get(CounterId);
             return counter.FlatId == FlatId;
         }
 
@@ -204,7 +175,7 @@ namespace HedgePlatform.BLL.Services
 
         private bool CheckCurrentMonthVal(int CounterId)
         {
-            return db.CounterValues.FindFirst(x => ( x.CounterId == CounterId) && (x.DateValue.Month==DateTime.Now.Month)) == null;
+            return _db.CounterValues.FindFirst(x => ( x.CounterId == CounterId) && (x.DateValue.Month==DateTime.Now.Month)) == null;
         }
     }
 }

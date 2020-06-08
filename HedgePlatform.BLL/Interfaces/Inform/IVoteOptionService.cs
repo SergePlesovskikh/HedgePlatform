@@ -6,8 +6,7 @@ using System.Text;
 namespace HedgePlatform.BLL.Interfaces
 {
     public interface IVoteOptionService
-    {
-        VoteOptionDTO GetVoteOption(int? id);
+    {      
         IEnumerable<VoteOptionDTO> GetVoteOptions();
         void CreateVoteOption(VoteOptionDTO voteOption);
         void EditVoteOption(VoteOptionDTO voteOption);

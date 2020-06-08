@@ -13,39 +13,30 @@ namespace HedgePlatform.BLL.Services
 {
     public class HouseManagerService : IHouseManagerService
     {
-        IUnitOfWork db { get; set; }
+        private IUnitOfWork _db { get; set; }
 
         public HouseManagerService(IUnitOfWork uow)
         {
-            db = uow;
+            _db = uow;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<HouseManagerService>();
-
-        public HouseManagerDTO GetHouseManager(int? id)
-        {
-            if (id == null)
-                throw new ValidationException("NULL", "");
-            var houseManager = db.HouseManagers.Get(id.Value);
-            if (houseManager == null)
-                throw new ValidationException("NOT_FOUND", "");
-
-            return new HouseManagerDTO { Id = houseManager.Id, Name = houseManager.Name, Image = houseManager.Image };
-        }
-
+        private static IMapper _mapper = new MapperConfiguration(cfg =>{
+            cfg.CreateMap<HouseManager, HouseManagerDTO>();
+            cfg.CreateMap<HouseManagerDTO, HouseManager>();
+        }).CreateMapper();
+      
         public IEnumerable<HouseManagerDTO> GetHouseManagers()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<HouseManager, HouseManagerDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<HouseManager>, List<HouseManagerDTO>>(db.HouseManagers.GetAll());
+            return _mapper.Map<IEnumerable<HouseManager>, List<HouseManagerDTO>>(_db.HouseManagers.GetAll());
         }
 
         public void CreateHouseManager(HouseManagerDTO houseManager)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<HouseManagerDTO, HouseManager>()).CreateMapper();
             try
             {
-                db.HouseManagers.Create(mapper.Map<HouseManagerDTO, HouseManager>(houseManager));
-                db.Save();
+                _db.HouseManagers.Create(_mapper.Map<HouseManagerDTO, HouseManager>(houseManager));
+                _db.Save();
             }
 
             catch (DbUpdateException ex)
@@ -65,17 +56,16 @@ namespace HedgePlatform.BLL.Services
         {
             if (houseManager == null)
                 throw new ValidationException("No House manager object", "");
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<HouseManagerDTO, HouseManager>()).CreateMapper();
             try
             {
-                db.HouseManagers.Update(mapper.Map<HouseManagerDTO, HouseManager>(houseManager));
-                db.Save();
+                _db.HouseManagers.Update(_mapper.Map<HouseManagerDTO, HouseManager>(houseManager));
+                _db.Save();
                 _logger.LogInformation("Edit House manager: " + houseManager.Id);
             }
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("House manager edit db error: " + ex.InnerException.Message);
+                _logger.LogError("House manager edit _db error: " + ex.InnerException.Message);
                 throw new ValidationException("DB_ERROR", "");
             }
 
@@ -90,18 +80,18 @@ namespace HedgePlatform.BLL.Services
             if (id == null)
                 throw new ValidationException("NULL", "");
 
-            var houseManager = db.HouseManagers.Get(id.Value);
+            var houseManager = _db.HouseManagers.Get(id.Value);
             if (houseManager == null)
                 throw new ValidationException("NOT_FOUND", "");
             try
             {
-                db.HouseManagers.Delete(id.Value);
-                db.Save();
+                _db.HouseManagers.Delete(id.Value);
+                _db.Save();
                 _logger.LogInformation("Delete House manager: " + houseManager.Id);
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("House manager delete db error: " + ex.InnerException.Message);
+                _logger.LogError("House manager delete _db error: " + ex.InnerException.Message);
                 throw new ValidationException("DB_ERROR", "");
             }
 
@@ -114,7 +104,7 @@ namespace HedgePlatform.BLL.Services
 
         public void Dispose()
         {
-            db.Dispose();
+            _db.Dispose();
         }
     }
 }

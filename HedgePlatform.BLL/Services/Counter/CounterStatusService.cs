@@ -13,39 +13,30 @@ namespace HedgePlatform.BLL.Services
 {
     public class CounterStatusService : ICounterStatusService
     {
-        IUnitOfWork db { get; set; }
-
+        private IUnitOfWork _db { get; set; }
         public CounterStatusService(IUnitOfWork uow)
         {
-            db = uow;
+            _db = uow;
         }
 
         private readonly ILogger _logger = Log.CreateLogger<CounterStatusService>();
-
-        public CounterStatusDTO GetCounterStatus(int? id)
+        private static IMapper _mapper = new MapperConfiguration(cfg =>
         {
-            if (id == null)
-                throw new ValidationException("NULL", "");
-            var counterStatus = db.CounterStats.Get(id.Value);
-            if (counterStatus == null)
-                throw new ValidationException("NOT_FOUND", "");
-
-            return new CounterStatusDTO { Id = counterStatus.Id, Name = counterStatus.Name };
-        }
+            cfg.CreateMap<CounterStatus, CounterStatusDTO>();
+            cfg.CreateMap<CounterStatusDTO, CounterStatus>();
+        }).CreateMapper();
 
         public IEnumerable<CounterStatusDTO> GetCounterStats()
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterStatus, CounterStatusDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<CounterStatus>, List<CounterStatusDTO>>(db.CounterStats.GetAll());
+        {           
+            return _mapper.Map<IEnumerable<CounterStatus>, List<CounterStatusDTO>>(_db.CounterStats.GetAll());
         }
 
         public void CreateCounterStatus(CounterStatusDTO counterStatus)
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterStatusDTO, CounterStatus>()).CreateMapper();
+        {           
             try
             {
-                db.CounterStats.Create(mapper.Map<CounterStatusDTO, CounterStatus>(counterStatus));
-                db.Save();
+                _db.CounterStats.Create(_mapper.Map<CounterStatusDTO, CounterStatus>(counterStatus));
+                _db.Save();
             }
 
             catch (DbUpdateException ex)
@@ -65,11 +56,11 @@ namespace HedgePlatform.BLL.Services
         {
             if (counterStatus == null)
                 throw new ValidationException("No counter Status object", "");
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CounterStatusDTO, CounterStatus>()).CreateMapper();
+          
             try
             {
-                db.CounterStats.Update(mapper.Map<CounterStatusDTO, CounterStatus>(counterStatus));
-                db.Save();
+                _db.CounterStats.Update(_mapper.Map<CounterStatusDTO, CounterStatus>(counterStatus));
+                _db.Save();
             }
 
             catch (DbUpdateException ex)
@@ -89,13 +80,13 @@ namespace HedgePlatform.BLL.Services
         {
             if (id == null)
                 throw new ValidationException("NULL", "");
-            var counterType = db.CounterStats.Get(id.Value);
+            var counterType = _db.CounterStats.Get(id.Value);
             if (counterType == null)
                 throw new ValidationException("NOT_FOUND", "");
             try
             {
-                db.CounterStats.Delete(id.Value);
-                db.Save();
+                _db.CounterStats.Delete(id.Value);
+                _db.Save();
             }
             catch
             {
@@ -105,7 +96,7 @@ namespace HedgePlatform.BLL.Services
 
         public void Dispose()
         {
-            db.Dispose();
+            _db.Dispose();
         }
     }
 }
