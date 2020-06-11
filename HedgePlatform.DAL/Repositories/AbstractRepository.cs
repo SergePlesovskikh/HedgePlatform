@@ -17,6 +17,12 @@ namespace HedgePlatform.DAL.Repositories
             _context = context;
             _db = context.Set<T>();
         }
+
+        public bool CanConnect()
+        {
+            return _context.Database.CanConnect();
+        }
+
         public IEnumerable<T> GetAll()
         {
             return _db.AsNoTracking().ToList();

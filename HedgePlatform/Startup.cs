@@ -12,12 +12,9 @@ using HedgePlatform.BLL.Interfaces;
 using HedgePlatform.BLL.Services;
 using HedgePlatform.DAL;
 using HedgePlatform.Middleware;
-using Microsoft.AspNetCore.Routing;
 using DinkToPdf.Contracts;
 using DinkToPdf;
-using System.Runtime.Loader;
-using System;
-using System.Reflection;
+using Microsoft.AspNetCore.Http;
 
 namespace HedgePlatform
 {
@@ -66,6 +63,7 @@ namespace HedgePlatform
             services.AddTransient<IVoteOptionService, VoteOptionService>();
             services.AddTransient<IVoteResultService, VoteResultService>();
 
+            services.AddTransient<ICheckDBConnectionService, CheckDBConnectionService>();
             services.AddTransient<IHTMLService, HTMLService>();
             services.AddTransient<IPDFService, PDFService>();
             services.AddTransient<ISMSSendService, SMSSendService>();
@@ -79,13 +77,12 @@ namespace HedgePlatform
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
+            }          
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
+            app.UseMiddleware<CheckDBComponent>();
 
             app.UseWhen(context => context.Request.Path.StartsWithSegments("/api/mobile/regist"),
                 appBuilder => appBuilder.UseMiddleware<CheckAuthComponent>());
@@ -100,7 +97,7 @@ namespace HedgePlatform
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });         
+            });            
         }
     }
 }

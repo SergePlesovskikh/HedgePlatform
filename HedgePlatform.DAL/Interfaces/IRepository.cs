@@ -8,6 +8,7 @@ namespace HedgePlatform.DAL.Interfaces
 {
     public interface IRepository<T> where T : class
     {
+        bool CanConnect();
         IEnumerable<T> GetAll();
         T Get(int id);
         T GetOneWithInclude(Func<T, bool> predicate, params Expression<Func<T, object>>[] includeProperties);
