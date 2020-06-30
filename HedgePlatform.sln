@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HedgePlatform.DAL", "HedgeP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HedgePlatform.BLL", "HedgePlatform.BLL\HedgePlatform.BLL.csproj", "{4276D7D4-346C-42C0-8E4C-CD0FDFFA7A90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HedgePlatform.Tests", "HedgePlatform.Tests\HedgePlatform.Tests.csproj", "{CFCFEF58-28B1-4334-AE6A-BD028082135A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{4276D7D4-346C-42C0-8E4C-CD0FDFFA7A90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4276D7D4-346C-42C0-8E4C-CD0FDFFA7A90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4276D7D4-346C-42C0-8E4C-CD0FDFFA7A90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFCFEF58-28B1-4334-AE6A-BD028082135A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFCFEF58-28B1-4334-AE6A-BD028082135A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFCFEF58-28B1-4334-AE6A-BD028082135A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFCFEF58-28B1-4334-AE6A-BD028082135A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

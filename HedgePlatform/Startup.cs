@@ -14,7 +14,6 @@ using HedgePlatform.DAL;
 using HedgePlatform.Middleware;
 using DinkToPdf.Contracts;
 using DinkToPdf;
-using Microsoft.AspNetCore.Http;
 
 namespace HedgePlatform
 {
@@ -82,7 +81,7 @@ namespace HedgePlatform
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
-            app.UseMiddleware<CheckDBComponent>();
+          //  app.UseMiddleware<CheckDBComponent>();
 
             app.UseWhen(context => context.Request.Path.StartsWithSegments("/api/mobile/regist"),
                 appBuilder => appBuilder.UseMiddleware<CheckAuthComponent>());

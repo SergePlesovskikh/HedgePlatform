@@ -5,7 +5,7 @@ using HedgePlatform.BLL.Interfaces;
 
 namespace HedgePlatform.Middleware
 {
-    // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
+   
     public class CheckAuthComponent
     {
         private readonly RequestDelegate _next;

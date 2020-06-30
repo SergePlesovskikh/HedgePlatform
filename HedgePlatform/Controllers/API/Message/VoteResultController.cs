@@ -5,7 +5,7 @@ using HedgePlatform.BLL.DTO;
 using HedgePlatform.BLL.Infr;
 using AutoMapper;
 
-namespace HedgePlatform.Controllers.API.Message
+namespace HedgePlatform.Controllers.API
 {
     [Route("api/mobile/work/[controller]")]
     [ApiController]
