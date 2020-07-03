@@ -5,7 +5,7 @@ using AutoMapper;
 using HedgePlatform.ViewModel.API;
 using HedgePlatform.BLL.DTO;
 
-namespace HedgePlatform.Controllers.API.Territory
+namespace HedgePlatform.Controllers.API
 {
     [Route("api/mobile/registration/[controller]")]
     [ApiController]

@@ -6,7 +6,7 @@ using HedgePlatform.ViewModel.API;
 using HedgePlatform.BLL.DTO;
 using Microsoft.AspNetCore.Http;
 
-namespace HedgePlatform.Controllers.API.Message
+namespace HedgePlatform.Controllers.API
 {
     
     [ApiController]

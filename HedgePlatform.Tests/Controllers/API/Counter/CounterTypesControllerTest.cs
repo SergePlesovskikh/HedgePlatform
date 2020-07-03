@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using HedgePlatform.ViewModel.API;
 using System.Linq;
 
-namespace HedgePlatform.Tests
+namespace HedgePlatform.Tests.Controllers.API
 {
     public class CounterTypesControllerTest
     {
