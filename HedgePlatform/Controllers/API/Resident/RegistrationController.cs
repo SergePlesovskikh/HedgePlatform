@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AutoMapper;
+﻿using AutoMapper;
 using HedgePlatform.BLL.DTO;
 using HedgePlatform.BLL.Interfaces;
+using HedgePlatform.BLL.Infr;
 using HedgePlatform.ViewModel.API;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +21,7 @@ namespace HedgePlatform.Controllers.API
 
         [Route("api/mobile/regist/[controller]")]
         [HttpPost]
-        public ActionResult<string> Registration([FromBody] ResidentViewModel resident, string uid)
+        public IActionResult Registration([FromBody] ResidentViewModel resident, string uid)
         {
             try
             {

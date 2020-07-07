@@ -16,9 +16,9 @@ namespace HedgePlatform.Controllers.API
             _smsSendService = smsSendService;
             _phoneService = phoneService;
         }
-        //TODO проверка корректности номера в BLL
+        //ToDo проверка корректности номера в BLL
         [HttpGet]
-        public async Task<ActionResult<string>> Get (string phone)
+        public async Task<IActionResult> Get (string phone)
         {
             try
             {   

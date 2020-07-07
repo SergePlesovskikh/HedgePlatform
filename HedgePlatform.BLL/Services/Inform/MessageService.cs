@@ -18,18 +18,22 @@ namespace HedgePlatform.BLL.Services
         private IVoteService _voteService;
         private IResidentService _residentService;
         private IVoteResultService _voteResultService;
+        private readonly ILogger _logger;
 
-        public MessageService(IUnitOfWork uow, IVoteService  voteService, IResidentService residentService, IVoteResultService voteResultService)
+        public MessageService(IUnitOfWork uow, IVoteService  voteService, IResidentService residentService, 
+            IVoteResultService voteResultService, ILogger<MessageService> logger)
         {
             _db = uow;
             _voteService = voteService;
             _residentService = residentService;
             _voteResultService = voteResultService;
+            _logger = logger;
         }
 
-        private readonly ILogger _logger = Log.CreateLogger<MessageService>();
+        
         private static IMapper _mapper = new MapperConfiguration(cfg => {
             cfg.CreateMap<Message, MessageDTO>();
+            cfg.CreateMap<MessageDTO, Message>();
             cfg.CreateMap<MessageDTO, VoteDTO>();
         }).CreateMapper();
 
@@ -37,7 +41,7 @@ namespace HedgePlatform.BLL.Services
         {          
             return _mapper.Map<IEnumerable<Message>, List<MessageDTO>>(_db.Messages.Find(x=>x.Discriminator=="Message"));
         }
-        //ToDo переделать выборку на sql
+       
         public IEnumerable<VoteDTO> GetMessagesAndVotes(int? ResidentId)
         {
             if (ResidentId == null)
@@ -71,7 +75,7 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
+                _logger.LogError("Database error exception: " + ex.Message);
                 throw new ValidationException("DB_ERROR", "");
             }
 
@@ -95,7 +99,7 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Message edit db error: " + ex.InnerException.Message);
+                _logger.LogError("Message edit db error: " + ex.Message);
                 throw new ValidationException("DB_ERROR", "");
             }
 
@@ -120,7 +124,7 @@ namespace HedgePlatform.BLL.Services
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Message delete db error: " + ex.InnerException.Message);
+                _logger.LogError("Message delete db error: " + ex.Message);
                 throw new ValidationException("DB_ERROR", "");
             }
             catch (Exception ex)
