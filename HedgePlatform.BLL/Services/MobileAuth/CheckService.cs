@@ -60,12 +60,13 @@ namespace HedgePlatform.BLL.Services
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Check creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
             catch (Exception ex)
             {
-                _logger.LogError("Check creating error: " + ex.Message);
+                _logger.LogError($"Check creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }      
@@ -73,24 +74,30 @@ namespace HedgePlatform.BLL.Services
         public void DeleteCheck(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "CHECK_ID");
+
             var check = _db.Checks.Get(id.Value);
             if (check == null)
                 throw new ValidationException("NOT_FOUND", "");
+
             try
             {
                 _db.Checks.Delete(id.Value);
                 _db.Save();
             }
-            catch
+            catch (DbUpdateException ex)
             {
+                DBValidator.SetException(ex);
+                _logger.LogError($"Check creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Check creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
 
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() => _db.Dispose();
     }
 }

@@ -28,7 +28,6 @@ namespace HedgePlatform.Controllers.API
             var countersTypes = _mapper.Map<IEnumerable<CounterTypeDTO>, List<CounterTypeViewModel>>(counterTypeDTOs);
             return countersTypes;
         }
-
         protected override void Dispose(bool disposing)
         {
             _counterTypeService.Dispose();

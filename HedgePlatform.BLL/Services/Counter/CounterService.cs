@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
+
 namespace HedgePlatform.BLL.Services
 {
     public class CounterService : ICounterService
@@ -46,7 +47,7 @@ namespace HedgePlatform.BLL.Services
         public IEnumerable<CounterDTO> GetCountersByFlat(int? FlatId)
         {
             if (FlatId == null)
-                throw new ValidationException("FlatId is NULL", "");
+                throw new ValidationException("NULL", "FLAT_ID");
 
             var counters = _db.Counters.GetWithInclude(p=>p.FlatId==FlatId, x => x.Flat, y => y.CounterStatus, d => d.CounterType);
             IEnumerable<CounterDTO> counterDTOs = _mapper.Map<IEnumerable<Counter>, List<CounterDTO>>(counters);
@@ -68,13 +69,14 @@ namespace HedgePlatform.BLL.Services
             
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Counter creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
             
             catch (Exception ex)
             {
-                _logger.LogError("counter creating error: " + ex.Message);
+                _logger.LogError($"Counter creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
@@ -82,10 +84,10 @@ namespace HedgePlatform.BLL.Services
         public void CreateCounter(CounterDTO counter, CounterValueDTO counterValue, int? FlatId)
         {
             if (FlatId == null)
-                throw new ValidationException("FlatId is NULL", "");
+                throw new ValidationException("NULL", "FLAT_ID");
 
             if (!CheckCounterAdd(FlatId.Value))
-                throw new ValidationException("Counters count is max", "");
+                throw new ValidationException("COUNTER_IS_MAX", "");
           
             try
             {
@@ -99,13 +101,14 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Counter creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("counter creating error: " + ex.Message);
+                _logger.LogError($"Counter creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
@@ -113,7 +116,7 @@ namespace HedgePlatform.BLL.Services
         public void EditCounter(CounterDTO counter)
         {
             if (counter == null)
-                throw new ValidationException("No counter object", "");
+                throw new ValidationException("NO_OBJECT", "");
             try
             {
                 _db.Counters.Update(_mapper.Map<CounterDTO, Counter>(counter));
@@ -123,13 +126,14 @@ namespace HedgePlatform.BLL.Services
             
             catch (DbUpdateException ex)
             {
-                _logger.LogError("counter edit db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Counter edit error: Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
             
             catch (Exception ex)
             {
-                _logger.LogError("counter edit error: " + ex.Message);
+                _logger.LogError($"Counter edit error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
@@ -137,7 +141,7 @@ namespace HedgePlatform.BLL.Services
         public void DeleteCounter(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "COUNTER_ID");
 
             var counter = _db.Counters.Get(id.Value);
             if (counter == null)
@@ -146,25 +150,23 @@ namespace HedgePlatform.BLL.Services
             {
                 _db.Counters.Delete(id.Value);
                 _db.Save();
-                _logger.LogInformation("Delete counter: " + counter.Id);
+                _logger.LogInformation($"Delete counter: {counter.Id}");
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("counter delete db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Counter delete error: Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
             
             catch (Exception ex)
             {
-                _logger.LogError("counter delete error: " + ex.Message);
+                _logger.LogError($"Counter delete error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
         
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() => _db.Dispose();        
 
         private bool CheckCounterAdd (int FlatId)
         {

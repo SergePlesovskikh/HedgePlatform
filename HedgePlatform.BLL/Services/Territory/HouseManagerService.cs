@@ -14,7 +14,6 @@ namespace HedgePlatform.BLL.Services
     public class HouseManagerService : IHouseManagerService
     {
         private IUnitOfWork _db { get; set; }
-
         public HouseManagerService(IUnitOfWork uow)
         {
             _db = uow;
@@ -26,10 +25,7 @@ namespace HedgePlatform.BLL.Services
             cfg.CreateMap<HouseManagerDTO, HouseManager>();
         }).CreateMapper();
       
-        public IEnumerable<HouseManagerDTO> GetHouseManagers()
-        {
-            return _mapper.Map<IEnumerable<HouseManager>, List<HouseManagerDTO>>(_db.HouseManagers.GetAll());
-        }
+        public IEnumerable<HouseManagerDTO> GetHouseManagers() => _mapper.Map<IEnumerable<HouseManager>, List<HouseManagerDTO>>(_db.HouseManagers.GetAll());        
 
         public void CreateHouseManager(HouseManagerDTO houseManager)
         {
@@ -41,70 +37,72 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"House manager creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("House manager creating error: " + ex.Message);
+                _logger.LogError($"House manager creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
-
         }
+
         public void EditHouseManager(HouseManagerDTO houseManager)
         {
             if (houseManager == null)
-                throw new ValidationException("No House manager object", "");
+                throw new ValidationException("NO_OBJECT", "");
             try
             {
                 _db.HouseManagers.Update(_mapper.Map<HouseManagerDTO, HouseManager>(houseManager));
                 _db.Save();
-                _logger.LogInformation("Edit House manager: " + houseManager.Id);
+                _logger.LogInformation($"Edit House manager: {houseManager.Id}");
             }
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("House manager edit _db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"House manager edit Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("House manager edit error: " + ex.Message);
+                _logger.LogError($"House manager edit error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
+
         public void DeleteHouseManager(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "HOUSE_MANAGER_ID");
 
             var houseManager = _db.HouseManagers.Get(id.Value);
             if (houseManager == null)
                 throw new ValidationException("NOT_FOUND", "");
+
             try
             {
                 _db.HouseManagers.Delete(id.Value);
                 _db.Save();
-                _logger.LogInformation("Delete House manager: " + houseManager.Id);
+                _logger.LogInformation($"Delete House manager: {houseManager.Id} - {houseManager.Name}");
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("House manager delete _db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"House manager delete Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("House manager delete error: " + ex.Message);
+                _logger.LogError($"House manager delete error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
 
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() => _db.Dispose();        
     }
 }

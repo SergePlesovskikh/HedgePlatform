@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using HedgePlatform.BLL.DTO;
-using HedgePlatform.BLL.Interfaces;
+﻿using HedgePlatform.BLL.Interfaces;
 using System;
 using System.Security.Cryptography;
 
@@ -8,15 +6,9 @@ namespace HedgePlatform.BLL.Services
 {
     public class TokenService : ITokenService
     {
-        public string GenerateToken()
-        {
-            return GenerateSeqString(32);
-        }
+        public string GenerateToken() => GenerateSeqString(32);        
 
-        public string GenerateUid()
-        {
-            return GenerateSeqString(16);
-        }
+        public string GenerateUid() => GenerateSeqString(16);        
 
         private static string GenerateSeqString(int len)
         {

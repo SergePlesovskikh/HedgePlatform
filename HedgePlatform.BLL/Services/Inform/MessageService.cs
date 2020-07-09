@@ -29,7 +29,6 @@ namespace HedgePlatform.BLL.Services
             _voteResultService = voteResultService;
             _logger = logger;
         }
-
         
         private static IMapper _mapper = new MapperConfiguration(cfg => {
             cfg.CreateMap<Message, MessageDTO>();
@@ -37,15 +36,12 @@ namespace HedgePlatform.BLL.Services
             cfg.CreateMap<MessageDTO, VoteDTO>();
         }).CreateMapper();
 
-        public IEnumerable<MessageDTO> GetMessages()
-        {          
-            return _mapper.Map<IEnumerable<Message>, List<MessageDTO>>(_db.Messages.Find(x=>x.Discriminator=="Message"));
-        }
+        public IEnumerable<MessageDTO> GetMessages() => _mapper.Map<IEnumerable<Message>, List<MessageDTO>>(_db.Messages.Find(x => x.Discriminator == "Message"));        
        
         public IEnumerable<VoteDTO> GetMessagesAndVotes(int? ResidentId)
         {
             if (ResidentId == null)
-                throw new ValidationException("No Resident Id", "");
+                throw new ValidationException("NULL", "RESIDENT_ID");
 
             List<VoteDTO> voteDTOs = new List<VoteDTO> { };
             if (_residentService.CheckChairman(ResidentId.Value))
@@ -75,20 +71,21 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Message creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("Message creating error: " + ex.Message);
+                _logger.LogError($"Message creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
         public void EditMessage(MessageDTO message)
         {
             if (message == null)
-                throw new ValidationException("No Message object", "");
+                throw new ValidationException("NO_OBJECT", "");
 
             try
             {
@@ -99,33 +96,37 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Message edit db error: " + ex.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Message edit Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("Message edit error: " + ex.Message);
+                _logger.LogError($"Message edit error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
         public void DeleteMessage(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "MESSAGE_ID");
+
             var message = _db.Messages.Get(id.Value);
             if (message == null)
                 throw new ValidationException("NOT_FOUND", "");
+
             try
             {
                 _db.Messages.Delete(id.Value);
                 _db.Save();
-                _logger.LogInformation("Delete Message: " + message.Id);
+                _logger.LogInformation($"Delete Message: {message.Id}");
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Message delete db error: " + ex.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Message delete Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
             catch (Exception ex)
             {
@@ -133,9 +134,6 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() => _db.Dispose();        
     }
 }

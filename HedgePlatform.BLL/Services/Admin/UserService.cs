@@ -29,7 +29,7 @@ namespace HedgePlatform.BLL.Services
         public UserDTO GetUser(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "USER_ID");
 
             var user = _db.Users.Get(id.Value);
             if (user == null)
@@ -38,10 +38,7 @@ namespace HedgePlatform.BLL.Services
             return _mapper.Map<User, UserDTO>(user);
         }
 
-        public IEnumerable<UserDTO> GetUsers()
-        {
-            return _mapper.Map<IEnumerable<User>, List<UserDTO>>(_db.Users.GetAll());
-        }
+        public IEnumerable<UserDTO> GetUsers() => _mapper.Map<IEnumerable<User>, List<UserDTO>>(_db.Users.GetAll());
 
         public void CreateUser(UserDTO user)
         {
@@ -53,13 +50,14 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"User creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("User creating error: " + ex.Message);
+                _logger.LogError($"User creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
 
@@ -67,7 +65,7 @@ namespace HedgePlatform.BLL.Services
         public void EditUser(UserDTO user)
         {
             if (user == null)
-                throw new ValidationException("No user object", "");
+                throw new ValidationException("NO_OBJECT", "");
 
             try
             {
@@ -77,13 +75,14 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("User edit db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"User edit Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("User edit error: " + ex.Message);
+                _logger.LogError($"User edit error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
@@ -91,7 +90,7 @@ namespace HedgePlatform.BLL.Services
         public void DeleteUser(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "USER_ID");
 
             var counterType = _db.CounterStats.Get(id.Value);
             if (counterType == null)
@@ -108,9 +107,6 @@ namespace HedgePlatform.BLL.Services
             }
         }
 
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() => _db.Dispose();        
     }
 }

@@ -28,7 +28,7 @@ namespace HedgePlatform.BLL.Services
             catch (Exception ex)
             {
                 _logger.LogError("PDF convertation error");
-                throw new ValidationException("PDF convertation error", ex.Message);
+                throw new ValidationException("PDF_ERROR", ex.Message);
             }
         }
 

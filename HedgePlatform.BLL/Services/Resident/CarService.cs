@@ -43,13 +43,14 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"car creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("car creating error: " + ex.Message);
+                _logger.LogError($"car creating error: {ex.Message}" );
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
 
@@ -57,30 +58,31 @@ namespace HedgePlatform.BLL.Services
         public void EditCar(CarDTO car)
         {
             if (car == null)
-                throw new ValidationException("No car object", "");
+                throw new ValidationException("NO_OBJECT", "");
             try
             {
                 _db.Cars.Update(_mapper.Map<CarDTO, Car>(car));
                 _db.Save();
-                _logger.LogInformation("Edit car: " + car.Id);
+                _logger.LogInformation($"Edit car: {car.Id}");
             }
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("car edit db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Car edit Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("car edit error: " + ex.Message);
+                _logger.LogError($"Car edit error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
         public void DeleteCar(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "CAR_ID");
 
             var car = _db.Cars.Get(id.Value);
             if (car == null)
@@ -89,23 +91,21 @@ namespace HedgePlatform.BLL.Services
             {
                 _db.Cars.Delete(id.Value);
                 _db.Save();
-                _logger.LogInformation("Delete car: " + car.Id);
+                _logger.LogInformation($"Delete car: {car.Id} - {car.GosNumber}" );
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("car delete db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Car delete Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("car delete error: " + ex.Message);
+                _logger.LogError($"Car delete error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() => _db.Dispose();
     }
 }

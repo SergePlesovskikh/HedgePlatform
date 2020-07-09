@@ -29,10 +29,12 @@ namespace HedgePlatform.BLL.Services
         public FlatDTO GetFlat(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "FLAT_ID");
+
             var flat = _db.Flats.Get(id.Value);
             if (flat == null)
                 throw new ValidationException("NOT_FOUND", "");
+
             return _mapper.Map<Flat, FlatDTO>(flat);
         }      
 
@@ -57,12 +59,13 @@ namespace HedgePlatform.BLL.Services
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"flat creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
             catch (Exception ex)
             {
-                _logger.LogError("flat creating error: " + ex.Message);
+                _logger.LogError($"flat creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
@@ -70,7 +73,7 @@ namespace HedgePlatform.BLL.Services
         public void EditFlat(FlatDTO flat)
         {
             if (flat == null)
-                throw new ValidationException("No flat object", "");           
+                throw new ValidationException("NO_OBJECT", "");           
             try
             {
                 _db.Flats.Update(_mapper.Map<FlatDTO, Flat>(flat));
@@ -79,12 +82,13 @@ namespace HedgePlatform.BLL.Services
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("flat edit _db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"flat edit Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
             catch (Exception ex)
             {
-                _logger.LogError("flat edit error: " + ex.Message);
+                _logger.LogError($"flat edit error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
@@ -92,32 +96,32 @@ namespace HedgePlatform.BLL.Services
         public void DeleteFlat(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "FLAT_ID");
+
             var flat = _db.Flats.Get(id.Value);
             if (flat == null)
                     throw new ValidationException("NOT_FOUND", "");
+
             try
             {
                 _db.Flats.Delete(id.Value);
                 _db.Save();
-                _logger.LogInformation("Delete flat: " + flat.Id);
+                _logger.LogInformation($"Delete flat: {flat.Id}");
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("flat delete _db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
             catch (Exception ex)
             {
-                _logger.LogError("flat delete error: " + ex.Message);
+                _logger.LogError($"flat delete error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
 
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() => _db.Dispose();        
     }
 }
 

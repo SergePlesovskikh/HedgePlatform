@@ -43,21 +43,22 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"house creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("house creating error: " + ex.Message);
+                _logger.LogError($"house creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
-
         }
+
         public void EditHouse(HouseDTO house)
         {
             if (house == null)
-                throw new ValidationException("No house object", "");
+                throw new ValidationException("NO_OBJECT", "");
             try
             {
                 _db.Houses.Update(_mapper.Map<HouseDTO, House>(house));
@@ -67,20 +68,21 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("house edit _db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("house edit error: " + ex.Message);
+                _logger.LogError($"house edit error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
         public void DeleteHouse(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "HOUSE_ID");
 
             var house = _db.Houses.Get(id.Value);
             if (house == null)
@@ -89,23 +91,21 @@ namespace HedgePlatform.BLL.Services
             {
                 _db.Houses.Delete(id.Value);
                 _db.Save();
-                _logger.LogInformation("Delete house: " + house.Id);
+                _logger.LogInformation($"Delete house: {house.Id} - {house.Street} - {house.Home}");
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("house delete _db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"house delete Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("house delete error: " + ex.Message);
+                _logger.LogError($"house delete error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() => _db.Dispose();        
     }
 }

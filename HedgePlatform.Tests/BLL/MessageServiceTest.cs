@@ -103,7 +103,7 @@ namespace HedgePlatform.Tests.BLL
 
             // Assert
             var exception = Assert.Throws<ValidationException>(act);
-            Assert.Equal("No Resident Id", exception.Message);
+            Assert.Equal("NULL", exception.Message);
         }
 
 
@@ -151,7 +151,7 @@ namespace HedgePlatform.Tests.BLL
 
             // Assert
             var exception = Assert.Throws<ValidationException>(act);
-            Assert.Equal("DB_ERROR", exception.Message);
+            Assert.Equal("SERVER_DB_ERROR", exception.Message);
         }
 
         [Fact]
@@ -199,7 +199,7 @@ namespace HedgePlatform.Tests.BLL
 
             // Assert
             var exception = Assert.Throws<ValidationException>(act);
-            Assert.Equal("No Message object", exception.Message);
+            Assert.Equal("NO_OBJECT", exception.Message);
         }
 
         [Fact]
@@ -222,7 +222,7 @@ namespace HedgePlatform.Tests.BLL
 
             // Assert
             var exception = Assert.Throws<ValidationException>(act);
-            Assert.Equal("DB_ERROR", exception.Message);
+            Assert.Equal("SERVER_DB_ERROR", exception.Message);
         }
 
         [Fact]
@@ -318,7 +318,7 @@ namespace HedgePlatform.Tests.BLL
 
             // Assert
             var exception = Assert.Throws<ValidationException>(act);
-            Assert.Equal("DB_ERROR", exception.Message);
+            Assert.Equal("SERVER_DB_ERROR", exception.Message);
         }
     }
 }

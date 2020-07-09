@@ -9,6 +9,7 @@ using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace HedgePlatform.BLL.Services
 {
     public class CounterTypeService : ICounterTypeService
@@ -40,13 +41,14 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Counter type creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("Counter type creating error: " + ex.Message);
+                _logger.LogError($"Counter type creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");                
             }
          
@@ -54,30 +56,31 @@ namespace HedgePlatform.BLL.Services
         public void EditCounterTypes(CounterTypeDTO counterType)
         {
             if (counterType == null)
-                throw new ValidationException("No counter type object", "");          
+                throw new ValidationException("NO_OBJECT", "");          
             try
             {
                 _db.CounterTypes.Update(_mapper.Map<CounterTypeDTO, CounterType>(counterType));
                 _db.Save();
-                _logger.LogInformation("Edit counter type: " + counterType.Id);
+                _logger.LogInformation($"Edit counter type: {counterType.Id}");
             }
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Counter type edit db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Counter type edit Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("Counter type edit error: " + ex.Message);
+                _logger.LogError($"Counter type edit error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }          
         }
         public void DeleteCounterType(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "COUNTER_ID");
             var counterType = _db.CounterTypes.Get(id.Value);
 
             if (counterType == null)
@@ -87,24 +90,22 @@ namespace HedgePlatform.BLL.Services
             {
                 _db.CounterTypes.Delete(id.Value);
                 _db.Save();
-                _logger.LogInformation("Delete counter type: " + counterType.Id);
+                _logger.LogInformation($"Delete counter type: {counterType.Id}");
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Counter type delete db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Counter type delete Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("Counter type delete error: " + ex.Message);
+                _logger.LogError($"Counter type delete error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }            
         }
 
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() =>_db.Dispose();        
     }
 }

@@ -39,7 +39,7 @@ namespace HedgePlatform.BLL.Services
         public IEnumerable<CounterValueDTO> GetCounterValuesByCounter(int? CounterId)
         {
             if (CounterId == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "COUNTER_ID");
 
             var counterValues = _db.CounterValues.GetWithInclude(p=>p.CounterId == CounterId,x => x.Counter);
             return _mapper.Map<IEnumerable<CounterValue>, List<CounterValueDTO>>(counterValues);
@@ -55,13 +55,14 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"CounterValue creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("counterValue creating error: " + ex.Message);
+                _logger.LogError($"CounterValue creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
@@ -69,7 +70,7 @@ namespace HedgePlatform.BLL.Services
         public void CreateCounterValue(CounterValueDTO counterValue, int? FlatId)
         {
             if (FlatId == null)
-                throw new ValidationException("REQ_ERROR", "");
+                throw new ValidationException("REQ_ERROR", "FLAT_ID");
 
             if (CheckCounterToFlat(FlatId.Value, counterValue.CounterId))
                 throw new ValidationException("WRONG_COUNTER", "");
@@ -85,8 +86,9 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"CounterValue creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
@@ -104,25 +106,26 @@ namespace HedgePlatform.BLL.Services
             {
                 _db.CounterValues.Update(_mapper.Map<CounterValueDTO, CounterValue>(counterValue));
                 _db.Save();
-                _logger.LogInformation("Edit counterValue: " + counterValue.Id);
+                _logger.LogInformation($"Edit counterValue: {counterValue.Id}");
             }
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("counterValue edit db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"counterValue edit Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("counterValue edit error: " + ex.Message);
+                _logger.LogError($"CounterValue edit error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
         public void DeleteCounterValue(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "FLAT_ID");
 
             var counterValue = _db.CounterValues.Get(id.Value);
             if (counterValue == null)
@@ -131,24 +134,23 @@ namespace HedgePlatform.BLL.Services
             {
                 _db.CounterValues.Delete(id.Value);
                 _db.Save();
-                _logger.LogInformation("Delete counterValue: " + counterValue.Id);
+                _logger.LogInformation($"Delete counterValue: {counterValue.Id}");
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("counterValue delete db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"СounterValue delete Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("counterValue delete error: " + ex.Message);
+                _logger.LogError($"СounterValue delete error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() => _db.Dispose();
+        
 
         public bool CheckCounterToFlat(int FlatId, int CounterId)
         {
@@ -156,15 +158,9 @@ namespace HedgePlatform.BLL.Services
             return counter.FlatId == FlatId;
         }
 
-        public bool CheckCounterValueAdd(int CounterId)
-        {
-            return CheckAlwaysAdd() || (CheckDate() && CheckCurrentMonthVal(CounterId));
-        }
+        public bool CheckCounterValueAdd(int CounterId) => CheckAlwaysAdd() || (CheckDate() && CheckCurrentMonthVal(CounterId));        
 
-        private bool CheckAlwaysAdd()
-        {
-            return bool.Parse(_configuration["CounterOptions:always_send_counter_value"]);
-        }
+        private bool CheckAlwaysAdd() => bool.Parse(_configuration["CounterOptions:always_send_counter_value"]);      
 
         private bool CheckDate()
         {
@@ -173,9 +169,7 @@ namespace HedgePlatform.BLL.Services
             return DateTime.Now.Day <= end_day && DateTime.Now.Day >= start_day;
         }
 
-        private bool CheckCurrentMonthVal(int CounterId)
-        {
-            return _db.CounterValues.FindFirst(x => ( x.CounterId == CounterId) && (x.DateValue.Month==DateTime.Now.Month)) == null;
-        }
+        private bool CheckCurrentMonthVal(int CounterId) => _db.CounterValues.FindFirst(x => ( x.CounterId == CounterId) 
+            && (x.DateValue.Month==DateTime.Now.Month)) == null;      
     }
 }

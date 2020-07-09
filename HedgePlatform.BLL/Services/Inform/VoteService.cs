@@ -31,10 +31,12 @@ namespace HedgePlatform.BLL.Services
         public VoteDTO GetVote(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "VOTE_ID");
+
             var vote = _db.Votes.Get(id.Value);
             if (vote == null)
                 throw new ValidationException("NOT_FOUND", "");
+
             return _mapper.Map<Vote, VoteDTO>(vote); 
         }
 
@@ -44,10 +46,8 @@ namespace HedgePlatform.BLL.Services
             return _mapper.Map<IEnumerable<Vote>, List<VoteDTO>>(votes);
         }
 
-        public bool CheckVoteResident(VoteDTO voteDTO, int ResidentId, IEnumerable<VoteResultDTO> voteResultDTOs)
-        {
-            return voteResultDTOs.Where(x => x.VoteOption.VoteId == voteDTO.Id).Count() == 0;           
-        }
+        public bool CheckVoteResident(VoteDTO voteDTO, int ResidentId, IEnumerable<VoteResultDTO> voteResultDTOs) =>
+            voteResultDTOs.Where(x => x.VoteOption.VoteId == voteDTO.Id).Count() == 0;                   
 
         public void CreateVote(VoteDTO vote)
         {
@@ -59,13 +59,14 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Vote creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("Vote creating error: " + ex.Message);
+                _logger.LogError($"Vote creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
@@ -73,7 +74,7 @@ namespace HedgePlatform.BLL.Services
         public void EditVote(VoteDTO vote)
         {
             if (vote == null)
-                throw new ValidationException("No Vote object", "");
+                throw new ValidationException("NO_OBJECT", "");
             try
             {
                 _db.Votes.Update(_mapper.Map<VoteDTO, Vote>(vote));
@@ -83,20 +84,21 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Vote edit db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Vote edit Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("Vote edit error: " + ex.Message);
+                _logger.LogError($"Vote edit error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
         public void DeleteVote(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "VOTE_ID");
 
             var vote = _db.Votes.Get(id.Value);
             if (vote == null)
@@ -109,20 +111,18 @@ namespace HedgePlatform.BLL.Services
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Vote delete db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Vote delete Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("Vote delete error: " + ex.Message);
+                _logger.LogError($"Vote delete error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
 
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() => _db.Dispose();        
     }
 }

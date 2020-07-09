@@ -1,8 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AutoMapper;
-using HedgePlatform.BLL.DTO;
+﻿using HedgePlatform.BLL.Infr;
 using HedgePlatform.BLL.Interfaces;
-using HedgePlatform.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HedgePlatform.Controllers.API
@@ -32,7 +29,7 @@ namespace HedgePlatform.Controllers.API
             }
             catch (ValidationException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest($"{ex.Message}:{ex.Property}");
             }
         }
         protected override void Dispose(bool disposing)

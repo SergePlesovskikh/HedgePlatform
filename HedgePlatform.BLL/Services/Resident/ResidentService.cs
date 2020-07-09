@@ -44,22 +44,22 @@ namespace HedgePlatform.BLL.Services
         public ResidentDTO GetResident(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "RESIDENT_ID");
+
             var resident = _db.Residents.Get(id.Value);
             if (resident == null)
                 throw new ValidationException("NOT_FOUND", "");
+
             return _mapper.Map<Resident, ResidentDTO>(resident);
         }
 
-        public string GetResidentStatus (int? id)
-        {
-            return GetResident(id).ResidentStatus;
-        }
+        public string GetResidentStatus (int? id) => GetResident(id).ResidentStatus;
 
         public byte[] GetRequest(int? ResidentId)
         {
             if (ResidentId == null)
                 throw new ValidationException("NULL", "");
+
             var residents = _db.Residents.GetWithInclude(x => x.Phone, x => x.Flat, x=>x.Flat.House);
             if (residents == null)
                 throw new ValidationException("NOT_FOUND", "");
@@ -74,10 +74,7 @@ namespace HedgePlatform.BLL.Services
             return _mapper.Map<IEnumerable<Resident>, List<ResidentDTO>>(residents);
         }
 
-        public bool CheckChairman(int ResidentId)
-        {
-            return GetResident(ResidentId).Chairman.Value;
-        }
+        public bool CheckChairman(int ResidentId) => GetResident(ResidentId).Chairman.Value;
 
         public void RegistrationResident(string uid, ResidentDTO resident)
         {
@@ -107,13 +104,14 @@ namespace HedgePlatform.BLL.Services
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"resident creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("resident creating error: " + ex.Message);
+                _logger.LogError($"resident creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
 
@@ -121,7 +119,7 @@ namespace HedgePlatform.BLL.Services
         public void EditResident(ResidentDTO resident)
         {
             if (resident == null)
-                throw new ValidationException("No resident object", "");
+                throw new ValidationException("NO_OBJECT", "");
           
             try
             {
@@ -132,20 +130,21 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("resident edit _db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("resident edit error: " + ex.Message);
+                _logger.LogError($"Resident edit error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
         public void DeleteResident(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "RESIDENT_ID");
 
             var resident = _db.Residents.Get(id.Value);
             if (resident == null)
@@ -158,33 +157,31 @@ namespace HedgePlatform.BLL.Services
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("resident delete _db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"resident delete Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("resident delete error: " + ex.Message);
+                _logger.LogError($"resident delete error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() => _db.Dispose();
 
         private void CheckNullResidentData(PhoneDTO phone, ResidentDTO resident, string uid)
         {
             if (phone == null)
             {
                 _logger.LogError("Not found phone for uid. Uid=" + uid);
-                throw new ValidationException("SERVER_ERROR", "");
+                throw new ValidationException("SERVER_ERROR", "UID");
             }
 
             if (resident.FlatId == null)
             {
                 _logger.LogError("Not found flat object" + uid);
-                throw new ValidationException("REQUEST_ERROR", "");
+                throw new ValidationException("REQUEST_ERROR", "FLAT_ID");
             }
         }
 

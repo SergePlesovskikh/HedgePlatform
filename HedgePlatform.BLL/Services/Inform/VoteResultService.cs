@@ -75,13 +75,14 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"voteResult creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("voteResult creating error: " + ex.Message);
+                _logger.LogError($"voteResult creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
@@ -89,13 +90,13 @@ namespace HedgePlatform.BLL.Services
         public void CreateVoteResult(VoteResultDTO voteResult, int? ResidentId)
         {
             if (ResidentId == null)
-                throw new ValidationException("No Resident Id", "");
+                throw new ValidationException("NULL", "RESIDENT_ID");
 
             if (!_residentService.CheckChairman(ResidentId.Value))
-                throw new ValidationException("No permission", "");
+                throw new ValidationException("NO_PERMISSION", "");
 
             if (!CheckVoteResult(voteResult, ResidentId.Value))
-                throw new ValidationException("Already vote", "");
+                throw new ValidationException("ALREADY_VOTE", "");
            
             try
             {
@@ -108,13 +109,14 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"voteResult creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("voteResult creating error: " + ex.Message);
+                _logger.LogError($"voteResult creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
@@ -122,7 +124,7 @@ namespace HedgePlatform.BLL.Services
         public void EditVoteResult(VoteResultDTO voteResult)
         {
             if (voteResult == null)
-                throw new ValidationException("No voteResult object", "");
+                throw new ValidationException("NO_OBJECT", "");
            
             try
             {
@@ -131,22 +133,24 @@ namespace HedgePlatform.BLL.Services
                 _logger.LogInformation("Edit voteResult: " + voteResult.Id);
             }
 
+
             catch (DbUpdateException ex)
             {
-                _logger.LogError("voteResult edit db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"voteResult editing Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("voteResult edit error: " + ex.Message);
+                _logger.LogError($"voteResult editing error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
         public void DeleteVoteResult(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "VOTE_RESULT_ID");
 
             var voteResult = _db.VoteResults.Get(id.Value);
             if (voteResult == null)
@@ -159,24 +163,22 @@ namespace HedgePlatform.BLL.Services
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("voteResult delete db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"voteResult delete Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("voteResult delete error: " + ex.Message);
+                _logger.LogError($"voteResult delete error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() => _db.Dispose();
+  
 
-        private bool CheckVoteResult(VoteResultDTO voteResult, int ResidentId)
-        {
-            return _db.VoteResults.FindFirst(x => x.ResidentId == ResidentId && x.VoteOptionId == voteResult.VoteOptionId) == null;             
-        }
+        private bool CheckVoteResult(VoteResultDTO voteResult, int ResidentId) =>
+         _db.VoteResults.FindFirst(x => x.ResidentId == ResidentId && x.VoteOptionId == voteResult.VoteOptionId) == null;             
+        
     }
 }

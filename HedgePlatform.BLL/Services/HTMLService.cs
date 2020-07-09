@@ -4,11 +4,13 @@ using HedgePlatform.BLL.Infr;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace HedgePlatform.BLL.Services
 {
     public class HTMLService : IHTMLService
-    {        
+    {
+        private readonly ILogger _logger = Log.CreateLogger<PDFService>();
         public string GenerateHTMLRequest(ResidentDTO resident)
         {
             var document = GetHTMLDocument("\\wwwroot\\html\\pdfrequest.html");
@@ -24,7 +26,7 @@ namespace HedgePlatform.BLL.Services
             return document.DocumentNode.OuterHtml;
         }
 
-        private static HtmlDocument GetHTMLDocument(string name)
+        private HtmlDocument GetHTMLDocument(string name)
         {
             try
             {
@@ -34,7 +36,8 @@ namespace HedgePlatform.BLL.Services
             }
             catch (Exception ex)
             {
-                throw new ValidationException("HTML template load error", ex.Message);                
+                _logger.LogError("Get HTML doc error");
+                throw new ValidationException("HTML_ERROR", ex.Message);
             }
         }
 

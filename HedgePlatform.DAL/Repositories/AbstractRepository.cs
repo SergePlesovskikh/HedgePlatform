@@ -18,20 +18,10 @@ namespace HedgePlatform.DAL.Repositories
             _db = context.Set<T>();
         }
 
-        public bool CanConnect()
-        {
-            return _context.Database.CanConnect();
-        }
+        public IEnumerable<T> GetAll() => _db.AsNoTracking().ToList();        
 
-        public IEnumerable<T> GetAll()
-        {
-            return _db.AsNoTracking().ToList();
-        }
-
-        public T Get(int id)
-        {
-            return _db.Find(id);
-        }
+        public T Get(int id) => _db.Find(id);
+        
         public T GetOneWithInclude(Func<T, bool> predicate, params Expression<Func<T, object>>[] includeProperties)
         {
             var query = Include(includeProperties);
@@ -50,25 +40,15 @@ namespace HedgePlatform.DAL.Repositories
             return item;
         }
 
-        public IEnumerable<T> Find(Func<T, Boolean> predicate)
-        {
-            return _db.AsNoTracking().Where(predicate).ToList();
-        }
+        public IEnumerable<T> Find(Func<T, Boolean> predicate) => _db.AsNoTracking().Where(predicate).ToList();
+        
 
-        public T FindFirst(Func<T, Boolean> predicate)
-        {
-            return _db.AsNoTracking().Where(predicate).ToList().FirstOrDefault();
-        }
+        public T FindFirst(Func<T, Boolean> predicate) => _db.AsNoTracking().Where(predicate).ToList().FirstOrDefault();        
 
-        public void Delete(int id)
-        {
-            _db.Remove(Get(id));
-        }
+        public void Delete(int id) => _db.Remove(Get(id));        
 
-        public IEnumerable<T> GetWithInclude(params Expression<Func<T, object>>[] includeProperties)
-        {
-            return Include(includeProperties).ToList();
-        }
+        public IEnumerable<T> GetWithInclude(params Expression<Func<T, object>>[] includeProperties) => Include(includeProperties).ToList();
+        
 
         public IEnumerable<T> GetWithInclude(Func<T, bool> predicate,
             params Expression<Func<T, object>>[] includeProperties)

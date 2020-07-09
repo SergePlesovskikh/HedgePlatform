@@ -44,7 +44,7 @@ namespace HedgePlatform.Controllers.ADM.Resident
             }
             catch (ValidationException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest($"{ex.Message}:{ex.Property}");
             }
         }
 
@@ -60,11 +60,11 @@ namespace HedgePlatform.Controllers.ADM.Resident
             }
             catch (ValidationException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest($"{ex.Message}:{ex.Property}");
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public IActionResult Delete(int id)
         {
             try
@@ -74,7 +74,7 @@ namespace HedgePlatform.Controllers.ADM.Resident
             }
             catch (ValidationException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest($"{ex.Message}:{ex.Property}");
             }
         }
         protected override void Dispose(bool disposing)

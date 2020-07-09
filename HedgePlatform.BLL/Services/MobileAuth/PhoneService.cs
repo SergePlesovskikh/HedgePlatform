@@ -26,18 +26,18 @@ namespace HedgePlatform.BLL.Services
             cfg.CreateMap<PhoneDTO, Phone>();
         }).CreateMapper();
 
-        public bool CheckPhone(string phone)
-        {
-            return _db.Phones.Find(x => x.Number == phone) != null;             
-        }
+        public bool CheckPhone(string phone) =>
+             _db.Phones.Find(x => x.Number == phone) != null;     
 
         public PhoneDTO GetPhone(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "PHONE_ID");
+
             var phone = _db.Phones.GetOneWithInclude(x=>x.Id==id.Value, x=>x.Resident);
             if (phone == null)
                 throw new ValidationException("NOT_FOUND", "");
+
             return _mapper.Map<Phone, PhoneDTO>(phone);
         }
 
@@ -66,21 +66,22 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Phone creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("Phone creating error: " + ex.Message);
+                _logger.LogError($"Phone creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
-
         }
+
         public void EditPhone(PhoneDTO phone)
         {
             if (phone == null)
-                throw new ValidationException("No phone object", "");
+                throw new ValidationException("NO_OBJECT", "");
             try
             {
                 _db.Phones.Update(_mapper.Map<PhoneDTO, Phone>(phone));
@@ -88,12 +89,13 @@ namespace HedgePlatform.BLL.Services
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Phone edit db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Phone edit Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
             catch (Exception ex)
             {
-                _logger.LogError("Phone edit error: " + ex.Message);
+                _logger.LogError($"Phone edit error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
@@ -101,10 +103,12 @@ namespace HedgePlatform.BLL.Services
         public void DeletePhone(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "PHONE_ID");
+
             var counterType = _db.Phones.Get(id.Value);
             if (counterType == null)
                 throw new ValidationException("NOT_FOUND", "");
+
             try
             {
                 _db.Phones.Delete(id.Value);
@@ -115,9 +119,6 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() => _db.Dispose();        
     }
 }

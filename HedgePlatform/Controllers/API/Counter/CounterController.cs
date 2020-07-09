@@ -49,7 +49,7 @@ namespace HedgePlatform.Controllers.API
             }
             catch (ValidationException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest($"{ex.Message}:{ex.Property}");
             }
         }
         protected override void Dispose(bool disposing)

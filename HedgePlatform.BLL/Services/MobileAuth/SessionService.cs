@@ -41,20 +41,21 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Session creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("Session creating error: " + ex.Message);
+                _logger.LogError($"Session creating error: {ex.Message}" );
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
         public void DeleteSession(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "SESSION_ID");
 
             var counterType = _db.CounterStats.Get(id.Value);
             if (counterType == null)
@@ -70,9 +71,6 @@ namespace HedgePlatform.BLL.Services
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() =>  _db.Dispose();        
     }
 }

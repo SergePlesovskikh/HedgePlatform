@@ -43,21 +43,22 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"voteOption creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("voteOption creating error: " + ex.Message);
+                _logger.LogError($"voteOption creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
-
         }
+
         public void EditVoteOption(VoteOptionDTO voteOption)
         {
             if (voteOption == null)
-                throw new ValidationException("No voteOption object", "");
+                throw new ValidationException("NO_OBJECT", "");
           
             try
             {
@@ -68,20 +69,22 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("voteOption edit db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"voteOption Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("voteOption edit error: " + ex.Message);
+                _logger.LogError($"voteOption edit error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
+
         public void DeleteVoteOption(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "VOTE_OPTION_ID");
 
             var voteOption = _db.VoteOptions.Get(id.Value);
             if (voteOption == null)
@@ -94,19 +97,18 @@ namespace HedgePlatform.BLL.Services
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("voteOption delete db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"voteOption delete Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("voteOption delete error: " + ex.Message);
+                _logger.LogError($"voteOption delete error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+
+        public void Dispose() => _db.Dispose();        
     }
 }

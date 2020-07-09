@@ -62,7 +62,6 @@ namespace HedgePlatform
             services.AddTransient<IVoteOptionService, VoteOptionService>();
             services.AddTransient<IVoteResultService, VoteResultService>();
 
-            services.AddTransient<ICheckDBConnectionService, CheckDBConnectionService>();
             services.AddTransient<IHTMLService, HTMLService>();
             services.AddTransient<IPDFService, PDFService>();
             services.AddTransient<ISMSSendService, SMSSendService>();
@@ -81,7 +80,6 @@ namespace HedgePlatform
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
-          //  app.UseMiddleware<CheckDBComponent>();
 
             app.UseWhen(context => context.Request.Path.StartsWithSegments("/api/mobile/regist"),
                 appBuilder => appBuilder.UseMiddleware<CheckAuthComponent>());

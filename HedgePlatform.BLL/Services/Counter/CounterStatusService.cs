@@ -26,10 +26,7 @@ namespace HedgePlatform.BLL.Services
             cfg.CreateMap<CounterStatusDTO, CounterStatus>();
         }).CreateMapper();
 
-        public IEnumerable<CounterStatusDTO> GetCounterStats()
-        {           
-            return _mapper.Map<IEnumerable<CounterStatus>, List<CounterStatusDTO>>(_db.CounterStats.GetAll());
-        }
+        public IEnumerable<CounterStatusDTO> GetCounterStats() => _mapper.Map<IEnumerable<CounterStatus>, List<CounterStatusDTO>>(_db.CounterStats.GetAll());        
 
         public void CreateCounterStatus(CounterStatusDTO counterStatus)
         {           
@@ -41,13 +38,14 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Database error exception: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Counter status creating Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("Counter status creating error: " + ex.Message);
+                _logger.LogError($"Counter status creating error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
 
@@ -55,7 +53,7 @@ namespace HedgePlatform.BLL.Services
         public void EditCounterStatus(CounterStatusDTO counterStatus)
         {
             if (counterStatus == null)
-                throw new ValidationException("No counter Status object", "");
+                throw new ValidationException("NO_OBJECT", "");
           
             try
             {
@@ -65,13 +63,14 @@ namespace HedgePlatform.BLL.Services
 
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Counter status edit db error: " + ex.InnerException.Message);
-                throw new ValidationException("DB_ERROR", "");
+                DBValidator.SetException(ex);
+                _logger.LogError($"Counter status edit Database error exception: {DBValidator.GetErrMessage()}. Property: {DBValidator.GetErrProperty()}");
+                throw new ValidationException("DB_ERROR", DBValidator.GetErrProperty());
             }
 
             catch (Exception ex)
             {
-                _logger.LogError("Counter status edit error: " + ex.Message);
+                _logger.LogError($"Counter status edit error: {ex.Message}");
                 throw new ValidationException("UNKNOWN_ERROR", "");
             }
         }
@@ -79,7 +78,7 @@ namespace HedgePlatform.BLL.Services
         public void DeleteCounterStatus(int? id)
         {
             if (id == null)
-                throw new ValidationException("NULL", "");
+                throw new ValidationException("NULL", "COUNTER_STATUS_ID");
             var counterType = _db.CounterStats.Get(id.Value);
             if (counterType == null)
                 throw new ValidationException("NOT_FOUND", "");
@@ -94,9 +93,6 @@ namespace HedgePlatform.BLL.Services
             }
         }
 
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
+        public void Dispose() => _db.Dispose();        
     }
 }
